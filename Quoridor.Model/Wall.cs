@@ -8,6 +8,7 @@ namespace Quoridor.Model
 {
 	internal class Wall: IElement
 	{
+		private Orientation _orientation;
 		public Position Position { get; set; }
 
 		public bool Place(Position position);

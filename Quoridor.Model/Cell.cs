@@ -8,5 +8,8 @@ namespace Quoridor.Model
 		public Position Position { get; set; }
 
 		public bool Place(Position position);
+
+		public Cell()
+		{ }
 	}
 }
