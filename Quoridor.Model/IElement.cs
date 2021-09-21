@@ -5,5 +5,7 @@ namespace Quoridor
 	interface IElement
 	{
 		Position Position { get; set; }
+
+		bool Place(Position position);
 	}
 }
