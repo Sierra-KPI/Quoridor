@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Quoridor.Model
+﻿namespace Quoridor.Model
 {
 	internal class Wall: IElement
 	{
-		private Orientation _orientation;
-		public Position Position { get; set; }
+		private readonly Orientation _orientation;
+		public Position Position { get; private set; }
+		public bool HasWall { get; private set; }
 
-		public bool Place();
+		public bool Place()
+		{
+			// Bool, because, maybe, it will return true, if placed correctly
+			// and false, if otherwise
+			HasWall = true;
+			return true;
+		}
+
+		public Wall(Position position)
+		{
+			Position = position;
+		}
 	}
 }
