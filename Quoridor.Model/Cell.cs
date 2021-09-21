@@ -4,12 +4,15 @@ namespace Quoridor.Model
 {
 	internal class Cell : IElement
 	{
-		public bool HasPlayer { get; private set; }
+		public bool HasPlayer { get; set; }
 		public Position Position { get; set; }
 
-		public bool Place(Position position);
+		public bool Place()
+		{}
 
-		public Cell()
-		{ }
+		public Cell(Position position)
+		{
+			Position = position;
+		}
 	}
 }

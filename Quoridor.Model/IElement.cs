@@ -6,6 +6,6 @@ namespace Quoridor
 	{
 		Position Position { get; set; }
 
-		bool Place(Position position);
+		bool Place();
 	}
 }

@@ -11,6 +11,6 @@ namespace Quoridor.Model
 		private Orientation _orientation;
 		public Position Position { get; set; }
 
-		public bool Place(Position position);
+		public bool Place();
 	}
 }
