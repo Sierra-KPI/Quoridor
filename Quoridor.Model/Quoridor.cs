@@ -17,7 +17,21 @@ namespace Quoridor
 			CurrentBoard = board;
 		}
 
-		private void SwitchPlayer()
+		private void CheckGameEnd()
+		{
+			if (false)
+			{
+				EndGame();
+			}
+		}
+
+		private void EndGame()
+		{
+			Console.WriteLine($"The game is over and winner is {0}!",
+				CurrentPlayer);
+		}
+
+		private void ChangePlayer()
 		{
 			CurrentPlayer = CurrentPlayer == FirstPlayer ?
 				SecondPlayer : FirstPlayer;
