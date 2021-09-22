@@ -2,6 +2,7 @@
 {
 	internal class Cell : IElement
 	{
+	    public int Id { get; private set; }
 		public bool HasPlayer { get; private set; }
 		public Position Position { get; private set; }
 
