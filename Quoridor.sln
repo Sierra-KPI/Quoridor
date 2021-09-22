@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Console.App", "Quo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Console.Input", "Quoridor.Console.Input\Quoridor.Console.Input.csproj", "{8855A7A5-CA92-48B9-A1EB-A16A27252FEB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model.Tests", "Quoridor.Model.Tests\Quoridor.Model.Tests.csproj", "{09B8ADEB-C50C-4D94-A067-EB4803A048A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model", "Quoridor.Model\Quoridor.Model.csproj", "{6653306C-2CC4-4F0C-9043-5CAA11AEBDBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{8855A7A5-CA92-48B9-A1EB-A16A27252FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8855A7A5-CA92-48B9-A1EB-A16A27252FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8855A7A5-CA92-48B9-A1EB-A16A27252FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B8ADEB-C50C-4D94-A067-EB4803A048A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B8ADEB-C50C-4D94-A067-EB4803A048A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B8ADEB-C50C-4D94-A067-EB4803A048A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B8ADEB-C50C-4D94-A067-EB4803A048A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6653306C-2CC4-4F0C-9043-5CAA11AEBDBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6653306C-2CC4-4F0C-9043-5CAA11AEBDBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6653306C-2CC4-4F0C-9043-5CAA11AEBDBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6653306C-2CC4-4F0C-9043-5CAA11AEBDBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
