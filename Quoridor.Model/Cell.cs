@@ -14,9 +14,10 @@
 			return true;
 		}
 
-		public Cell(Position position)
+		public Cell(Position position, int id)
 		{
 			Position = position;
+			Id = id;
 		}
 	}
 }
