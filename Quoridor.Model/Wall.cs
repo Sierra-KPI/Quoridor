@@ -14,9 +14,10 @@
 			return true;
 		}
 
-		public Wall(Position position)
+		public Wall(Position position, Orientation orientation)
 		{
 			Position = position;
+			_orientation = orientation;
 		}
 	}
 }

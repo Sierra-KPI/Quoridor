@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Quoridor
+﻿namespace Quoridor
 {
 	interface IElement
 	{
