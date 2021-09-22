@@ -9,14 +9,14 @@ namespace Quoridor.Model {
 
         private Cell[,] cells;
         private Cell[] validPlayersSpots;
-        private Cell[,] validWallsSpots;
+        private Cell[,] validPaths;
 
         public int width => cells.GetLength(0);
         public int height => cells.GetLength(1);
 
         public Board(Cell[,] cells, Cell[,] walls) {
             this.cells = cells;
-            this.validWallsSpots = walls;
+            this.validPaths = walls;
 
         }
 

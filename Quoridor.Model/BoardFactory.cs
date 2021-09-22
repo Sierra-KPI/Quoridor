@@ -26,8 +26,7 @@ namespace Quoridor.Model {
             for (int i = 0; i < this.size; i++) {
                 for (int j = 0; j < this.size; j++) {
                     var position = new Position(i, j);
-                    cells[i, j] = new Cell(position);
-                    cells[i, j].id = idC++;
+                    cells[i, j] = new Cell(position, idC++);
 
                     if (i != 0) {
                         walls[idW, 0] = cells[i - 1, j];
