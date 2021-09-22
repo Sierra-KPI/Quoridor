@@ -14,8 +14,9 @@ namespace Quoridor.Model {
         public int width => cells.GetLength(0);
         public int height => cells.GetLength(1);
 
-        public Board(Cell[,] cells) {
+        public Board(Cell[,] cells, Cell[,] walls) {
             this.cells = cells;
+            this.validWallsSpots = walls;
 
         }
 
