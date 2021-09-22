@@ -19,10 +19,15 @@ namespace Quoridor
 
 		private void CheckGameEnd()
 		{
-			if (false)
+			if (true)
 			{
 				EndGame();
 			}
+		}
+
+		public bool MakeMove()
+		{
+			return true;
 		}
 
 		private void EndGame()
@@ -31,7 +36,7 @@ namespace Quoridor
 				CurrentPlayer);
 		}
 
-		private void ChangePlayer()
+		private void SwapPlayer()
 		{
 			CurrentPlayer = CurrentPlayer == FirstPlayer ?
 				SecondPlayer : FirstPlayer;
