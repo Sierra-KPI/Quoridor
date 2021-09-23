@@ -28,8 +28,19 @@ namespace Quoridor.Model {
                 this.adjacencyList[i] = new LinkedList<int>();
             }
 
-            
+            for (int i = 0; i < this.edges.GetLength(0); i++) {
+                this.addEdge(this.edges[i, 0], this.edges[i, 1]);
+                this.addEdge(this.edges[i, 1], this.edges[i, 0]);
+            }
 
+        }
+
+        void addEdge(int v1, int v2) {
+            this.adjacencyList[v1].AddLast(v2);
+        }
+
+        bool removeEdge(int v1, int v2) {
+            return adjacencyList[v1].Remove(v2);
         }
 
 
