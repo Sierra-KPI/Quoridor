@@ -10,6 +10,27 @@ namespace Quoridor.Model {
         int[,] edges;
         LinkedList<int>[] adjacencyList;
 
+        public Graph(int _size) {
+            this.size = _size * _size;
+            this.edges = new int[2 * _size * (_size - 1), 2];
+
+            int idW = 0;
+            for (int v = 0; v < size; v++) {
+                if (v - 1 >= 0 && (v % _size != 0)) {
+                    edges[idW, 0] = v - 1;
+                    edges[idW, 1] = v;
+                    idW++;
+                }
+                if (v - 3 >= 0) {
+                    edges[idW, 0] = v - 3;
+                    edges[idW, 1] = v;
+                    idW++;
+                }
+            }
+
+            makeAdjacencyList();
+        }
+
         public Graph(int[,] edges, int size) {
             this.size = size;
             this.edges = edges;
@@ -24,7 +45,7 @@ namespace Quoridor.Model {
                 adjacencyList[i] = new LinkedList<int>();
             }
 
-            for (int i = 0; i < this.edges.GetLength(0); i++) {
+            for (int i = 0; i < edges.GetLength(0); i++) {
                 addEdge(edges[i, 0], edges[i, 1]);
                 addEdge(edges[i, 1], edges[i, 0]);
             }
