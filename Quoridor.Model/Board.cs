@@ -1,33 +1,38 @@
-﻿namespace Quoridor.Model {
-    public class Board {
+﻿namespace Quoridor.Model 
+{
+    public class Board 
+    {
+        private Cell[,] _cells;
+        private Graph _graph;
 
-        private Cell[,] cells;
-        private Graph graph;
+        public int Size => _cells.GetLength(0);
 
-        public int Size => cells.GetLength(0);
-
-        public Board(Cell[,] cells, Graph graph) {
-            this.cells = cells;
-            this.graph = graph;
+        public Board(Cell[,] cells, Graph graph) 
+        {
+            _cells = cells;
+            _graph = graph;
         }
 
-        public Cell[] getPossiblePlayersMoves(Cell cell) {
-            var edges = graph.getEdgesForVertex(cell.id);
+        public Cell[] GetPossiblePlayersMoves(Cell cell) 
+        {
+            var edges = _graph.GetEdgesForVertex(cell.id);
             Cell[] possibleCells = new Cell[edges.Length];
-            for (int i = 0; i < edgs.Length; i++) {
+            for (int i = 0; i < edgs.GetLength(0); i++) 
+            {
                 possibleCells[i] = getCellById(edgs[i]);
             }
             return possibleCells;
         }
 
-        public void getPossibleWallsPlaces() {
+        public void GetPossibleWallsPlaces() 
+        {
 
         }
 
-        Cell getCellById(int id) {
-            foreach (Cell elem in cells) {
+        Cell GetCellById(int id) 
+        {
+            foreach (Cell elem in _cells) 
                 if (elem.id == id) return elem;
-            }
             return null;
         }
 
