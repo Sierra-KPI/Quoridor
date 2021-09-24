@@ -1,4 +1,4 @@
-﻿namespace Quoridor
+﻿namespace Quoridor.Model
 {
 	interface IElement
 	{

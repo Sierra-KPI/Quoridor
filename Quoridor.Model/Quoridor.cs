@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quoridor
+namespace Quoridor.Model
 {
 	internal class Quoridor
 	{
@@ -25,7 +25,7 @@ namespace Quoridor
 			}
 		}
 
-		public bool MakeMove()
+		public bool MakeMove(int x, int y)
 		{
 			return true;
 		}
