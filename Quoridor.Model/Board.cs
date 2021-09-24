@@ -8,7 +8,6 @@ namespace Quoridor.Model {
     public class Board {
 
         private Cell[,] cells;
-        private Cell[] validPlayersSpots;
 
         public Graph graph;
 
@@ -19,6 +18,22 @@ namespace Quoridor.Model {
             this.cells = cells;
             this.graph = graph;
 
+        }
+
+        public Cell[] getPossiblePlayersMoves(Cell cell) {
+            var edges = graph.getEdges(cell.id);
+            Cell[] possibleCells = new Cell[edges.Length];
+            for (int i = 0; i < edgs.Length; i++) {
+                possibleCells[i] = getCellById(edgs[i]);
+            }
+            return possibleCells;
+        }
+
+        Cell getCellById(int id) {
+            foreach (Cell elem in cells) {
+                if (elem.id == id) return elem;
+            }
+            return null;
         }
 
     }
