@@ -52,12 +52,19 @@ namespace Quoridor.Model {
 
         }
 
-        void addEdge(int v1, int v2) {
-            adjacencyList[v1].AddLast(v2);
+        void addEdge(int vertex1, int vertex2) {
+            adjacencyList[vertex1].AddLast(vertex2);
         }
 
-        bool removeEdge(int v1, int v2) {
-            return adjacencyList[v1].Remove(v2);
+        bool removeEdge(int vertex1, int vertex2) {
+            return adjacencyList[vertex1].Remove(vertex2);
+        }
+
+        public int[] getEdgesForVertex(int vertex) {
+            LinkedList<int> list = adjacencyList[vertex];
+            int[] edgs = new int[list.Count];
+            list.CopyTo(edgs, 0);
+            return edgs;
         }
 
         public int[] dijkstraAlgorithm(int startVertex) {
