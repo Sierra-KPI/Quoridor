@@ -33,7 +33,7 @@
         {
             foreach (Cell elem in _cells) 
                 if (elem.id == id) return elem;
-            return null;
+            return Cell.Default;
         }
 
     }
