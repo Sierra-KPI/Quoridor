@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model 
 {
-    public class Board 
+    internal class Board 
     {
         private Cell[,] _cells;
         private Graph _graph;
@@ -15,11 +15,11 @@
 
         public Cell[] GetPossiblePlayersMoves(Cell cell) 
         {
-            var edges = _graph.GetEdgesForVertex(cell.id);
-            Cell[] possibleCells = new Cell[edges.Length];
-            for (int i = 0; i < edgs.GetLength(0); i++) 
+            var edges = _graph.GetEdgesForVertex(cell.Id);
+            Cell[] possibleCells = new Cell[edges.GetLength(0)];
+            for (int i = 0; i < edges.GetLength(0); i++) 
             {
-                possibleCells[i] = getCellById(edgs[i]);
+                possibleCells[i] = GetCellById(edges[i]);
             }
             return possibleCells;
         }
@@ -32,7 +32,7 @@
         Cell GetCellById(int id) 
         {
             foreach (Cell elem in _cells) 
-                if (elem.id == id) return elem;
+                if (elem.Id == id) return elem;
             return Cell.Default;
         }
 
