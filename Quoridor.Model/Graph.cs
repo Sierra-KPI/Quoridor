@@ -100,7 +100,7 @@ namespace Quoridor.Model
                 used[curr] = true;
 
                 LinkedList<int> list = _adjacencyList[curr];
-                foreach (var vertex in list)
+                foreach (int vertex in list)
                     if (distances[curr] + 1 < distances[vertex])
                         distances[vertex] = distances[curr] + 1;
 
