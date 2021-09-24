@@ -1,11 +1,5 @@
 ﻿namespace Quoridor.Model 
 {
-
-    public interface IBoardFactory 
-    {
-        Board CreateBoard();
-    }
-
     public class BoardFactory : IBoardFactory 
     {
         private int _size = 9;
