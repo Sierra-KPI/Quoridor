@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Quoridor.Model {
     class Graph {
-        int size;
-        int[,] edges;
-        LinkedList<int>[] adjacencyList;
+        private int size;
+        private int[,] edges;
+        private LinkedList<int>[] adjacencyList;
 
         public Graph(int _size) {
             this.size = _size * _size;
@@ -39,7 +35,7 @@ namespace Quoridor.Model {
         }
 
         void makeAdjacencyList() {
-            adjacencyList = new LinkedList<int>[this.size];
+            adjacencyList = new LinkedList<int>[size];
 
             for (int i = 0; i < adjacencyList.Length; ++i) {
                 adjacencyList[i] = new LinkedList<int>();
@@ -93,8 +89,6 @@ namespace Quoridor.Model {
             }
             return distances;
         }
-
-
 
 
     }
