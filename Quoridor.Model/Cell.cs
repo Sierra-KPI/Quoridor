@@ -5,6 +5,12 @@
 	    public int Id { get; private set; }
 		public bool HasPlayer { get; private set; }
 		public Position Position { get; private set; }
+		public static Cell Default => new Cell()
+		{
+			Id = 500,
+			Position = new Position(),
+			HasPlayer = false
+		};
 
 		public bool Place()
 		{
