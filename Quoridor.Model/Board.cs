@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Quoridor.Model {
+﻿namespace Quoridor.Model {
     public class Board {
 
         private Cell[,] cells;
+        private Graph graph;
 
-        public Graph graph;
-
-        public int width => cells.GetLength(0);
-        public int height => cells.GetLength(1);
+        public int Size => cells.GetLength(0);
 
         public Board(Cell[,] cells, Graph graph) {
             this.cells = cells;
             this.graph = graph;
-
         }
 
         public Cell[] getPossiblePlayersMoves(Cell cell) {
-            var edges = graph.getEdges(cell.id);
+            var edges = graph.getEdgesForVertex(cell.id);
             Cell[] possibleCells = new Cell[edges.Length];
             for (int i = 0; i < edgs.Length; i++) {
                 possibleCells[i] = getCellById(edgs[i]);
             }
             return possibleCells;
+        }
+
+        public void getPossibleWallsPlaces() {
+
         }
 
         Cell getCellById(int id) {
