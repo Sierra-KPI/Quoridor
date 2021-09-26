@@ -2,21 +2,21 @@
 {
     class Position
     {
-        public Position(int x, int y) { }
-
-        public int left (int x)
+        public int x { get; }
+        public int y { get; }
+        public int Left(int x)
         {
             return x--;
         }
-        public int right(int x)
+        public int Right(int x)
         {
             return x++;
         }
-        public int up(int y)
+        public int Up(int y)
         {
             return y++;
         }
-        public int down(int y)
+        public int Down(int y)
         {
             return y--;
         }
