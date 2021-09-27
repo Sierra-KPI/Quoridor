@@ -1,4 +1,6 @@
-﻿namespace Quoridor.Model 
+﻿using System;
+
+namespace Quoridor.Model 
 {
     internal class Board 
     {
@@ -11,6 +13,12 @@
         {
             _cells = cells;
             _graph = graph;
+        }
+
+        public bool MakeMove(Cell from, Cell to)
+        {
+            var moves = GetPossiblePlayersMoves(from);
+            return Array.Exists(moves, element => element == to);
         }
 
         public Cell[] GetPossiblePlayersMoves(Cell cell) 
