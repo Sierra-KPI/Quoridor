@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Quoridor.Model
+﻿namespace Quoridor.Model
 {
 	internal class Quoridor
 	{
