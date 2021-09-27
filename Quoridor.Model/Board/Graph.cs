@@ -65,7 +65,7 @@ namespace Quoridor.Model
             return false;
         }
 
-        bool RemoveEdge(int vertex1, int vertex2) 
+        public bool RemoveEdge(int vertex1, int vertex2) 
         {
             return _adjacencyList[vertex1].Remove(vertex2);
         }
@@ -78,7 +78,13 @@ namespace Quoridor.Model
             return edgs;
         }
 
-        public int[] DijkstraAlgorithm(int startVertex) 
+        public bool HasPath(int from, int to)
+        {
+            var dists = DijkstraAlgorithm(from);
+            return dists[to] != int.MaxValue;
+        }
+
+        int[] DijkstraAlgorithm(int startVertex) 
         {
             int[] distances = new int[_size];
             bool[] used = new bool[_size];
