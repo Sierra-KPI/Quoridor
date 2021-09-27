@@ -32,8 +32,7 @@ namespace Quoridor.Model
 
 		private void EndGame()
 		{
-			Console.WriteLine($"The game is over and winner is {0}!",
-				CurrentPlayer);
+			CurrentPlayer.HasWon();
 		}
 
 		private void SwapPlayer()
