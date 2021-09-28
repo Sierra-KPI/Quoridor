@@ -22,10 +22,6 @@
 				EndGame();
 			}
 		}
-
-		public bool MakeMove(int x, int y)
-		{
-			return true;
 		}
 
 		private void EndGame()
