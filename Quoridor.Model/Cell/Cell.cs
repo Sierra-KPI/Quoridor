@@ -4,21 +4,21 @@
     {
         public int Id { get; private set; }
         public bool HasPlayer { get; private set; }
-        public Coordinates Position { get; private set; }
+        public Coordinates Coordinate { get; private set; }
 
         private const int DefaultId = 500;
         private static readonly Coordinates s_defaultPosition = new(0, 0);
 
-        public static Cell Default => new(s_defaultPosition, DefaultId)
+        public static Cell Default => new Cell()
         {
-            Id = DefaultId,
-            Position = s_defaultPosition,
+            Id = 500,
+            Coordinate = new Coordinates(),
             HasPlayer = false
         };
 
-        public Cell(Coordinates position, int id)
+        public Cell(Coordinates coordinate, int id)
         {
-            Position = position;
+            Coordinate = coordinate;
             Id = id;
         }
     }
