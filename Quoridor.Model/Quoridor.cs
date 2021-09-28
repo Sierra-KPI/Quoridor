@@ -15,13 +15,14 @@
 			CurrentBoard = board;
 		}
 
-		private void CheckGameEnd()
+		public bool CheckGameEnd()
 		{
-			if (true)
+			if (CurrentPlayer.HasWon())
 			{
 				EndGame();
+				return true;
 			}
-		}
+			return false;
 		}
 
 		private void EndGame()
