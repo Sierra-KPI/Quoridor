@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Quoridor.Model 
+namespace Quoridor.Model
 
 {
-    internal class Board 
+    internal class Board
     {
         private Cell[,] _cells;
         private List<Wall> _walls;
@@ -12,7 +12,7 @@ namespace Quoridor.Model
 
         public int Size => _cells.GetLength(0);
 
-        public Board(Cell[,] cells, List<Wall> walls, Graph graph) 
+        public Board(Cell[,] cells, List<Wall> walls, Graph graph)
         {
             _cells = cells;
             _graph = graph;
@@ -49,30 +49,21 @@ namespace Quoridor.Model
             return true;
         }
 
-        public bool HasPath(Cell from, Cell to)
-        {
-            return _graph.HasPath(from.Id, to.Id);
-        }
+        public bool HasPath(Cell from, Cell to) => _graph.HasPath(from.Id, to.Id);
 
-        public Cell[] GetPossiblePlayersMoves(Cell cell) 
+        public Cell[] GetPossiblePlayersMoves(Cell cell)
         {
             var edges = _graph.GetEdgesForVertex(cell.Id);
             Cell[] possibleCells = new Cell[edges.GetLength(0)];
-            for (int i = 0; i < edges.GetLength(0); i++) 
+            for (int i = 0; i < edges.GetLength(0); i++)
             {
                 possibleCells[i] = GetCellById(edges[i]);
             }
             return possibleCells;
         }
 
-        public List<Wall> GetPossibleWallsPlaces() 
-        {
-            return _walls;
-        }
+        public List<Wall> GetPossibleWallsPlaces() => _walls;
 
-        Cell GetCellById(int id) 
-        {
-            return _cells[id / Size, id % Size];
-        }
+        Cell GetCellById(int id) => _cells[id / Size, id % Size];
     }
 }

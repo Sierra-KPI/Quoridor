@@ -1,6 +1,6 @@
-﻿namespace Quoridor.Model 
+﻿namespace Quoridor.Model
 {
-    internal interface IBoardFactory 
+    internal interface IBoardFactory
     {
         Board CreateBoard();
     }

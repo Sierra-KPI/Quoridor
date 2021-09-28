@@ -1,28 +1,28 @@
 ﻿using System.Collections.Generic;
 
-namespace Quoridor.Model 
+namespace Quoridor.Model
 {
-    class Graph 
+    class Graph
     {
         private int _size;
         private int[,] _edges;
         private LinkedList<int>[] _adjacencyList;
 
-        public Graph(int size) 
+        public Graph(int size)
         {
             _size = size * size;
             _edges = new int[2 * size * (size - 1), 2];
 
             int edgeId = 0;
-            for (var v = 0; v < size; v++) 
+            for (var v = 0; v < size; v++)
             {
-                if (v - 1 >= 0 && (v % size != 0)) 
+                if (v - 1 >= 0 && (v % size != 0))
                 {
                     _edges[edgeId, 0] = v - 1;
                     _edges[edgeId, 1] = v;
                     edgeId++;
                 }
-                if (v - size >= 0) 
+                if (v - size >= 0)
                 {
                     _edges[edgeId, 0] = v - size;
                     _edges[edgeId, 1] = v;
@@ -33,7 +33,7 @@ namespace Quoridor.Model
             MakeAdjacencyList();
         }
 
-        public Graph(int[,] edges, int size) 
+        public Graph(int[,] edges, int size)
         {
             _size = size;
             _edges = edges;
@@ -41,35 +41,32 @@ namespace Quoridor.Model
             MakeAdjacencyList();
         }
 
-        void MakeAdjacencyList() 
+        void MakeAdjacencyList()
         {
             _adjacencyList = new LinkedList<int>[_size];
 
-            for (var i = 0; i < _adjacencyList.GetLength(0); ++i) 
+            for (var i = 0; i < _adjacencyList.GetLength(0); ++i)
             {
                 _adjacencyList[i] = new LinkedList<int>();
             }
 
-            for (var i = 0; i < _edges.GetLength(0); i++) 
+            for (var i = 0; i < _edges.GetLength(0); i++)
             {
                 AddEdge(_edges[i, 0], _edges[i, 1]);
             }
         }
 
-        bool AddEdge(int vertex1, int vertex2) 
+        bool AddEdge(int vertex1, int vertex2)
         {
-            if (_adjacencyList[vertex1].AddLast(vertex2) != null 
-                && _adjacencyList[vertex2].AddLast(vertex1) != null)  
+            if (_adjacencyList[vertex1].AddLast(vertex2) != null
+                && _adjacencyList[vertex2].AddLast(vertex1) != null)
                 return true;
             return false;
         }
 
-        public bool RemoveEdge(int vertex1, int vertex2) 
-        {
-            return _adjacencyList[vertex1].Remove(vertex2) && _adjacencyList[vertex2].Remove(vertex1);
-        }
+        public bool RemoveEdge(int vertex1, int vertex2) => _adjacencyList[vertex1].Remove(vertex2) && _adjacencyList[vertex2].Remove(vertex1);
 
-        public int[] GetEdgesForVertex(int vertex) 
+        public int[] GetEdgesForVertex(int vertex)
         {
             LinkedList<int> list = _adjacencyList[vertex];
             int[] edgs = new int[list.Count];
@@ -83,18 +80,18 @@ namespace Quoridor.Model
             return dists[to] != int.MaxValue;
         }
 
-        int[] DijkstraAlgorithm(int startVertex) 
+        int[] DijkstraAlgorithm(int startVertex)
         {
             int[] distances = new int[_size];
             bool[] used = new bool[_size];
 
-            for (var i = 0; i < _size; i++) 
+            for (var i = 0; i < _size; i++)
             {
                 distances[i] = int.MaxValue;
             }
             distances[startVertex] = 0;
 
-            for (var i = 0; i < _size; i++) 
+            for (var i = 0; i < _size; i++)
             {
                 int curr = -1;
                 for (var j = 0; j < _size; j++)
