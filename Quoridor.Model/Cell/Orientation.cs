@@ -1,9 +1,8 @@
 ﻿namespace Quoridor.Model
 {
-	enum Orientation
-	{
-		Horizontal,
-		Vertical,
-		Cross
-	}
+    internal enum Orientation
+    {
+        Horizontal,
+        Vertical
+    }
 }

@@ -1,45 +1,45 @@
-﻿using System;
-
-namespace Quoridor.Model
+﻿namespace Quoridor.Model
 {
-	internal class Quoridor
-	{
-		public Player FirstPlayer { get; set; }
-		public Player SecondPlayer { get; set; }
-		public Player CurrentPlayer { get; private set; }
-		public Board CurrentBoard { get; private set; }
+    internal class Quoridor
+    {
+        public IPlayer FirstPlayer { get; set; }
+        public IPlayer SecondPlayer { get; set; }
+        public IPlayer CurrentPlayer { get; private set; }
+        public Board CurrentBoard { get; private set; }
 
-		public Quoridor(Player firstPlayer, Player secondPlayer,
-			Board board)
-		{
-			FirstPlayer = firstPlayer;
-			SecondPlayer = secondPlayer;
-			CurrentBoard = board;
-		}
+        public Quoridor(IPlayer firstPlayer, IPlayer secondPlayer,
+            Board board)
+        {
+            FirstPlayer = firstPlayer;
+            SecondPlayer = secondPlayer;
+            CurrentBoard = board;
+        }
 
-		private void CheckGameEnd()
-		{
-			if (true)
-			{
-				EndGame();
-			}
-		}
+        public bool CheckGameEnd()
+        {
+            if (CurrentPlayer.HasWon())
+            {
+                EndGame();
+                return true;
+            }
+            return false;
+        }
 
-		public bool MakeMove(int x, int y)
-		{
-			return true;
-		}
+        public bool PlaceWall()
+        { }
 
-		private void EndGame()
-		{
-			Console.WriteLine($"The game is over and winner is {0}!",
-				CurrentPlayer);
-		}
+        private void EndGame() => CurrentPlayer.HasWon();
 
-		private void SwapPlayer()
-		{
-			CurrentPlayer = CurrentPlayer == FirstPlayer ?
-				SecondPlayer : FirstPlayer;
-		}
-	}
+        public void SwapPlayer()
+        {
+            if (CurrentPlayer == FirstPlayer)
+            {
+                CurrentPlayer = SecondPlayer;
+            }
+            else
+            {
+                CurrentPlayer = FirstPlayer;
+            }
+        }
+    }
 }

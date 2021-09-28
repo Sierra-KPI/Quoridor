@@ -22,9 +22,9 @@ namespace Quoridor.Model
                     _edges[edgeId, 1] = v;
                     edgeId++;
                 }
-                if (v - 3 >= 0) 
+                if (v - size >= 0) 
                 {
-                    _edges[edgeId, 0] = v - 3;
+                    _edges[edgeId, 0] = v - size;
                     _edges[edgeId, 1] = v;
                     edgeId++;
                 }
@@ -53,21 +53,20 @@ namespace Quoridor.Model
             for (var i = 0; i < _edges.GetLength(0); i++) 
             {
                 AddEdge(_edges[i, 0], _edges[i, 1]);
-                AddEdge(_edges[i, 1], _edges[i, 0]);
             }
-
         }
 
         bool AddEdge(int vertex1, int vertex2) 
         {
-            if (_adjacencyList[vertex1].AddLast(vertex2) != null) 
+            if (_adjacencyList[vertex1].AddLast(vertex2) != null 
+                && _adjacencyList[vertex2].AddLast(vertex1) != null)  
                 return true;
             return false;
         }
 
-        bool RemoveEdge(int vertex1, int vertex2) 
+        public bool RemoveEdge(int vertex1, int vertex2) 
         {
-            return _adjacencyList[vertex1].Remove(vertex2);
+            return _adjacencyList[vertex1].Remove(vertex2) && _adjacencyList[vertex2].Remove(vertex1);
         }
 
         public int[] GetEdgesForVertex(int vertex) 
@@ -78,7 +77,13 @@ namespace Quoridor.Model
             return edgs;
         }
 
-        public int[] DijkstraAlgorithm(int startVertex) 
+        public bool HasPath(int from, int to)
+        {
+            var dists = DijkstraAlgorithm(from);
+            return dists[to] != int.MaxValue;
+        }
+
+        int[] DijkstraAlgorithm(int startVertex) 
         {
             int[] distances = new int[_size];
             bool[] used = new bool[_size];

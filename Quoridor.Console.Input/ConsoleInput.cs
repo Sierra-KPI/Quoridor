@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Quoridor.Console.Input
+﻿namespace Quoridor.Console.Input
 {
-	internal class ConsoleInput
-	{
+    internal class ConsoleInput
+    {
 
-	}
+    }
 }
