@@ -26,7 +26,9 @@
         }
 
         public bool PlaceWall()
-        { }
+        {
+            return true;
+        }
 
         private void EndGame() => CurrentPlayer.HasWon();
 

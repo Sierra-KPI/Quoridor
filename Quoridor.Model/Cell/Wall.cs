@@ -2,16 +2,16 @@
 {
     internal class Wall : IElement
     {
-        private readonly Orientation _orientation;
-        public Coordinates Position { get; private set; }
-        public Coordinates EndPosition { get; private set; }
+        public Orientation _orientation { get; private set; }
+        public Coordinates Coordinates { get; private set; }
+        public Coordinates EndCoordinates { get; private set; }
         public bool HasWall { get; private set; }
 
-        public Wall(Coordinates position, Coordinates endPosition,
+        public Wall(Coordinates coordinates, Coordinates endCoordinates,
             Orientation orientation)
         {
-            Position = position;
-            EndPosition = endPosition;
+            Coordinates = coordinates;
+            EndCoordinates = endCoordinates;
             _orientation = orientation;
         }
     }

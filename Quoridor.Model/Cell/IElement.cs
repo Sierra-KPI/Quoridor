@@ -2,6 +2,6 @@
 {
     internal interface IElement
     {
-        Coordinates Position { get; }
+        Coordinates Coordinates { get; }
     }
 }
