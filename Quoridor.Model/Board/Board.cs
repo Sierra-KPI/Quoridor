@@ -71,9 +71,7 @@ namespace Quoridor.Model
 
         Cell GetCellById(int id) 
         {
-            foreach (Cell elem in _cells) 
-                if (elem.Id == id) return elem;
-            return Cell.Default;
+            return _cells[id / Size, id % Size];
         }
 
     }
