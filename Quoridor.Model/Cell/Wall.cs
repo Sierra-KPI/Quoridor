@@ -3,15 +3,20 @@
     internal class Wall : IElement
     {
         private readonly Orientation _orientation;
-        public Coordinates Position { get; private set; }
-        public Coordinates EndPosition { get; private set; }
+        public Coordinates Coordinate { get; private set; }
         public bool HasWall { get; private set; }
 
-        public Wall(Coordinates position, Coordinates endPosition,
-            Orientation orientation)
+        public bool Place()
         {
-            Position = position;
-            EndPosition = endPosition;
+            // Bool, because, maybe, it will return true, if placed correctly
+            // and false, if otherwise
+            HasWall = true;
+            return true;
+        }
+
+        public Wall(Coordinates coordinate, Orientation orientation)
+        {
+            Coordinate = coordinate;
             _orientation = orientation;
         }
     }
