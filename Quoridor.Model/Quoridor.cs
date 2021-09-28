@@ -30,10 +30,16 @@
 			CurrentPlayer.HasWon();
 		}
 
-		private void SwapPlayer()
+		public void SwapPlayer()
 		{
-			CurrentPlayer = CurrentPlayer == FirstPlayer ?
-				SecondPlayer : FirstPlayer;
+			if (CurrentPlayer == FirstPlayer)
+			{
+				CurrentPlayer = SecondPlayer;
+			}
+			else
+			{
+				CurrentPlayer = FirstPlayer;
+			}
 		}
 	}
 }
