@@ -2,12 +2,12 @@
 {
 	internal class Quoridor
 	{
-		public Player FirstPlayer { get; set; }
-		public Player SecondPlayer { get; set; }
-		public Player CurrentPlayer { get; private set; }
+		public IPlayer FirstPlayer { get; set; }
+		public IPlayer SecondPlayer { get; set; }
+		public IPlayer CurrentPlayer { get; private set; }
 		public Board CurrentBoard { get; private set; }
 
-		public Quoridor(Player firstPlayer, Player secondPlayer,
+		public Quoridor(IPlayer firstPlayer, IPlayer secondPlayer,
 			Board board)
 		{
 			FirstPlayer = firstPlayer;
