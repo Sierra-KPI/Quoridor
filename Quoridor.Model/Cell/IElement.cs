@@ -1,9 +1,9 @@
 ﻿namespace Quoridor.Model
 {
-	interface IElement
-	{
-		Coordinates Position { get; }
+    internal interface IElement
+    {
+        Coordinates Position { get; }
 
-		bool Place();
-	}
+        bool Place();
+    }
 }

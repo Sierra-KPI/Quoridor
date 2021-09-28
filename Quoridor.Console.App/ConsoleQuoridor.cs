@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Quoridor.Console.App
+﻿namespace Quoridor.Console.App
 {
-	internal class ConsoleQuoridor
-	{
+    internal class ConsoleQuoridor
+    {
 
-	}
+    }
 }

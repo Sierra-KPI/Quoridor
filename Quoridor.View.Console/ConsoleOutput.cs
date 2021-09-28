@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Quoridor.View.Console
+﻿namespace Quoridor.View.Console
 {
-	internal class ConsoleOutput
-	{
+    internal class ConsoleOutput
+    {
 
-	}
+    }
 }
