@@ -1,16 +1,21 @@
-﻿namespace Quoridor.Model 
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Quoridor.Model 
 {
     internal class Board 
     {
         private Cell[,] _cells;
+        private List<Wall> _walls;
         private Graph _graph;
 
         public int Size => _cells.GetLength(0);
 
-        public Board(Cell[,] cells, Graph graph) 
+        public Board(Cell[,] cells, List<Wall> walls, Graph graph) 
         {
             _cells = cells;
             _graph = graph;
+            _walls = walls;
         }
 
         public bool MakeMove(Cell from, Cell to)
@@ -21,6 +26,12 @@
 
         public bool PlaceWall(Cell cell1, Cell cell2)
         {
+            _walls = _walls.Where(elem =>
+                (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell2.Id) &&
+                (elem.Cell1.Id != cell1.Id - Size || elem.Cell2.Id != cell2.Id - Size) &&
+                (elem.Cell1.Id != cell1.Id + Size || elem.Cell2.Id != cell2.Id + Size) &&
+                (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell1.Id + Size)
+            ).ToList();
 
             var from1 = cell1.Id;
             var to1 = cell2.Id;
@@ -49,9 +60,9 @@
             return possibleCells;
         }
 
-        public void GetPossibleWallsPlaces() 
+        public List<Wall> GetPossibleWallsPlaces() 
         {
-
+            return _walls;
         }
 
         Cell GetCellById(int id) 
