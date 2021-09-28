@@ -2,7 +2,7 @@
 {
 	interface IElement
 	{
-		Position Position { get; }
+		Coordinates Coordinate { get; }
 
 		bool Place();
 	}

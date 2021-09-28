@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model
 {
-    class Position
+    class Coordinates
     {
         public int x { get; }
         public int y { get; }
@@ -20,6 +20,10 @@
         {
             return y--;
         }
-        public Position(int x, int y) { }
+        public Coordinates(int x, int y) 
+        {
+            this.x = x;
+            this.y = y;
+        }
     }
 }

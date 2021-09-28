@@ -4,11 +4,11 @@
 	{
 	    public int Id { get; private set; }
 		public bool HasPlayer { get; private set; }
-		public Position Position { get; set; }
+		public Coordinates Coordinate { get; set; }
 		public static Cell Default => new Cell()
 		{
 			Id = 500,
-			Position = new Position(),
+			Coordinate = new Coordinates(),
 			HasPlayer = false
 		};
 
@@ -20,9 +20,9 @@
 			return true;
 		}
 
-		public Cell(Position position, int id)
+		public Cell(Coordinates coordinate, int id)
 		{
-			Position = position;
+			Coordinate = coordinate;
 			Id = id;
 		}
 	}

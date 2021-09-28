@@ -4,10 +4,7 @@
     {
         Cell CurrentCell { get; }
         int WallsCount { get; }
-        Position Move(Position currentCell, Position start, Position end, bool HasWall);
-        void PlaceWall();
+        Cell ChangePosition(Cell currentCell, int x, int y);
         bool HasWon();
-        Cell StartPosition { get; }
-        Cell[] EndPosition { get; }
     }
 }

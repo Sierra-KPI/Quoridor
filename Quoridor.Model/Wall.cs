@@ -3,7 +3,7 @@
 	internal class Wall: IElement
 	{
 		private readonly Orientation _orientation;
-		public Position Position { get; private set; }
+		public Coordinates Coordinate { get; private set; }
 		public bool HasWall { get; private set; }
 
 		public bool Place()
@@ -14,9 +14,9 @@
 			return true;
 		}
 
-		public Wall(Position position, Orientation orientation)
+		public Wall(Coordinates coordinate, Orientation orientation)
 		{
-			Position = position;
+			Coordinate = coordinate;
 			_orientation = orientation;
 		}
 	}

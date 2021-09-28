@@ -4,36 +4,25 @@
     {
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }    
-        public Cell StartPosition { get; private set; }
-        public Cell[] EndPosition { get; private set; }
-        public bool HasWall { get; private set; }
-        public Position Move(Position currentPosition, Position startPosition, Position endPosition, bool HasWall)
+        public Cell ChangePosition(Cell currentCell, int x, int y)
         {
-            currentPosition = startPosition;
-            if( HasWall == false)
-            {
-                currentPosition = endPosition;
-            }
-            return currentPosition;
+            Coordinates coordinate = new Coordinates(x, y);
+            Cell newCell = new Cell(coordinate, 50);
+            currentCell = newCell;
+            return currentCell;
         }
-        public void PlaceWall() 
+        public void DecreaseWallCount() 
         {
-            if (HasWall == false)
-            {
-                HasWall = true;
                 WallsCount--;
-            }
         }
          public bool HasWon() 
         {
             return true;
         }        
-        public Player(Cell startposition, Cell[] endPosition, Cell currentcell)
+        public Player(Cell currentcell)
         {
             CurrentCell = currentcell;
-            EndPosition = endPosition;
             WallsCount = 10;
-            StartPosition = startposition;
         }
     }
 }

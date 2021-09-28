@@ -13,8 +13,8 @@
             {
                 for (var j = 0; j < _size; j++) 
                 {
-                    var position = new Position(i, j);
-                    cells[i, j] = new Cell(position, cellId++);
+                    var position = new Coordinates(i, j);
+                    cells[i, j] = new Cell(coordinate, cellId++);
                 }
             }
 
