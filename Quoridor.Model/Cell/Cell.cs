@@ -16,14 +16,6 @@
             HasPlayer = false
         };
 
-        public bool Place()
-        {
-            // Bool, because, maybe, it will return true, if placed correctly
-            // and false, if otherwise
-            HasPlayer = true;
-            return true;
-        }
-
         public Cell(Coordinates position, int id)
         {
             Position = position;

@@ -3,7 +3,5 @@
     internal interface IElement
     {
         Coordinates Position { get; }
-
-        bool Place();
     }
 }
