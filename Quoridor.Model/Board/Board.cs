@@ -26,11 +26,15 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Cell cell1, Cell cell2)
         {
+            int diff = 0;
+            if (cell2.Id - cell1.Id == 1) diff = Size;
+            else if (cell2.Id - cell1.Id == Size) diff = 1;
+
             _walls = _walls.Where(elem =>
                 (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell2.Id) &&
-                (elem.Cell1.Id != cell1.Id - Size || elem.Cell2.Id != cell2.Id - Size) &&
-                (elem.Cell1.Id != cell1.Id + Size || elem.Cell2.Id != cell2.Id + Size) &&
-                (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell1.Id + Size)
+                (elem.Cell1.Id != cell1.Id - diff || elem.Cell2.Id != cell2.Id - diff) &&
+                (elem.Cell1.Id != cell1.Id + diff || elem.Cell2.Id != cell2.Id + diff) &&
+                (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell1.Id + diff)
             ).ToList();
 
             var from1 = cell1.Id;
