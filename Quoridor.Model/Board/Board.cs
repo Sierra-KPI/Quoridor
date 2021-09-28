@@ -2,6 +2,7 @@
 using System.Linq;
 
 namespace Quoridor.Model 
+
 {
     internal class Board 
     {
@@ -73,6 +74,5 @@ namespace Quoridor.Model
         {
             return _cells[id / Size, id % Size];
         }
-
     }
 }
