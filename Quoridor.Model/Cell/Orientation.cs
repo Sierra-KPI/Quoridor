@@ -3,7 +3,6 @@
     internal enum Orientation
     {
         Horizontal,
-        Vertical,
-        Cross
+        Vertical
     }
 }

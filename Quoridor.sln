@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.View.Console", "Quoridor.View.Console\Quoridor.View.Console.csproj", "{168F5D0B-37E1-491C-80FA-7DF379A996CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.View", "Quoridor.View.Console\Quoridor.View.csproj", "{168F5D0B-37E1-491C-80FA-7DF379A996CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Console.App", "Quoridor.Console.App\Quoridor.Console.App.csproj", "{81D64F5F-2107-4984-98F1-1EF034CE9F54}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Console.Input", "Q
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model", "Quoridor.Model\Quoridor.Model.csproj", "{800960B1-56F5-4370-B06F-E89521ABB25E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quoridor.Model.Tests", "Quoridor.Model.Tests\Quoridor.Model.Tests.csproj", "{FCE2CA02-2BF2-4D78-A491-0EF060667FA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model.Tests", "Quoridor.Model.Tests\Quoridor.Model.Tests.csproj", "{FCE2CA02-2BF2-4D78-A491-0EF060667FA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

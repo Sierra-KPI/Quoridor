@@ -25,6 +25,9 @@
             return false;
         }
 
+        public bool PlaceWall()
+        { }
+
         private void EndGame() => CurrentPlayer.HasWon();
 
         public void SwapPlayer()
