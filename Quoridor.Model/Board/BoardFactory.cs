@@ -14,8 +14,8 @@
             {
                 for (var j = 0; j < _size; j++) 
                 {
-                    var сoordinate = new Coordinates(i, j);
-                    cells[i, j] = new Cell(сoordinate, cellId++);
+                    var position = new Position(i, j);
+                    cells[i, j] = new Cell(position, cellId++);
 
                     if (i != 0 && j != this.size - 1)
                     {
