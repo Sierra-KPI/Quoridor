@@ -2,7 +2,7 @@
 {
     public class Wall : IElement
     {
-        public Orientation _orientation { get; private set; }
+        public Orientation Orientation { get; private set; }
         public Coordinates Coordinates { get; private set; }
         public Coordinates EndCoordinates { get; private set; }
         public bool HasWall { get; private set; }
@@ -12,7 +12,7 @@
         {
             Coordinates = coordinates;
             EndCoordinates = endCoordinates;
-            _orientation = orientation;
+            Orientation = orientation;
         }
     }
 }
