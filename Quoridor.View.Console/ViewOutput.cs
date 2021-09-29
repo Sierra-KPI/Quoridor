@@ -6,6 +6,7 @@ namespace Quoridor.View
     public class ViewOutput
     {
         private const string CellSymbol = " C ";
+        private const string PlayerSymbol = " P ";
         private const string HorizontalWallSymbol = "───";
         private const string VerticalWallSymbol = " │ ";
         private const string HorizontalPlacedWallSymbol = "═══";
@@ -14,7 +15,7 @@ namespace Quoridor.View
         private readonly IElement[,] _board = new IElement[3, 3]
         {
             {
-                new Cell(new Coordinates(0, 0), 1),
+                new Cell(new Coordinates(0, 0), 1) {HasPlayer = true},
                 new Wall(new Coordinates(0, 0),
                     new Coordinates(0, 1), Orientation.Vertical),
                 new Cell(new Coordinates(0, 2), 1)
@@ -34,7 +35,7 @@ namespace Quoridor.View
                 new Cell(new Coordinates(2, 0), 1),
                 new Wall(new Coordinates(2, 0),
                     new Coordinates(2, 1), Orientation.Vertical),
-                new Cell(new Coordinates(2, 2), 1)
+                new Cell(new Coordinates(2, 2), 1) {HasPlayer = true}
             }
         };
 
@@ -44,38 +45,55 @@ namespace Quoridor.View
             {
                 for (var j = 0; j < _board.GetLength(0); j++)
                 {
-                    if (_board[i,j] is Cell)
+                    if (_board[i, j] is Cell cell)
                     {
-                        Console.Write(CellSymbol);
+                        DrawCell(cell);
                     }
                     else
                     {
                         Wall wall = (Wall)_board[i, j];
-                        if (wall.HasWall)
-                        {
-                            if (wall.Orientation == Orientation.Vertical)
-                            {
-                                Console.Write(VerticalPlacedWallSymbol);
-                            }
-                            else
-                            {
-                                Console.Write(HorizontalPlacedWallSymbol);
-                            }
-                        }
-                        else
-                        {
-                            if (wall.Orientation == Orientation.Vertical)
-                            {
-                                Console.Write(VerticalWallSymbol);
-                            }
-                            else
-                            {
-                                Console.Write(HorizontalWallSymbol);
-                            }
-                        }
+                        DrawWall(wall);
                     }
                 }
-                    Console.WriteLine();
+                Console.WriteLine();
+            }
+        }
+
+        public void DrawCell(Cell cell)
+        {
+            if (cell.HasPlayer)
+            {
+                Console.Write(CellSymbol);
+            }
+            else
+            {
+                Console.Write(PlayerSymbol);
+            }
+        }
+
+        public void DrawWall(Wall wall)
+        {
+            if (wall.HasWall)
+            {
+                if (wall.Orientation == Orientation.Vertical)
+                {
+                    Console.Write(VerticalPlacedWallSymbol);
+                }
+                else
+                {
+                    Console.Write(HorizontalPlacedWallSymbol);
+                }
+            }
+            else
+            {
+                if (wall.Orientation == Orientation.Vertical)
+                {
+                    Console.Write(VerticalWallSymbol);
+                }
+                else
+                {
+                    Console.Write(HorizontalWallSymbol);
+                }
             }
         }
 

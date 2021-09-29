@@ -3,7 +3,7 @@
     public class Cell : IElement
     {
         public int Id { get; private set; }
-        public bool HasPlayer { get; private set; }
+        public bool HasPlayer { get; set; }
         public Coordinates Coordinates { get; private set; }
 
         private const int DefaultId = 500;
