@@ -32,11 +32,14 @@ namespace Quoridor.Model
             else if (cell2.Id - cell1.Id == Size) diff = 1;
 
             _walls = _walls.Where(elem =>
-                (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell2.Id) &&
-                (elem.Cell1.Id != cell1.Id - diff || elem.Cell2.Id != cell2.Id - diff) &&
-                (elem.Cell1.Id != cell1.Id + diff || elem.Cell2.Id != cell2.Id + diff) &&
-                (elem.Cell1.Id != cell1.Id || elem.Cell2.Id != cell1.Id + diff)
-            ).ToList();
+            {
+                var wallCell1 = GetCellByCoordinates(elem.Coordinates);
+                var wallCell2 = GetCellByCoordinates(elem.EndCoordinates);
+                return (wallCell1.Id != cell1.Id || wallCell2.Id != cell2.Id) &&
+                (wallCell1.Id != cell1.Id - diff || wallCell2.Id != cell2.Id - diff) &&
+                (wallCell1.Id != cell1.Id + diff || wallCell2.Id != cell2.Id + diff) &&
+                (wallCell1.Id != cell1.Id || wallCell2.Id != cell1.Id + diff);
+            }).ToList();
 
             var from1 = cell1.Id;
             var to1 = cell2.Id;
@@ -65,5 +68,7 @@ namespace Quoridor.Model
         public List<Wall> GetPossibleWallsPlaces() => _walls;
 
         Cell GetCellById(int id) => _cells[id / Size, id % Size];
+
+        Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
     }
 }
