@@ -4,9 +4,9 @@ namespace Quoridor.Console.App
 {
     internal class Program
     {
-        static void Main()
+        private static void Main()
         {
-            ViewOutput viewOutput= new();
+            ViewOutput viewOutput = new();
             viewOutput.DrawBoard();
         }
     }
