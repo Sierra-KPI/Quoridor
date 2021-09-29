@@ -2,8 +2,8 @@
 {
     public class Coordinates
     {
-        public int x { get; }
-        public int y { get; }
+        public int X { get; }
+        public int Y { get; }
         public int Left(int x)
         {
             return x--;
@@ -22,8 +22,8 @@
         }
         public Coordinates(int x, int y) 
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
     }
 }

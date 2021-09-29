@@ -3,24 +3,25 @@
     internal class Player : IPlayer
     {
         public int WallsCount { get; private set; }
-        public Cell CurrentCell { get; private set; }
-        public Cell ChangePosition(Cell currentCell, Coordinates coordinate)
+        public Cell CurrentCell { get; private set; }    
+        public Cell ChangePosition(Cell currentCell, int x, int y)
         {
+            Coordinates coordinate = new Coordinates(x, y);
             Cell newCell = new Cell(coordinate, 50);
             currentCell = newCell;
             return currentCell;
         }
-        public void DecreaseWallCounter()
+        public void DecreaseWallCount() 
         {
-            WallsCount--;
+                WallsCount--;
         }
          public bool HasWon() 
         {
             return true;
-        }
-        public Player(Cell currentCell)
+        }        
+        public Player(Cell currentcell)
         {
-            CurrentCell = currentCell;
+            CurrentCell = currentcell;
             WallsCount = 10;
         }
     }
