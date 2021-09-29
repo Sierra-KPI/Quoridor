@@ -5,10 +5,16 @@ namespace Quoridor.View
 {
     public class ViewOutput
     {
+        private const string CellSymbol = " C ";
+        private const string HorizontalWallSymbol = "───";
+        private const string VerticalWallSymbol = " │ ";
+        private const string HorizontalPlacedWallSymbol = "═══";
+        private const string VerticalPlacedWallSymbol = " ║ ";
+
         IElement[,] board = new IElement[3, 3]
         {
             { new Cell(new Coordinates(0, 0), 1), new Wall(new Coordinates(0, 0), new Coordinates(0, 1), Orientation.Vertical), new Cell(new Coordinates(0, 2), 1) },
-            { new Wall(new Coordinates(1, 0), new Coordinates(1, 1), Orientation.Horizontal), new Wall(new Coordinates(1, 1), new Coordinates(1, 2), Orientation.Horizontal), new Wall(new Coordinates(1, 2), new Coordinates(1, 3), Orientation.Horizontal) },
+            { new Wall(new Coordinates(1, 0), new Coordinates(1, 1), Orientation.Horizontal) {HasWall = true}, new Wall(new Coordinates(1, 1), new Coordinates(1, 2), Orientation.Horizontal) {HasWall = true}, new Wall(new Coordinates(1, 2), new Coordinates(1, 3), Orientation.Horizontal) {HasWall = true} },
             { new Cell(new Coordinates(2, 0), 1), new Wall(new Coordinates(2, 0), new Coordinates(2, 1), Orientation.Vertical), new Cell(new Coordinates(2, 2), 1)  }
         };
 
@@ -20,18 +26,32 @@ namespace Quoridor.View
                 {
                     if (board[i,j] is Cell)
                     {
-                        Console.Write(" C ");
+                        Console.Write(CellSymbol);
                     }
                     else
                     {
-                        Wall wall = board[i, j] as Wall;
-                        if (wall.Orientation == Orientation.Vertical)
+                        Wall wall = (Wall)board[i, j];
+                        if (wall.HasWall)
                         {
-                            Console.Write(" │ ");
+                            if (wall.Orientation == Orientation.Vertical)
+                            {
+                                Console.Write(VerticalPlacedWallSymbol);
+                            }
+                            else
+                            {
+                                Console.Write(HorizontalPlacedWallSymbol);
+                            }
                         }
                         else
                         {
-                            Console.Write("───");
+                            if (wall.Orientation == Orientation.Vertical)
+                            {
+                                Console.Write(VerticalWallSymbol);
+                            }
+                            else
+                            {
+                                Console.Write(HorizontalWallSymbol);
+                            }
                         }
                     }
                 }

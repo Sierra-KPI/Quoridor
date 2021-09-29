@@ -5,7 +5,7 @@
         public Orientation Orientation { get; private set; }
         public Coordinates Coordinates { get; private set; }
         public Coordinates EndCoordinates { get; private set; }
-        public bool HasWall { get; private set; }
+        public bool HasWall { get; set; }
 
         public Wall(Coordinates coordinates, Coordinates endCoordinates,
             Orientation orientation)
