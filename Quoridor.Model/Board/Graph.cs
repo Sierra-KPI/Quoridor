@@ -74,6 +74,16 @@ namespace Quoridor.Model
             return edgs;
         }
 
+        public bool CheckPaths(int from, int[] to)
+        {
+            var dists = DijkstraAlgorithm(from);
+            for (int i = 0; i < to.GetLength(0); i++)
+            {
+                if (dists[to[i]] != int.MaxValue) return true;
+            }
+            return false;
+        }
+
         public bool HasPath(int from, int to)
         {
             var dists = DijkstraAlgorithm(from);

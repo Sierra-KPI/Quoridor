@@ -43,13 +43,23 @@ namespace Quoridor.Model
 
             var from1 = cell1.Id;
             var to1 = cell2.Id;
-            var from2 = cell1.Id + Size;
-            var to2 = cell2.Id + Size;
+            var from2 = cell1.Id + diff;
+            var to2 = cell2.Id + diff;
 
             _graph.RemoveEdge(from1, to1);
             _graph.RemoveEdge(from2, to2);
 
             return true;
+        }
+
+        public bool CheckPaths(Cell from, Cell[] to)
+        {
+            var idOfCells = new int[to.GetLength(0)];
+            for (int i = 0; i < to.GetLength(0); i++)
+            {
+                idOfCells[i] = to[i].Id;
+            }
+            return _graph.CheckPaths(from.Id, idOfCells);
         }
 
         public bool HasPath(Cell from, Cell to) => _graph.HasPath(from.Id, to.Id);
