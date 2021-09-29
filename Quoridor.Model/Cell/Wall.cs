@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model
 {
-    internal class Wall : IElement
+    public class Wall : IElement
     {
         public Orientation _orientation { get; private set; }
         public Coordinates Coordinates { get; private set; }

@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model
 {
-    internal class Cell : IElement
+    public class Cell : IElement
     {
         public int Id { get; private set; }
         public bool HasPlayer { get; private set; }
