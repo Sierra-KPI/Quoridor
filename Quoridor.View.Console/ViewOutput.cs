@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Quoridor.Model;
 
@@ -13,8 +14,9 @@ namespace Quoridor.View
         private const string HorizontalPlacedWallSymbol = "═══";
         private const string VerticalPlacedWallSymbol = " ║ ";
 
-        StringBuilder outputString = new("");
+        private readonly StringBuilder _outputString = new("");
 
+        Dictionary<Tuple<Orientation, bool>, string> stringValues = new();
 
         private readonly IElement[,] _board = new IElement[3, 3]
         {
@@ -43,25 +45,37 @@ namespace Quoridor.View
             }
         };
 
+        public ViewOutput()
+        {
+            InitializeStringDictionary();
+        }
+
+        private void InitializeStringDictionary()
+        {
+            var tuple = (Orientation.Horizontal, false);
+            stringValues.Add(tuple.ToTuple(), HorizontalWallSymbol);
+        }
+
         public void DrawBoard()
         {
+            (Orientation, bool) tuple = new(Orientation.Horizontal, false);
             for (var i = 0; i < _board.GetLength(0); i++)
             {
                 for (var j = 0; j < _board.GetLength(0); j++)
                 {
                     if (_board[i, j] is Cell cell)
                     {
-                        outputString.Append(DrawCell(cell));
+                        _outputString.Append(DrawCell(cell));
                     }
                     else
                     {
                         Wall wall = (Wall)_board[i, j];
-                        outputString.Append(DrawWall(wall));
+                        _outputString.Append(DrawWall(wall));
                     }
                 }
-                outputString.Append('\n');
+                _outputString.Append('\n');
             }
-            Console.WriteLine(outputString);
+            Console.WriteLine(_outputString);
         }
 
         public string DrawCell(Cell cell)
@@ -93,6 +107,7 @@ namespace Quoridor.View
             }
         }
 
+        // Probably should be in an input
         public static string ReadMove()
         {
             string input = Console.ReadLine();
