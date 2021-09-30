@@ -45,10 +45,7 @@ namespace Quoridor.View
             }
         };
 
-        public ViewOutput()
-        {
-            InitializeStringDictionary();
-        }
+        public ViewOutput() => InitializeStringDictionary();
 
         private void InitializeStringDictionary()
         {
@@ -94,7 +91,8 @@ namespace Quoridor.View
 
         public string DrawWall(Wall wall)
         {
-            var wallTuple = (wall.Orientation, wall.HasWall);
+            (Orientation Orientation, bool HasWall) wallTuple
+                = (wall.Orientation, wall.HasWall);
             return _stringValues[wallTuple.ToTuple()];
         }
 
