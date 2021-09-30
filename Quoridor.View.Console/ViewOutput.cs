@@ -15,8 +15,8 @@ namespace Quoridor.View
         private const string VerticalPlacedWallSymbol = " ║ ";
 
         private readonly StringBuilder _outputString = new("");
-
-        Dictionary<Tuple<Orientation, bool>, string> stringValues = new();
+        private readonly Dictionary<Tuple<Orientation, bool>,
+            string> _stringValues = new();
 
         private readonly IElement[,] _board = new IElement[3, 3]
         {
@@ -52,13 +52,18 @@ namespace Quoridor.View
 
         private void InitializeStringDictionary()
         {
-            var tuple = (Orientation.Horizontal, false);
-            stringValues.Add(tuple.ToTuple(), HorizontalWallSymbol);
+            _stringValues.Add((Orientation.Horizontal,
+                false).ToTuple(), HorizontalWallSymbol);
+            _stringValues.Add((Orientation.Horizontal,
+                true).ToTuple(), HorizontalPlacedWallSymbol);
+            _stringValues.Add((Orientation.Vertical,
+                false).ToTuple(), VerticalWallSymbol);
+            _stringValues.Add((Orientation.Vertical,
+                true).ToTuple(), VerticalPlacedWallSymbol);
         }
 
         public void DrawBoard()
         {
-            (Orientation, bool) tuple = new(Orientation.Horizontal, false);
             for (var i = 0; i < _board.GetLength(0); i++)
             {
                 for (var j = 0; j < _board.GetLength(0); j++)
@@ -89,22 +94,8 @@ namespace Quoridor.View
 
         public string DrawWall(Wall wall)
         {
-            if (wall.HasWall)
-            {
-                if (wall.Orientation == Orientation.Vertical)
-                {
-                    return VerticalPlacedWallSymbol;
-                }
-                return HorizontalPlacedWallSymbol;
-            }
-            else
-            {
-                if (wall.Orientation == Orientation.Vertical)
-                {
-                    return VerticalWallSymbol;
-                }
-                return HorizontalWallSymbol;
-            }
+            var wallTuple = (wall.Orientation, wall.HasWall);
+            return _stringValues[wallTuple.ToTuple()];
         }
 
         // Probably should be in an input
