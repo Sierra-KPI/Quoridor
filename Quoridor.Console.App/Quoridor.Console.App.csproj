@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Quoridor.Model\Quoridor.Model.csproj" />
+    <ProjectReference Include="..\Quoridor.View.Console\Quoridor.View.csproj" />
+  </ItemGroup>
+
 </Project>

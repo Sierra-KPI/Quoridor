@@ -1,4 +1,4 @@
-﻿namespace Quoridor.Model
+namespace Quoridor.Model
 {
     internal class BoardFactory : IBoardFactory
     {

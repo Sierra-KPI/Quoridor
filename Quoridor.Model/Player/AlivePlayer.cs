@@ -14,7 +14,7 @@
         {
             WallsCount--;
         }
-         public bool HasWon() 
+        public bool HasWon()
         {
             return true;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model
 {
-    internal interface IElement
+    public interface IElement
     {
         Coordinates Coordinates { get; }
     }
