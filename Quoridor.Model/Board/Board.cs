@@ -52,6 +52,38 @@ namespace Quoridor.Model
             return true;
         }
 
+        public bool RemoveWall(Cell cell1, Cell cell2)
+        {
+            int diff = 0;
+            if (cell2.Id - cell1.Id == 1) diff = Size;
+            else if (cell2.Id - cell1.Id == Size) diff = 1;
+
+            var from1 = cell1.Id;
+            var to1 = cell2.Id;
+            var from2 = cell1.Id + diff;
+            var to2 = cell2.Id + diff;
+
+            _graph.RemoveEdge(from1, to1);
+            _graph.RemoveEdge(from2, to2);
+            return true;
+        }
+
+        public bool AddWall(Cell cell1, Cell cell2)
+        {
+            int diff = 0;
+            if (cell2.Id - cell1.Id == 1) diff = Size;
+            else if (cell2.Id - cell1.Id == Size) diff = 1;
+
+            var from1 = cell1.Id;
+            var to1 = cell2.Id;
+            var from2 = cell1.Id + diff;
+            var to2 = cell2.Id + diff;
+
+            _graph.AddEdge(from1, to1);
+            _graph.AddEdge(from2, to2);
+            return true;
+        }
+
         public bool CheckPaths(Cell from, Cell[] to)
         {
             var idOfCells = new int[to.GetLength(0)];

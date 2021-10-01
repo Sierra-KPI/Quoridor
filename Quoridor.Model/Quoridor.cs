@@ -37,9 +37,27 @@
             return false;
         }
 
-        public bool PlaceWall()
+        public bool PlaceWall(Cell cell1, Cell cell2)
         {
-            return true;
+            if (CurrentBoard.RemoveWall(cell1, cell2))
+            {
+                var resPlayer1 = CurrentBoard.CheckPaths(FirstPlayer.CurrentCell, FirstPlayer.EndsCells);
+                var resPlayer2 = CurrentBoard.CheckPaths(SecondPlayer.CurrentCell, SecondPlayer.EndsCells);
+                if (resPlayer1 && resPlayer2)
+                {
+                    if (CurrentBoard.PlaceWall(cell1, cell2))
+                    {
+                        CurrentPlayer.DecreaseWallCounter();
+                        SwapPlayer();
+                        return true;
+                    }
+                } else
+                {
+                    CurrentBoard.AddWall(cell1, cell2);
+                }
+            }
+            
+            return false;
         }
 
         private void EndGame() => CurrentPlayer.HasWon();

@@ -56,7 +56,7 @@ namespace Quoridor.Model
             }
         }
 
-        bool AddEdge(int vertex1, int vertex2)
+        public bool AddEdge(int vertex1, int vertex2)
         {
             if (_adjacencyList[vertex1].AddLast(vertex2) != null
                 && _adjacencyList[vertex2].AddLast(vertex1) != null)
