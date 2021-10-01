@@ -25,6 +25,18 @@
             return false;
         }
 
+        public bool MakeMove(Cell from, Cell to)
+        {
+            if (CurrentBoard.MakeMove(from, to))
+            {
+                CurrentPlayer.ChangePosition(to);
+                CheckGameEnd();
+                SwapPlayer();
+                return true;
+            }
+            return false;
+        }
+
         public bool PlaceWall()
         {
             return true;
