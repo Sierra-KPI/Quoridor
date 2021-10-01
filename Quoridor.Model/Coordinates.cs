@@ -1,9 +1,9 @@
 ﻿namespace Quoridor.Model
 {
-    public class Coordinates
+    class Coordinates
     {
-        public int X { get; }
-        public int Y { get; }
+        public int x { get; }
+        public int y { get; }
         public int Left(int x)
         {
             return x--;
@@ -20,10 +20,10 @@
         {
             return y--;
         }
-        public Coordinates(int x, int y) 
+        public Coordinates(int x, int y)
         {
-            X = x;
-            Y = y;
+            this.x = x;
+            this.y = y;
         }
     }
 }
