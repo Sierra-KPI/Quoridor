@@ -56,7 +56,7 @@ namespace Quoridor.Model
             }
         }
 
-        bool AddEdge(int vertex1, int vertex2)
+        public bool AddEdge(int vertex1, int vertex2)
         {
             if (_adjacencyList[vertex1].AddLast(vertex2) != null
                 && _adjacencyList[vertex2].AddLast(vertex1) != null)
@@ -72,6 +72,16 @@ namespace Quoridor.Model
             int[] edgs = new int[list.Count];
             list.CopyTo(edgs, 0);
             return edgs;
+        }
+
+        public bool CheckPaths(int from, int[] to)
+        {
+            var dists = DijkstraAlgorithm(from);
+            for (int i = 0; i < to.GetLength(0); i++)
+            {
+                if (dists[to[i]] != int.MaxValue) return true;
+            }
+            return false;
         }
 
         public bool HasPath(int from, int to)
