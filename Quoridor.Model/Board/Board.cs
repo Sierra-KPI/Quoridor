@@ -41,14 +41,6 @@ namespace Quoridor.Model
                 (wallCell1.Id != cell1.Id || wallCell2.Id != cell1.Id + diff);
             }).ToList();
 
-            var from1 = cell1.Id;
-            var to1 = cell2.Id;
-            var from2 = cell1.Id + diff;
-            var to2 = cell2.Id + diff;
-
-            _graph.RemoveEdge(from1, to1);
-            _graph.RemoveEdge(from2, to2);
-
             return true;
         }
 
