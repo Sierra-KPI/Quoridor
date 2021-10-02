@@ -27,9 +27,7 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Cell cell1, Cell cell2)
         {
-            int diff = 0;
-            if (cell2.Id - cell1.Id == 1) diff = Size;
-            else if (cell2.Id - cell1.Id == Size) diff = 1;
+            int diff = GetDiffId(cell1, cell2);
 
             _walls = _walls.Where(elem =>
             {
@@ -54,9 +52,7 @@ namespace Quoridor.Model
 
         public bool RemoveWall(Cell cell1, Cell cell2)
         {
-            int diff = 0;
-            if (cell2.Id - cell1.Id == 1) diff = Size;
-            else if (cell2.Id - cell1.Id == Size) diff = 1;
+            int diff = GetDiffId(cell1, cell2);
 
             var from1 = cell1.Id;
             var to1 = cell2.Id;
@@ -70,9 +66,7 @@ namespace Quoridor.Model
 
         public bool AddWall(Cell cell1, Cell cell2)
         {
-            int diff = 0;
-            if (cell2.Id - cell1.Id == 1) diff = Size;
-            else if (cell2.Id - cell1.Id == Size) diff = 1;
+            int diff = GetDiffId(cell1, cell2);
 
             var from1 = cell1.Id;
             var to1 = cell2.Id;
