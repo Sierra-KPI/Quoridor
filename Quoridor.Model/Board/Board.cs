@@ -50,6 +50,8 @@ namespace Quoridor.Model
             return diff;
         }
 
+
+
         public bool RemoveWall(Cell cell1, Cell cell2)
         {
             int diff = GetDiffId(cell1, cell2);
@@ -59,9 +61,7 @@ namespace Quoridor.Model
             var from2 = cell1.Id + diff;
             var to2 = cell2.Id + diff;
 
-            _graph.RemoveEdge(from1, to1);
-            _graph.RemoveEdge(from2, to2);
-            return true;
+            return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
         }
 
         public bool AddWall(Cell cell1, Cell cell2)
