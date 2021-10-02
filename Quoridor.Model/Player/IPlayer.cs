@@ -4,6 +4,7 @@
     {
         Cell CurrentCell { get; }
         int WallsCount { get; }
+        Cell[] EndCells { get; }
         bool HasWon();
     }
 }

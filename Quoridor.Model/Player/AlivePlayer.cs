@@ -4,6 +4,7 @@
     {
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
+        public Cell[] EndCells { get; private set; }
         public Cell ChangePosition(int x, int y)
         {
             Coordinates coordinate = new Coordinates(x, y);
@@ -19,10 +20,11 @@
         {
             return true;
         }
-        public Player(Cell currentCell)
+        public Player(Cell currentCell, Cell[] endCells)
         {
             CurrentCell = currentCell;
             WallsCount = 10;
+            EndCells = endCells;
         }
     }
 }

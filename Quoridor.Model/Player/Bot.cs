@@ -6,15 +6,13 @@ namespace Quoridor.Model
     {
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
-        public Coordinates[] EndPosition { get; private set; }
-        public Cell ChangePosition()
+        public Cell[] EndCells { get; private set; }
+        public Cell MoveToRandomPosition(Cell[] possibleMoves)
         {
             var random = new Random();
-            int index = random.Next(EndPosition.Length);
-            int id = random.Next();
-            Coordinates randomPosition = EndPosition[index];
-            Cell newCell = new(randomPosition, id);
-            Cell currentCell = newCell;
+            int index = random.Next(possibleMoves.Length);
+            Cell randomCell = possibleMoves[index];
+            Cell currentCell = randomCell;
             return currentCell;
         }
         public void DecreaseWallCounter()
@@ -26,10 +24,11 @@ namespace Quoridor.Model
             return true;
         }
 
-        public Bot(Cell currentCell, Coordinates[] endPosition)
+        public Bot(Cell currentCell, Cell[] endCells)
         {
             CurrentCell = currentCell;
-            EndPosition = endPosition;
+            WallsCount = 10;
+            EndCells = endCells;
         }
     }
 }
