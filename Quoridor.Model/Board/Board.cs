@@ -73,9 +73,7 @@ namespace Quoridor.Model
             var from2 = cell1.Id + diff;
             var to2 = cell2.Id + diff;
 
-            _graph.AddEdge(from1, to1);
-            _graph.AddEdge(from2, to2);
-            return true;
+            return _graph.AddEdge(from1, to1) && _graph.AddEdge(from2, to2);
         }
 
         public bool CheckPaths(Cell from, Cell[] to)
