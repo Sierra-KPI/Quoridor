@@ -29,7 +29,6 @@ namespace Quoridor.Model
                     edgeId++;
                 }
             }
-
             MakeAdjacencyList();
         }
 
@@ -37,7 +36,6 @@ namespace Quoridor.Model
         {
             _size = size;
             _edges = edges;
-
             MakeAdjacencyList();
         }
 
@@ -46,14 +44,10 @@ namespace Quoridor.Model
             _adjacencyList = new LinkedList<int>[_size];
 
             for (var i = 0; i < _adjacencyList.GetLength(0); ++i)
-            {
                 _adjacencyList[i] = new LinkedList<int>();
-            }
 
             for (var i = 0; i < _edges.GetLength(0); i++)
-            {
                 AddEdge(_edges[i, 0], _edges[i, 1]);
-            }
         }
 
         public bool AddEdge(int vertex1, int vertex2)
@@ -78,9 +72,7 @@ namespace Quoridor.Model
         {
             var dists = DijkstraAlgorithm(from);
             for (int i = 0; i < to.GetLength(0); i++)
-            {
                 if (dists[to[i]] != int.MaxValue) return true;
-            }
             return false;
         }
 
@@ -96,9 +88,7 @@ namespace Quoridor.Model
             bool[] used = new bool[_size];
 
             for (var i = 0; i < _size; i++)
-            {
                 distances[i] = int.MaxValue;
-            }
             distances[startVertex] = 0;
 
             for (var i = 0; i < _size; i++)

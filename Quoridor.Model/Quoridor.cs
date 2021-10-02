@@ -41,8 +41,8 @@
         {
             if (CurrentBoard.RemoveWall(cell1, cell2))
             {
-                var resPlayer1 = CurrentBoard.CheckPaths(FirstPlayer.CurrentCell, FirstPlayer.EndsCells);
-                var resPlayer2 = CurrentBoard.CheckPaths(SecondPlayer.CurrentCell, SecondPlayer.EndsCells);
+                var resPlayer1 = CurrentBoard.CheckPaths(FirstPlayer.CurrentCell, FirstPlayer.EndCells);
+                var resPlayer2 = CurrentBoard.CheckPaths(SecondPlayer.CurrentCell, SecondPlayer.EndCells);
                 if (resPlayer1 && resPlayer2)
                 {
                     if (CurrentBoard.PlaceWall(cell1, cell2))
@@ -51,12 +51,8 @@
                         SwapPlayer();
                         return true;
                     }
-                } else
-                {
-                    CurrentBoard.AddWall(cell1, cell2);
-                }
+                } else CurrentBoard.AddWall(cell1, cell2);
             }
-            
             return false;
         }
 

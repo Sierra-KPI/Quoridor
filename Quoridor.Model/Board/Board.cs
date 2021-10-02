@@ -38,7 +38,6 @@ namespace Quoridor.Model
                 (wallCell1.Id != cell1.Id + diff || wallCell2.Id != cell2.Id + diff) &&
                 (wallCell1.Id != cell1.Id || wallCell2.Id != cell1.Id + diff);
             }).ToList();
-
             return true;
         }
 
@@ -49,8 +48,6 @@ namespace Quoridor.Model
             else if (cell2.Id - cell1.Id == Size) diff = 1;
             return diff;
         }
-
-
 
         public bool RemoveWall(Cell cell1, Cell cell2)
         {
@@ -80,9 +77,7 @@ namespace Quoridor.Model
         {
             var idOfCells = new int[to.GetLength(0)];
             for (int i = 0; i < to.GetLength(0); i++)
-            {
                 idOfCells[i] = to[i].Id;
-            }
             return _graph.CheckPaths(from.Id, idOfCells);
         }
 
@@ -93,9 +88,7 @@ namespace Quoridor.Model
             var edges = _graph.GetEdgesForVertex(cell.Id);
             Cell[] possibleCells = new Cell[edges.GetLength(0)];
             for (int i = 0; i < edges.GetLength(0); i++)
-            {
                 possibleCells[i] = GetCellById(edges[i]);
-            }
             return possibleCells;
         }
 
