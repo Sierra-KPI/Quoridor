@@ -44,6 +44,14 @@ namespace Quoridor.Model
             return true;
         }
 
+        int GetDiffId(Cell cell1, Cell cell2)
+        {
+            int diff = 0;
+            if (cell2.Id - cell1.Id == 1) diff = Size;
+            else if (cell2.Id - cell1.Id == Size) diff = 1;
+            return diff;
+        }
+
         public bool RemoveWall(Cell cell1, Cell cell2)
         {
             int diff = 0;
