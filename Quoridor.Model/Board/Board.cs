@@ -83,6 +83,17 @@ namespace Quoridor.Model
 
         public bool HasPath(Cell from, Cell to) => _graph.HasPath(from.Id, to.Id);
 
+        public Cell[] GetEndCellsForPlayer(Cell cell)
+        {
+            var endCells = new Cell[Size];
+            var endY = cell.Coordinates.Y == 0 ? Size - 1 : 0;
+            for (var i = 0; i < Size; i++)
+            {
+                endCells[i] = _cells[i, endY];
+            }
+            return endCells;
+        }
+
         public Cell[] GetPossiblePlayersMoves(Cell cell)
         {
             var edges = _graph.GetEdgesForVertex(cell.Id);
