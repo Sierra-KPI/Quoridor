@@ -4,21 +4,27 @@
     {
         public int X { get; }
         public int Y { get; }
-        public int Left(int x)
+        public int x;
+        public int y;
+        public Coordinates Left()
         {
-            return x--;
+            Coordinates newCoordinates = new Coordinates(x--, y);
+            return newCoordinates;
         }
-        public int Right(int x)
+        public Coordinates Right()
         {
-            return x++;
+            Coordinates newCoordinates = new Coordinates(x++, y);
+            return newCoordinates;
         }
-        public int Up(int y)
+        public Coordinates Up()
         {
-            return y++;
+            Coordinates newCoordinates = new Coordinates(x, y++);
+            return newCoordinates;
         }
-        public int Down(int y)
+        public Coordinates Down()
         {
-            return y--;
+            Coordinates newCoordinates = new Coordinates(x, y--);
+            return newCoordinates;
         }
         public Coordinates(int x, int y)
         {
