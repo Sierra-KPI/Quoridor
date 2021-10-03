@@ -82,6 +82,16 @@ namespace Quoridor.Model
 
         public bool HasPath(Cell from, Cell to) => _graph.HasPath(from.Id, to.Id);
 
+        public Cell GetStartCellForPlayer(int id)
+        {
+            switch (id)
+            {
+                case 1: return _cells[Size / 2, 0];
+                case 2: return _cells[Size / 2, Size - 1];
+                default: return Cell.Default;
+            }
+        }
+
         public Cell[] GetEndCellsForPlayer(Cell cell)
         {
             var endCells = new Cell[Size];
