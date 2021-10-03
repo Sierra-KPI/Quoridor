@@ -1,13 +1,13 @@
 ﻿namespace Quoridor.Model
 {
-    internal class Quoridor
+    public class QuoridorGame
     {
         public IPlayer FirstPlayer { get; set; }
         public IPlayer SecondPlayer { get; set; }
         public IPlayer CurrentPlayer { get; private set; }
         public Board CurrentBoard { get; private set; }
 
-        public Quoridor(IPlayer firstPlayer, IPlayer secondPlayer,
+        public QuoridorGame(IPlayer firstPlayer, IPlayer secondPlayer,
             Board board)
         {
             CurrentPlayer = FirstPlayer = firstPlayer;

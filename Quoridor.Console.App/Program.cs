@@ -1,13 +1,48 @@
 ﻿using Quoridor.View;
+using Quoridor.Model;
+using System;
 
-namespace Quoridor.Console.App
+namespace Quoridor.OutputConsole.App
 {
     internal class Program
     {
         private static void Main()
         {
-            ViewOutput viewOutput = new();
-            viewOutput.DrawBoard();
+            Board board1 = new BoardFactory().CreateBoard();
+            Console.WriteLine(board1);
+            //Player player1 = new();
+
+
+            //IElement[,] _board = new IElement[3, 3]
+            //{
+            //    {
+            //        new Cell(new Coordinates(0, 0), 1),
+            //        new Wall(new Coordinates(0, 0),
+            //            new Coordinates(0, 1), Orientation.Vertical),
+            //        new Cell(new Coordinates(0, 2), 1)
+            //    },
+            //    {
+            //        new Wall(new Coordinates(1, 0),
+            //            new Coordinates(1, 1), Orientation.Horizontal)
+            //            {HasWall = true},
+            //        new Wall(new Coordinates(1, 1),
+            //            new Coordinates(1, 2), Orientation.Horizontal)
+            //            {HasWall = true},
+            //        new Wall(new Coordinates(1, 2),
+            //            new Coordinates(1, 3), Orientation.Horizontal)
+            //            {HasWall = true}
+            //    },
+            //    {
+            //        new Cell(new Coordinates(2, 0), 1),
+            //        new Wall(new Coordinates(2, 0),
+            //            new Coordinates(2, 1), Orientation.Vertical),
+            //        new Cell(new Coordinates(2, 2), 1)
+            //    }
+            //};
+
+            //QuoridorGame game = new(,, _board);
+            //ViewOutput viewOutput = new();
+            //viewOutput.DrawBoard();
         }
     }
 }

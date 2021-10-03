@@ -1,4 +1,4 @@
-﻿namespace Quoridor.Console.Input
+﻿namespace Quoridor.OutputConsole.Input
 {
     internal class ConsoleInput
     {

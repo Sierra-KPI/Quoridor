@@ -1,6 +1,6 @@
 namespace Quoridor.Model
 {
-    internal class BoardFactory : IBoardFactory
+    public class BoardFactory : IBoardFactory
     {
         private int _size = 9;
 

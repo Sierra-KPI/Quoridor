@@ -3,7 +3,7 @@
     public class Cell : IElement
     {
         public int Id { get; private set; }
-        public bool HasPlayer { get; set; }
+        public IPlayer Player { get; set; }
         public Coordinates Coordinates { get; private set; }
 
         private const int DefaultId = 500;
@@ -13,7 +13,6 @@
         {
             Id = DefaultId,
             Coordinates = s_defaultCoordinates,
-            HasPlayer = false
         };
 
         public Cell(Coordinates coordinates, int id)
