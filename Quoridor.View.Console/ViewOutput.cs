@@ -21,11 +21,13 @@ namespace Quoridor.View
         private readonly Dictionary<Tuple<Orientation, bool>,
             string> _stringValues = new();
 
-
+        private int _size;
+        private string[,] _board;
 
         public ViewOutput(QuoridorGame game)
         {
             _currentGame = game;
+            _size = game.CurrentBoard.Size;
             InitializeStringDictionary();
         }
 
@@ -41,7 +43,59 @@ namespace Quoridor.View
                 true).ToTuple(), VerticalPlacedWallSymbol);
         }
 
+
+
+        public void CreateBoard(Wall[] walls)
+        {
+            _board = new string[_size * 2 + 1, _size * 2 + 1];
+
+            for (var i = 0; i < _size * 2 + 1; i++)
+                for (var j = 0; j < _size * 2 + 1; j++)
+                    _board[i, j] = EmptyCellSymbol;
+
+            for (var i = 0; i < _size * 2 + 1; i += 2)
+                for (var j = 0; j < _size * 2 + 1; j++)
+                    _board[i, j] = HorizontalWallSymbol;
+
+            for (var i = 0; i < _size * 2 + 1; i++)
+                for (var j = 0; j < _size * 2 + 1; j += 2)
+                    _board[i, j] = VerticalWallSymbol;
+
+
+            for (var i = 0; i < walls.GetLength(0); i++)
+            {
+                var x1 = walls[i].Coordinates.X * 2 + 1;
+                var y1 = walls[i].Coordinates.Y * 2 + 1;
+                var x2 = walls[i].EndCoordinates.X * 2 + 1;
+                var y2 = walls[i].EndCoordinates.Y * 2 + 1;
+
+                if (walls[i].Orientation == Orientation.Vertical)
+                {
+                    _board[x1 - 1, y2 - y1] = VerticalPlacedWallSymbol;
+                    _board[x1, y2 - y1] = VerticalPlacedWallSymbol;
+                    _board[x1 + 1, y2 - y1] = VerticalPlacedWallSymbol;
+                }
+                if (walls[i].Orientation == Orientation.Horizontal)
+                {
+                    _board[x2 - x1, y1] = HorizontalPlacedWallSymbol;
+                }
+            }
+
+        }
+
         public void DrawBoard()
+        {
+            for (var i = 0; i < _board.GetLength(0); i++)
+            {
+                for (var j = 0; j < _board.GetLength(0); j++)
+                    Console.Write(_board[i, j]);
+                Console.WriteLine();
+            }
+        }
+
+
+
+        /*public void DrawBoard()
         {
             for (var i = 0; i < _board.GetLength(0); i++)
             {
@@ -60,7 +114,7 @@ namespace Quoridor.View
                 _outputString.Append('\n');
             }
             Console.WriteLine(_outputString);
-        }
+        }*/
 
         public string DrawCell(Cell cell)
         {
