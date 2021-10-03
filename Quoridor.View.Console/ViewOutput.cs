@@ -66,8 +66,16 @@ namespace Quoridor.View
                     _board[i, j] = EmptyCellSymbol;
         }
 
-        public void UpdateBoard(Wall[] walls)
+        public void UpdateBoard(Wall[] walls, Cell firstPlayer, Cell secondPlayer)
         {
+            CleanCells();
+            var x = firstPlayer.Coordinates.X * 2 + 1;
+            var y = firstPlayer.Coordinates.Y * 2 + 1;
+            _board[x, y] = FirstPlayerSymbol;
+
+            x = secondPlayer.Coordinates.X * 2 + 1;
+            y = secondPlayer.Coordinates.Y * 2 + 1;
+            _board[x, y] = SecondPlayerSymbol;
 
             for (var i = 0; i < walls.GetLength(0); i++)
             {
