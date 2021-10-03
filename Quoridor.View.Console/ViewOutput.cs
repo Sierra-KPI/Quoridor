@@ -48,10 +48,7 @@ namespace Quoridor.View
         private void CreateBoard()
         {
             _board = new string[_size * 2 + 1, _size * 2 + 1];
-
-            for (var i = 0; i < _size * 2 + 1; i++)
-                for (var j = 0; j < _size * 2 + 1; j++)
-                    _board[i, j] = EmptyCellSymbol;
+            CleanCells();
 
             for (var i = 0; i < _size * 2 + 1; i += 2)
                 for (var j = 0; j < _size * 2 + 1; j++)
@@ -62,8 +59,16 @@ namespace Quoridor.View
                     _board[i, j] = VerticalWallSymbol;
         }
 
+        private void CleanCells()
+        {
+            for (var i = 0; i < _size * 2 + 1; i++)
+                for (var j = 0; j < _size * 2 + 1; j++)
+                    _board[i, j] = EmptyCellSymbol;
+        }
+
         public void UpdateBoard(Wall[] walls)
         {
+
             for (var i = 0; i < walls.GetLength(0); i++)
             {
                 var x1 = walls[i].Coordinates.X * 2 + 1;
