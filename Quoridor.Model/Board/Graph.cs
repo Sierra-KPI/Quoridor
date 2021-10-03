@@ -2,7 +2,7 @@
 
 namespace Quoridor.Model
 {
-    class Graph
+    public class Graph
     {
         private int _size;
         private int[,] _edges;

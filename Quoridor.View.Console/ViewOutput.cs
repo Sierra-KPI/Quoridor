@@ -7,8 +7,11 @@ namespace Quoridor.View
 {
     public class ViewOutput
     {
-        private const string CellSymbol = " C ";
-        private const string PlayerSymbol = " P ";
+        private readonly QuoridorGame _currentGame;
+
+        private const string FirstPlayerSymbol = " 1 ";
+        private const string SecondPlayerSymbol = " 2 ";
+        private const string EmptyCellSymbol = "   ";
         private const string HorizontalWallSymbol = "───";
         private const string VerticalWallSymbol = " │ ";
         private const string HorizontalPlacedWallSymbol = "═══";
@@ -18,34 +21,13 @@ namespace Quoridor.View
         private readonly Dictionary<Tuple<Orientation, bool>,
             string> _stringValues = new();
 
-        private readonly IElement[,] _board = new IElement[3, 3]
-        {
-            {
-                new Cell(new Coordinates(0, 0), 1) {HasPlayer = true},
-                new Wall(new Coordinates(0, 0),
-                    new Coordinates(0, 1), Orientation.Vertical),
-                new Cell(new Coordinates(0, 2), 1)
-            },
-            {
-                new Wall(new Coordinates(1, 0),
-                    new Coordinates(1, 1), Orientation.Horizontal)
-                    {HasWall = true},
-                new Wall(new Coordinates(1, 1),
-                    new Coordinates(1, 2), Orientation.Horizontal)
-                    {HasWall = true},
-                new Wall(new Coordinates(1, 2),
-                    new Coordinates(1, 3), Orientation.Horizontal)
-                    {HasWall = true}
-            },
-            {
-                new Cell(new Coordinates(2, 0), 1),
-                new Wall(new Coordinates(2, 0),
-                    new Coordinates(2, 1), Orientation.Vertical),
-                new Cell(new Coordinates(2, 2), 1) {HasPlayer = true}
-            }
-        };
 
-        public ViewOutput() => InitializeStringDictionary();
+
+        public ViewOutput(QuoridorGame game)
+        {
+            _currentGame = game;
+            InitializeStringDictionary();
+        }
 
         private void InitializeStringDictionary()
         {
@@ -82,11 +64,15 @@ namespace Quoridor.View
 
         public string DrawCell(Cell cell)
         {
-            if (cell.HasPlayer)
+            if (cell == _currentGame.FirstPlayer.CurrentCell)
             {
-                return CellSymbol;
+                return FirstPlayerSymbol;
             }
-            return PlayerSymbol;
+            else if (cell == _currentGame.SecondPlayer.CurrentCell)
+            {
+                return SecondPlayerSymbol;
+            }
+            return EmptyCellSymbol;
         }
 
         public string DrawWall(Wall wall)

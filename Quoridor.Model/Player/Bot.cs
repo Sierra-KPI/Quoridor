@@ -3,16 +3,18 @@ using System.Collections.Generic;
 
 namespace Quoridor.Model
 {
-    internal class Bot : IPlayer
+    public class Bot : IPlayer
     {
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
         public Cell[] EndCells { get; private set; }
+
         public Cell ChangeCoordinates(Cell newCell)
         {
             Cell currentCell = newCell;
             return currentCell;
         }
+
         public Cell ChooseRandomCell(Cell[] possibleCells)
         {
             var random = new Random();
@@ -21,6 +23,7 @@ namespace Quoridor.Model
             Cell chosenCell = randomCell;
             return chosenCell;
         }
+
         public Wall ChooseRandomWall(List<Wall> possibleWalls)
         {
             var random = new Random();
@@ -29,14 +32,17 @@ namespace Quoridor.Model
             Wall chosenWall = randomWall;
             return chosenWall;
         }
+
         public void DecreaseWallCount()
         {
             WallsCount--;
         }
+
         public bool HasWon()
         {
             return true;
         }
+
         public Bot(Cell currentCell, Cell[] endCells)
         {
             CurrentCell = currentCell;

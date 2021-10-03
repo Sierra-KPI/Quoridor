@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model
 {
-    interface IPlayer
+    public interface IPlayer
     {
         Cell CurrentCell { get; }
         int WallsCount { get; }

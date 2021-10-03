@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Quoridor.Model
-
 {
-    internal class Board
+    public class Board
     {
         private Cell[,] _cells;
         private List<Wall> _walls;
