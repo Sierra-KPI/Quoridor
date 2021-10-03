@@ -1,6 +1,6 @@
 ﻿namespace Quoridor.Model
 {
-    class Coordinates
+    public class Coordinates
     {
         public int X { get; }
         public int Y { get; }

@@ -5,6 +5,7 @@
         Cell CurrentCell { get; }
         int WallsCount { get; }
         Cell[] EndCells { get; }
+        Cell ChangeCoordinates(int x, int y);
         bool HasWon();
     }
 }

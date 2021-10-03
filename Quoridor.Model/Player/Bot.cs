@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Quoridor.Model
 {
@@ -7,13 +8,28 @@ namespace Quoridor.Model
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
         public Cell[] EndCells { get; private set; }
-        public Cell MoveToRandomPosition(Cell[] possibleMoves)
+        public Cell ChangeCoordinates(int x, int y)
+        {
+            Coordinates coordinates = new Coordinates(x, y);
+            Cell newCell = new(coordinates, 50);
+            Cell currentCell = newCell;
+            return currentCell;
+        }
+        public Cell ChooseRandomCell(Cell[] possibleCells)
         {
             var random = new Random();
-            int index = random.Next(possibleMoves.Length);
-            Cell randomCell = possibleMoves[index];
-            Cell currentCell = randomCell;
-            return currentCell;
+            int index = random.Next(possibleCells.Length);
+            Cell randomCell = possibleCells[index];
+            Cell chosenCell = randomCell;
+            return chosenCell;
+        }
+        public Wall ChooseRandomWall(List<Wall> possibleWalls)
+        {
+            var random = new Random();
+            int index = random.Next(possibleWalls.Count);
+            Wall randomWall = possibleWalls[index];
+            Wall chosenWall = randomWall;
+            return chosenWall;
         }
         public void DecreaseWallCounter()
         {
@@ -23,7 +39,6 @@ namespace Quoridor.Model
         {
             return true;
         }
-
         public Bot(Cell currentCell, Cell[] endCells)
         {
             CurrentCell = currentCell;

@@ -5,7 +5,7 @@
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
         public Cell[] EndCells { get; private set; }
-        public Cell ChangePosition(int x, int y)
+        public Cell ChangeCoordinates(int x, int y)
         {
             Coordinates coordinate = new Coordinates(x, y);
             Cell newCell = new(coordinate, 50);
