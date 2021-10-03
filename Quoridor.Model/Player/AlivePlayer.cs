@@ -4,13 +4,13 @@
     {
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
-        public Cell ChangePosition(Cell currentCell, Coordinates coordinate)
+        public Cell[] EndCells { get; private set; }
+        public Cell ChangeCoordinates(Cell newCell)
         {
-            Cell newCell = new Cell(coordinate, 50);
-            currentCell = newCell;
+            Cell currentCell = newCell;
             return currentCell;
         }
-        public void DecreaseWallCounter()
+        public void DecreaseWallCount()
         {
             WallsCount--;
         }
@@ -18,10 +18,11 @@
         {
             return true;
         }
-        public Player(Cell currentCell)
+        public Player(Cell currentCell, Cell[] endCells)
         {
             CurrentCell = currentCell;
             WallsCount = 10;
+            EndCells = endCells;
         }
     }
 }

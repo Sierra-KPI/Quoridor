@@ -1,21 +1,47 @@
-﻿namespace Quoridor.Model
+﻿using System;
+using System.Collections.Generic;
+
+namespace Quoridor.Model
 {
     internal class Bot : IPlayer
     {
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
-        public Position Move(Position currentCell, Position start, Position end, bool HasWall) 
+        public Cell[] EndCells { get; private set; }
+        public Cell ChangeCoordinates(Cell newCell)
         {
-            currentCell = start;
-            if (HasWall == false)
-            {
-                currentCell = end;
-            }
+            Cell currentCell = newCell;
             return currentCell;
         }
-        public void PlaceWall() { }
-        public bool HasWon() { return true; }
-        public Cell StartPosition { get; private set; }
-        public Cell[] EndPosition { get; private set; }
+        public Cell ChooseRandomCell(Cell[] possibleCells)
+        {
+            var random = new Random();
+            int index = random.Next(possibleCells.Length);
+            Cell randomCell = possibleCells[index];
+            Cell chosenCell = randomCell;
+            return chosenCell;
+        }
+        public Wall ChooseRandomWall(List<Wall> possibleWalls)
+        {
+            var random = new Random();
+            int index = random.Next(possibleWalls.Count);
+            Wall randomWall = possibleWalls[index];
+            Wall chosenWall = randomWall;
+            return chosenWall;
+        }
+        public void DecreaseWallCount()
+        {
+            WallsCount--;
+        }
+        public bool HasWon()
+        {
+            return true;
+        }
+        public Bot(Cell currentCell, Cell[] endCells)
+        {
+            CurrentCell = currentCell;
+            WallsCount = 10;
+            EndCells = endCells;
+        }
     }
 }

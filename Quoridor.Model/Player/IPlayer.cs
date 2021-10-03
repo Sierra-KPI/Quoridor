@@ -4,7 +4,9 @@
     {
         Cell CurrentCell { get; }
         int WallsCount { get; }
-        Cell ChangePosition(Cell currentCell, Coordinates coordinate);
+        Cell[] EndCells { get; }
+        Cell ChangeCoordinates(Cell cell);
+        void DecreaseWallCount();
         bool HasWon();
     }
 }

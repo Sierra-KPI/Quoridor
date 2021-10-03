@@ -29,7 +29,7 @@
         {
             if (CurrentBoard.MakeMove(from, to))
             {
-                CurrentPlayer.ChangePosition(to);
+                CurrentPlayer.ChangeCoordinates(to);
                 CheckGameEnd();
                 SwapPlayer();
                 return true;
@@ -47,7 +47,7 @@
                 {
                     if (CurrentBoard.PlaceWall(cell1, cell2))
                     {
-                        CurrentPlayer.DecreaseWallCounter();
+                        CurrentPlayer.DecreaseWallCount();
                         SwapPlayer();
                         return true;
                     }
