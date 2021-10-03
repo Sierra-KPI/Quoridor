@@ -112,7 +112,7 @@ namespace Quoridor.Model
             return possibleCells;
         }
 
-        public List<Wall> GetPossibleWallsPlaces() => _walls;
+        public Wall[] GetPossibleWallsPlaces() => _walls.ToArray();
 
         Cell GetCellById(int id) => _cells[id / Size, id % Size];
 
