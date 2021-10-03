@@ -5,9 +5,10 @@ namespace Quoridor.Model
 {
     public class Board
     {
+        private Graph _graph;
         private Cell[,] _cells;
         private List<Wall> _walls;
-        private Graph _graph;
+        public List<Wall> PlacedWalls;
 
         public int Size => _cells.GetLength(0);
 
@@ -16,6 +17,7 @@ namespace Quoridor.Model
             _cells = cells;
             _graph = graph;
             _walls = walls;
+            PlacedWalls = new List<Wall>();
         }
 
         public bool MakeMove(Cell from, Cell to)
@@ -37,6 +39,11 @@ namespace Quoridor.Model
                 (wallCell1.Id != cell1.Id + diff || wallCell2.Id != cell2.Id + diff) &&
                 (wallCell1.Id != cell1.Id || wallCell2.Id != cell1.Id + diff);
             }).ToList();
+
+            var orientation = diff == 1 ? Orientation.Horizontal : Orientation.Vertical;
+            var wall = new Wall(cell1.Coordinates, cell2.Coordinates, orientation);
+            PlacedWalls.Add(wall);
+
             return true;
         }
 
@@ -113,6 +120,8 @@ namespace Quoridor.Model
         }
 
         public Wall[] GetPossibleWallsPlaces() => _walls.ToArray();
+
+        public Wall[] GetPlacedWalls() => PlacedWalls.ToArray();
 
         Cell GetCellById(int id) => _cells[id / Size, id % Size];
 
