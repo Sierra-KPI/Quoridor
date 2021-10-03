@@ -29,7 +29,7 @@
         {
             if (CurrentBoard.MakeMove(from, to))
             {
-                CurrentPlayer.ChangePosition(to);
+                CurrentPlayer.ChangeCoordinates(to);
                 CheckGameEnd();
                 SwapPlayer();
                 return true;
@@ -41,13 +41,13 @@
         {
             if (CurrentBoard.RemoveWall(cell1, cell2))
             {
-                var resPlayer1 = CurrentBoard.CheckPaths(FirstPlayer.CurrentCell, FirstPlayer.EndsCells);
-                var resPlayer2 = CurrentBoard.CheckPaths(SecondPlayer.CurrentCell, SecondPlayer.EndsCells);
+                var resPlayer1 = CurrentBoard.CheckPaths(FirstPlayer.CurrentCell, FirstPlayer.EndCells);
+                var resPlayer2 = CurrentBoard.CheckPaths(SecondPlayer.CurrentCell, SecondPlayer.EndCells);
                 if (resPlayer1 && resPlayer2)
                 {
                     if (CurrentBoard.PlaceWall(cell1, cell2))
                     {
-                        CurrentPlayer.DecreaseWallCounter();
+                        CurrentPlayer.DecreaseWallCount();
                         SwapPlayer();
                         return true;
                     }

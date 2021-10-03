@@ -8,10 +8,8 @@ namespace Quoridor.Model
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
         public Cell[] EndCells { get; private set; }
-        public Cell ChangeCoordinates(int x, int y)
+        public Cell ChangeCoordinates(Cell newCell)
         {
-            Coordinates coordinates = new Coordinates(x, y);
-            Cell newCell = new(coordinates, 50);
             Cell currentCell = newCell;
             return currentCell;
         }
@@ -31,7 +29,7 @@ namespace Quoridor.Model
             Wall chosenWall = randomWall;
             return chosenWall;
         }
-        public void DecreaseWallCounter()
+        public void DecreaseWallCount()
         {
             WallsCount--;
         }
