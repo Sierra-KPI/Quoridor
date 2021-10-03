@@ -9,9 +9,11 @@ namespace Quoridor.OutputConsole.App
         private static void Main()
         {
             Board board1 = new BoardFactory().CreateBoard();
-            Console.WriteLine(board1);
-            //Player player1 = new();
-
+            Player player1 = new(board1.GetStartCellForPlayer(1),
+                board1.GetEndCellsForPlayer(board1.GetStartCellForPlayer(1)));
+            Player player2 = new(board1.GetStartCellForPlayer(2),
+                board1.GetEndCellsForPlayer(board1.GetStartCellForPlayer(2)));
+            QuoridorGame game = new QuoridorGame(player1, player2, board1);
 
             //IElement[,] _board = new IElement[3, 3]
             //{
