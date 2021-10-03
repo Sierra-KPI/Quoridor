@@ -29,6 +29,7 @@ namespace Quoridor.View
             _currentGame = game;
             _size = game.CurrentBoard.Size;
             InitializeStringDictionary();
+            CreateBoard();
         }
 
         private void InitializeStringDictionary()
@@ -44,8 +45,7 @@ namespace Quoridor.View
         }
 
 
-
-        public void CreateBoard(Wall[] walls)
+        private void CreateBoard()
         {
             _board = new string[_size * 2 + 1, _size * 2 + 1];
 
@@ -60,8 +60,10 @@ namespace Quoridor.View
             for (var i = 0; i < _size * 2 + 1; i++)
                 for (var j = 0; j < _size * 2 + 1; j += 2)
                     _board[i, j] = VerticalWallSymbol;
+        }
 
-
+        public void UpdateBoard(Wall[] walls)
+        {
             for (var i = 0; i < walls.GetLength(0); i++)
             {
                 var x1 = walls[i].Coordinates.X * 2 + 1;
@@ -80,7 +82,6 @@ namespace Quoridor.View
                     _board[x2 - x1, y1] = HorizontalPlacedWallSymbol;
                 }
             }
-
         }
 
         public void DrawBoard()
