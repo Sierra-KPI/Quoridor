@@ -10,7 +10,7 @@
         public Quoridor(IPlayer firstPlayer, IPlayer secondPlayer,
             Board board)
         {
-            FirstPlayer = firstPlayer;
+            CurrentPlayer = FirstPlayer = firstPlayer;
             SecondPlayer = secondPlayer;
             CurrentBoard = board;
         }
@@ -41,8 +41,11 @@
         {
             if (CurrentBoard.RemoveWall(cell1, cell2))
             {
-                var resPlayer1 = CurrentBoard.CheckPaths(FirstPlayer.CurrentCell, FirstPlayer.EndCells);
-                var resPlayer2 = CurrentBoard.CheckPaths(SecondPlayer.CurrentCell, SecondPlayer.EndCells);
+                bool resPlayer1 = CurrentBoard.CheckPaths
+                    (FirstPlayer.CurrentCell, FirstPlayer.EndCells);
+                bool resPlayer2 = CurrentBoard.CheckPaths
+                    (SecondPlayer.CurrentCell, SecondPlayer.EndCells);
+
                 if (resPlayer1 && resPlayer2)
                 {
                     if (CurrentBoard.PlaceWall(cell1, cell2))
@@ -51,7 +54,11 @@
                         SwapPlayer();
                         return true;
                     }
-                } else CurrentBoard.AddWall(cell1, cell2);
+                }
+                else
+                {
+                    CurrentBoard.AddWall(cell1, cell2);
+                }
             }
             return false;
         }
