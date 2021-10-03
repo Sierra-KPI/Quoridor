@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.View", "Quoridor.View.Console\Quoridor.View.csproj", "{168F5D0B-37E1-491C-80FA-7DF379A996CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Console.App", "Quoridor.Console.App\Quoridor.Console.App.csproj", "{81D64F5F-2107-4984-98F1-1EF034CE9F54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.OutputConsole.App", "Quoridor.Console.App\Quoridor.OutputConsole.App.csproj", "{81D64F5F-2107-4984-98F1-1EF034CE9F54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Console.Input", "Quoridor.Console.Input\Quoridor.Console.Input.csproj", "{8855A7A5-CA92-48B9-A1EB-A16A27252FEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.OutputConsole.Input", "Quoridor.Console.Input\Quoridor.OutputConsole.Input.csproj", "{8855A7A5-CA92-48B9-A1EB-A16A27252FEB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model", "Quoridor.Model\Quoridor.Model.csproj", "{800960B1-56F5-4370-B06F-E89521ABB25E}"
 EndProject
