@@ -6,9 +6,9 @@ namespace Quoridor.OutputConsole.Input
 {
     public class ConsoleInput
     {
-        private readonly QuoridorGame _game;
+        private QuoridorGame _game;
 
-        private Dictionary<string, int> chars = new();
+        private Dictionary<string, int> _chars = new();
         private bool _endLoop;
 
         private readonly string _greetingMessage = "Hi! Now You are " +
@@ -22,16 +22,18 @@ namespace Quoridor.OutputConsole.Input
         private readonly string _nullOrEmptyMessage = "Your input " +
             "is empty! Try again";
         private readonly string _helpMessage = "Here's some tips " +
-            "tips on how to play the game:\n1. player x y - move " +
-            "Your player from x cell to y cell\n2. wall x1 y1 x2 y2 - place " +
-            "wall from x1 y1 cell to x2 y2 cell\n3. help - print this " +
-            "helpbox\n4. quit - quit the game";
+            "tips on how to play the game:\n1. start x - start new " +
+            "game, where is the number of real players " +
+            "(1 for 1 real and 1 bot. 2 for two real players)" +
+            "\n2. player x y - move Your player from x cell to" +
+            " y cell\n3. wall x1 y1 x2 y2 - place wall from " +
+            "x1 y1 cell to x2 y2 cell\n4. help - print this " +
+            "helpbox\n5. quit - quit the game";
         private readonly string _incorrectMessage = "Incorrect command! " +
             "Try something else";
 
-        public ConsoleInput(QuoridorGame game)
+        public ConsoleInput()
         {
-            _game = game;
             WriteGreeting();
             InitializeDictionaries();
         }
@@ -44,7 +46,7 @@ namespace Quoridor.OutputConsole.Input
 
         private void InitializeDictionaries()
         {
-            chars = new Dictionary<string, int>
+            _chars = new Dictionary<string, int>
             {
                 { "A", 1 },
                 { "B", 2 },
@@ -84,6 +86,9 @@ namespace Quoridor.OutputConsole.Input
             {
                 switch (values[0])
                 {
+                    case "start":
+                        StartGame(values);
+                        break;
                     case "player":
                         MovePlayer(values);
                         break;
@@ -107,14 +112,33 @@ namespace Quoridor.OutputConsole.Input
             }
         }
 
+        private void StartGame(string[] values)
+        {
+            Board board = new BoardFactory().CreateBoard();
+            Player firstPlayer = new(board.GetStartCellForPlayer(1),
+                board.GetEndCellsForPlayer(board.GetStartCellForPlayer(1)));
+
+            if (values[1] == "1")
+            {
+                Bot secondPlayer = new(board.GetStartCellForPlayer(2),
+                board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
+                _game = new QuoridorGame(firstPlayer, secondPlayer, board);
+            }
+            else
+            {
+                Player secondPlayer = new(board.GetStartCellForPlayer(2),
+                board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
+                _game = new QuoridorGame(firstPlayer, secondPlayer, board);
+            }
+        }
+
         private void MovePlayer(string[] values)
         {
             Coordinates coordinates = new(int.Parse(values[1]),
-                chars[values[2]]);
-            Cell from = _game.CurrentPlayer.CurrentCell;
+                _chars[values[2]]);
             Cell to = _game.CurrentBoard.GetCellByCoordinates(coordinates);
 
-            _game.MakeMove(from, to);
+            _game.MakeMove(to);
         }
 
         private void PlaceWall(string[] values)
