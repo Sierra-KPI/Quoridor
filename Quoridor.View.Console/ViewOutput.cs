@@ -14,7 +14,7 @@ namespace Quoridor.View
         private const string EmptyCellSymbol = "   ";
         private const string HorizontalWallSymbol = "───";
         private const string VerticalWallSymbol = " │ ";
-        private const string HorizontalPlacedWallSymbol = "═══";
+        private const string HorizontalPlacedWallSymbol = "═══"; // try "███"
         private const string VerticalPlacedWallSymbol = " ║ ";
 
         private int _size;
