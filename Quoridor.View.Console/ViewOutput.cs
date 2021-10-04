@@ -67,8 +67,8 @@ namespace Quoridor.View
 
         private void CleanCells()
         {
-            for (var i = 1; i < _size * 2 + 1; i+=2)
-                for (var j = 1; j < _size * 2 + 1; j+=2)
+            for (var i = 1; i < _size * 2 + 1; i += 2)
+                for (var j = 1; j < _size * 2 + 1; j += 2)
                     _board[i, j] = EmptyCellSymbol;
         }
 

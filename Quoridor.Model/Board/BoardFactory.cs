@@ -1,5 +1,3 @@
-using System;
-
 namespace Quoridor.Model
 {
     public class BoardFactory : IBoardFactory
