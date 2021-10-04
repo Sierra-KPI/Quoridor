@@ -25,6 +25,8 @@ namespace Quoridor.OutputConsole.Input
             "Your player from x cell to y cell\n2. wall x1 y1 x2 y2 - place " +
             "wall from x1 y1 cell to x2 y2 cell\n3. help - print this " +
             "helpbox\n4. quit - quit the game";
+        private readonly string _IncorrectMessage = "Incorrect command! " +
+            "Try something else";
 
         public ConsoleInput(QuoridorGame game)
         {
@@ -51,22 +53,30 @@ namespace Quoridor.OutputConsole.Input
                 else
                 {
                     string[] inputValues = input.Split(Array.Empty<char>());
-                    switch (inputValues[0])
+                    try
                     {
-                        case "player":
-                            MovePlayer(inputValues);
-                            break;
-                        case "wall":
-                            PlaceWall(inputValues);
-                            break;
-                        case "quit":
-                            endLoop = true;
-                            break;
-                        case "help":
-                            Console.WriteLine(_helpMessage);
-                            break;
-                        default:
-                            break;
+                        switch (inputValues[0])
+                        {
+                            case "player":
+                                MovePlayer(inputValues);
+                                break;
+                            case "wall":
+                                PlaceWall(inputValues);
+                                break;
+                            case "quit":
+                                endLoop = true;
+                                break;
+                            case "help":
+                                Console.WriteLine(_helpMessage);
+                                break;
+                            default:
+                                WriteIncorrectMessage();
+                                break;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        WriteIncorrectMessage();
                     }
                 }
             }
@@ -78,6 +88,7 @@ namespace Quoridor.OutputConsole.Input
                 int.Parse(values[2]));
             Cell from = _game.CurrentPlayer.CurrentCell;
             Cell to = _game.CurrentBoard.GetCellByCoordinates(coordinates);
+
             _game.MakeMove(from, to);
         }
 
@@ -91,6 +102,11 @@ namespace Quoridor.OutputConsole.Input
             Cell to = _game.CurrentBoard.GetCellByCoordinates(secondCoordinates);
 
             _game.PlaceWall(from, to);
+        }
+
+        private void WriteIncorrectMessage()
+        {
+            Console.WriteLine(_IncorrectMessage);
         }
     }
 }
