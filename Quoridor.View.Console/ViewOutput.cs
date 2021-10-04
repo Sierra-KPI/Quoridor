@@ -110,8 +110,16 @@ namespace Quoridor.View
         public void DrawBoard()
         {
             UpdateBoard();
+
+            Console.Write("  ");
+            for (int i = 0; i < _size; i++)
+                Console.Write("     " + (char)(i + 65));
+            Console.WriteLine();
+
             for (var i = 0; i < _board.GetLength(0); i++)
             {
+                if (i % 2 == 1) Console.Write(" " + ((i / 2) + 1) + " ");
+                else Console.Write("   ");
                 for (var j = 0; j < _board.GetLength(0); j++)
                     Console.Write(_board[i, j]);
                 Console.WriteLine();
