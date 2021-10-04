@@ -10,6 +10,8 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<string, int> chars = new();
 
+        bool _endLoop;
+
         private readonly string _greetingMessage = "Hi! Now You are " +
             "playing Quoridor. The object of the game is to advance " +
             "your pawn to the opposite edge of the board. On your " +
@@ -42,8 +44,7 @@ namespace Quoridor.OutputConsole.Input
 
         public void ReadMove()
         {
-            var endLoop = false;
-            while(!endLoop)
+            while(!_endLoop)
             {
                 string input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
@@ -53,32 +54,37 @@ namespace Quoridor.OutputConsole.Input
                 else
                 {
                     string[] inputValues = input.Split(Array.Empty<char>());
-                    try
-                    {
-                        switch (inputValues[0])
-                        {
-                            case "player":
-                                MovePlayer(inputValues);
-                                break;
-                            case "wall":
-                                PlaceWall(inputValues);
-                                break;
-                            case "quit":
-                                endLoop = true;
-                                break;
-                            case "help":
-                                Console.WriteLine(_helpMessage);
-                                break;
-                            default:
-                                WriteIncorrectMessage();
-                                break;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        WriteIncorrectMessage();
-                    }
+                    ExecuteCommand(inputValues);
                 }
+            }
+        }
+
+        private void ExecuteCommand(string[] values)
+        {
+            try
+            {
+                switch (values[0])
+                {
+                    case "player":
+                        MovePlayer(values);
+                        break;
+                    case "wall":
+                        PlaceWall(values);
+                        break;
+                    case "quit":
+                        _endLoop = QuitLoop();
+                        break;
+                    case "help":
+                        WriteHelpMessage();
+                        break;
+                    default:
+                        WriteIncorrectMessage();
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                WriteIncorrectMessage();
             }
         }
 
@@ -108,5 +114,12 @@ namespace Quoridor.OutputConsole.Input
         {
             Console.WriteLine(_IncorrectMessage);
         }
+
+        private void WriteHelpMessage()
+        {
+            Console.WriteLine(_helpMessage);
+        }
+
+        private static bool QuitLoop() => true;
     }
 }
