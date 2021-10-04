@@ -43,23 +43,23 @@ namespace Quoridor.View
 
         public void DrawBoard()
         {
-            for (var i = 0; i < _board.GetLength(0); i++)
-            {
-                for (var j = 0; j < _board.GetLength(0); j++)
-                {
-                    if (_board[i, j] is Cell cell)
-                    {
-                        _outputString.Append(DrawCell(cell));
-                    }
-                    else
-                    {
-                        Wall wall = (Wall)_board[i, j];
-                        _outputString.Append(DrawWall(wall));
-                    }
-                }
-                _outputString.Append('\n');
-            }
-            Console.WriteLine(_outputString);
+            //for (var i = 0; i < _board.GetLength(0); i++)
+            //{
+            //    for (var j = 0; j < _board.GetLength(0); j++)
+            //    {
+            //        if (_board[i, j] is Cell cell)
+            //        {
+            //            _outputString.Append(DrawCell(cell));
+            //        }
+            //        else
+            //        {
+            //            Wall wall = (Wall)_board[i, j];
+            //            _outputString.Append(DrawWall(wall));
+            //        }
+            //    }
+            //    _outputString.Append('\n');
+            //}
+            //Console.WriteLine(_outputString);
         }
 
         public string DrawCell(Cell cell)
