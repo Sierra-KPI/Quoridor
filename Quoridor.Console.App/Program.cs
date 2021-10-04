@@ -13,7 +13,10 @@ namespace Quoridor.OutputConsole.App
                 board1.GetEndCellsForPlayer(board1.GetStartCellForPlayer(1)));
             Player player2 = new(board1.GetStartCellForPlayer(2),
                 board1.GetEndCellsForPlayer(board1.GetStartCellForPlayer(2)));
-            QuoridorGame game = new QuoridorGame(player1, player2, board1);
+            QuoridorGame game = new(player1, player2, board1);
+
+            ViewOutput viewOutput = new(game);
+            viewOutput.DrawBoard();
 
             //IElement[,] _board = new IElement[3, 3]
             //{
