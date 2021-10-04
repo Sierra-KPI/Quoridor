@@ -12,12 +12,12 @@ namespace Quoridor.OutputConsole.Input
         private bool _endLoop;
 
         private readonly string _greetingMessage = "Hi! Now You are " +
-            "playing Quoridor. The object of the game is to advance " +
-            "your pawn to the opposite edge of the board. On your " +
+            "playing Quoridor.\nThe object of the game is to advance " +
+            "your pawn to the opposite edge of the board.\nOn your " +
             "turn you may either move your pawn or place a wall. " +
-            "You may hinder your opponent with wall placement, " +
-            "but not completely block them off. Meanwhile, " +
-            "they are trying to do the same to you. The first " +
+            "\nYou may hinder your opponent with wall placement, " +
+            "but not completely block them off.\nMeanwhile, " +
+            "they are trying to do the same to you.\nThe first " +
             "pawn to reach the opposite side wins.";
         private readonly string _nullOrEmptyMessage = "Your input " +
             "is empty! Try again";
@@ -77,6 +77,7 @@ namespace Quoridor.OutputConsole.Input
             }
         }
 
+        // TO-DO bot vs player and player vs player
         private void ExecuteCommand(string[] values)
         {
             try
@@ -109,7 +110,7 @@ namespace Quoridor.OutputConsole.Input
         private void MovePlayer(string[] values)
         {
             Coordinates coordinates = new(int.Parse(values[1]),
-                int.Parse(values[2]));
+                chars[values[2]]);
             Cell from = _game.CurrentPlayer.CurrentCell;
             Cell to = _game.CurrentBoard.GetCellByCoordinates(coordinates);
 

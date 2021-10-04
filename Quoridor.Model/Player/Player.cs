@@ -19,6 +19,7 @@
 
         public bool HasWon()
         {
+            // TO-DO check current CurrentCell and EndCells
             return true;
         }
 
