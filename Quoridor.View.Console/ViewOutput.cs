@@ -17,10 +17,6 @@ namespace Quoridor.View
         private const string HorizontalPlacedWallSymbol = "═══";
         private const string VerticalPlacedWallSymbol = " ║ ";
 
-        private readonly StringBuilder _outputString = new("");
-        private readonly Dictionary<Tuple<Orientation, bool>,
-            string> _stringValues = new();
-
         private int _size;
         private string[,] _board;
 
@@ -28,22 +24,8 @@ namespace Quoridor.View
         {
             _currentGame = game;
             _size = game.CurrentBoard.Size;
-            InitializeStringDictionary();
             CreateBoard();
         }
-
-        private void InitializeStringDictionary()
-        {
-            _stringValues.Add((Orientation.Horizontal,
-                false).ToTuple(), HorizontalWallSymbol);
-            _stringValues.Add((Orientation.Horizontal,
-                true).ToTuple(), HorizontalPlacedWallSymbol);
-            _stringValues.Add((Orientation.Vertical,
-                false).ToTuple(), VerticalWallSymbol);
-            _stringValues.Add((Orientation.Vertical,
-                true).ToTuple(), VerticalPlacedWallSymbol);
-        }
-
 
         private void CreateBoard()
         {
@@ -126,29 +108,6 @@ namespace Quoridor.View
             }
         }
 
-
-
-        /*public void DrawBoard()
-        {
-            for (var i = 0; i < _board.GetLength(0); i++)
-            {
-                for (var j = 0; j < _board.GetLength(0); j++)
-                {
-                    if (_board[i, j] is Cell cell)
-                    {
-                        _outputString.Append(DrawCell(cell));
-                    }
-                    else
-                    {
-                        Wall wall = (Wall)_board[i, j];
-                        _outputString.Append(DrawWall(wall));
-                    }
-                }
-                _outputString.Append('\n');
-            }
-            Console.WriteLine(_outputString);
-        }*/
-
         public string DrawCell(Cell cell)
         {
             if (cell == _currentGame.FirstPlayer.CurrentCell)
@@ -167,17 +126,6 @@ namespace Quoridor.View
             (Orientation Orientation, bool HasWall) wallTuple
                 = (wall.Orientation, wall.HasWall);
             return _stringValues[wallTuple.ToTuple()];
-        }
-
-        // Probably should be in an input
-        public static string ReadMove()
-        {
-            string input = Console.ReadLine();
-            if (string.IsNullOrEmpty(input))
-            {
-                return "No input. Try again";
-            }
-            return input;
         }
     }
 }
