@@ -57,14 +57,7 @@ namespace Quoridor.OutputConsole.Input
                             MovePlayer(inputValues);
                             break;
                         case "wall":
-                            Coordinates firstCoordinates = new(int.Parse(inputValues[1]),
-                                int.Parse(inputValues[2]));
-                            Coordinates secondCoordinates = new(int.Parse(inputValues[3]),
-                                int.Parse(inputValues[4]));
-                            Cell from = _game.CurrentBoard.GetCellByCoordinates(firstCoordinates);
-                            Cell to = _game.CurrentBoard.GetCellByCoordinates(secondCoordinates);
-
-                            _game.PlaceWall(inputValues[1], inputValues[2]);
+                            PlaceWall(inputValues);
                             break;
                         case "quit":
                             endLoop = true;
@@ -86,6 +79,18 @@ namespace Quoridor.OutputConsole.Input
             Cell from = _game.CurrentPlayer.CurrentCell;
             Cell to = _game.CurrentBoard.GetCellByCoordinates(coordinates);
             _game.MakeMove(from, to);
+        }
+
+        private void PlaceWall(string[] values)
+        {
+            Coordinates firstCoordinates = new(int.Parse(values[1]),
+                int.Parse(values[2]));
+            Coordinates secondCoordinates = new(int.Parse(values[3]),
+                int.Parse(values[4]));
+            Cell from = _game.CurrentBoard.GetCellByCoordinates(firstCoordinates);
+            Cell to = _game.CurrentBoard.GetCellByCoordinates(secondCoordinates);
+
+            _game.PlaceWall(from, to);
         }
     }
 }
