@@ -1,3 +1,5 @@
+using System;
+
 namespace Quoridor.Model
 {
     public class BoardFactory : IBoardFactory
@@ -15,17 +17,14 @@ namespace Quoridor.Model
                 for (var j = 0; j < _size; j++)
                 {
                     var coordinates = new Coordinates(i, j);
-                    cells[i, j] = new Cell(coordinates, cellId++);
+                    cells[i, j] = new Cell(coordinates, cellId);
+                    cellId++;
 
                     if (i != 0 && j != _size - 1)
-                    {
                         walls.Add(new Wall(coordinates.Left(), coordinates, Orientation.Vertical));
-                    }
 
                     if (j != 0 && i != _size - 1)
-                    {
                         walls.Add(new Wall(coordinates.Up(), coordinates, Orientation.Horizontal));
-                    }
                 }
             }
 
