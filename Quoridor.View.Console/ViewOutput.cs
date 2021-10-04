@@ -59,24 +59,34 @@ namespace Quoridor.View
                     _board[i, j] = VerticalWallSymbol;
         }
 
+        private void UpdateBoard()
+        {
+            UpdateCells();
+            UpdateWalls();
+        }
+
         private void CleanCells()
         {
-            for (var i = 0; i < _size * 2 + 1; i++)
-                for (var j = 0; j < _size * 2 + 1; j++)
+            for (var i = 1; i < _size * 2 + 1; i+=2)
+                for (var j = 1; j < _size * 2 + 1; j+=2)
                     _board[i, j] = EmptyCellSymbol;
         }
 
-        public void UpdateBoard(Wall[] walls, Cell firstPlayer, Cell secondPlayer)
+        private void UpdateCells()
         {
             CleanCells();
-            var x = firstPlayer.Coordinates.X * 2 + 1;
-            var y = firstPlayer.Coordinates.Y * 2 + 1;
+            var x = _currentGame.FirstPlayer.CurrentCell.Coordinates.X * 2 + 1;
+            var y = _currentGame.FirstPlayer.CurrentCell.Coordinates.Y * 2 + 1;
             _board[x, y] = FirstPlayerSymbol;
 
-            x = secondPlayer.Coordinates.X * 2 + 1;
-            y = secondPlayer.Coordinates.Y * 2 + 1;
+            x = _currentGame.SecondPlayer.CurrentCell.Coordinates.X * 2 + 1;
+            y = _currentGame.SecondPlayer.CurrentCell.Coordinates.Y * 2 + 1;
             _board[x, y] = SecondPlayerSymbol;
+        }
 
+        private void UpdateWalls()
+        {
+            var walls = _currentGame.CurrentBoard.GetPlacedWalls();
             for (var i = 0; i < walls.GetLength(0); i++)
             {
                 var x1 = walls[i].Coordinates.X * 2 + 1;
@@ -99,6 +109,7 @@ namespace Quoridor.View
 
         public void DrawBoard()
         {
+            UpdateBoard();
             for (var i = 0; i < _board.GetLength(0); i++)
             {
                 for (var j = 0; j < _board.GetLength(0); j++)
