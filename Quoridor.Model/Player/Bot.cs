@@ -18,16 +18,16 @@ namespace Quoridor.Model
         public Cell ChooseRandomCell(Cell[] possibleCells)
         {
             var random = new Random();
-            int index = random.Next(possibleCells.Length);
+            int index = random.Next(possibleCells.GetLength(0));
             Cell randomCell = possibleCells[index];
             Cell chosenCell = randomCell;
             return chosenCell;
         }
 
-        public Wall ChooseRandomWall(List<Wall> possibleWalls)
+        public Wall ChooseRandomWall(Wall[] possibleWalls)
         {
             var random = new Random();
-            int index = random.Next(possibleWalls.Count);
+            int index = random.Next(possibleWalls.GetLength(0));
             Wall randomWall = possibleWalls[index];
             Wall chosenWall = randomWall;
             return chosenWall;

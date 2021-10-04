@@ -8,8 +8,8 @@
 
         public Cell ChangeCoordinates(Cell newCell)
         {
-            Cell currentCell = newCell;
-            return currentCell;
+            CurrentCell = newCell;
+            return CurrentCell;
         }
 
         public void DecreaseWallCount()

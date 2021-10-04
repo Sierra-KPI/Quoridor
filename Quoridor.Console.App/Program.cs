@@ -15,12 +15,16 @@ namespace Quoridor.OutputConsole.App
             Player player2 = new(board1.GetStartCellForPlayer(2),
                 board1.GetEndCellsForPlayer(board1.GetStartCellForPlayer(2)));
             QuoridorGame game = new(player1, player2, board1);
+          
 
             ConsoleInput input = new(game);
 
             input.ReadMove();
 
             //Player player1 = new();
+
+            ViewOutput viewOutput = new(game);
+            viewOutput.DrawBoard();
 
 
             //IElement[,] _board = new IElement[3, 3]
