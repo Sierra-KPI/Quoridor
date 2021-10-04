@@ -8,7 +8,7 @@ namespace Quoridor.Model
         private Graph _graph;
         private Cell[,] _cells;
         private List<Wall> _walls;
-        public List<Wall> PlacedWalls;
+        private List<Wall> _placedWalls;
 
         public int Size => _cells.GetLength(0);
 
@@ -17,7 +17,7 @@ namespace Quoridor.Model
             _cells = cells;
             _graph = graph;
             _walls = walls;
-            PlacedWalls = new List<Wall>();
+            _placedWalls = new List<Wall>();
         }
 
         public bool MakeMove(Cell from, Cell to)
@@ -42,7 +42,7 @@ namespace Quoridor.Model
 
             var orientation = diff == 1 ? Orientation.Horizontal : Orientation.Vertical;
             var wall = new Wall(cell1.Coordinates, cell2.Coordinates, orientation);
-            PlacedWalls.Add(wall);
+            _placedWalls.Add(wall);
 
             return true;
         }
@@ -104,9 +104,7 @@ namespace Quoridor.Model
             var endCells = new Cell[Size];
             var endY = cell.Coordinates.Y == 0 ? Size - 1 : 0;
             for (var i = 0; i < Size; i++)
-            {
                 endCells[i] = _cells[i, endY];
-            }
             return endCells;
         }
 
@@ -121,10 +119,10 @@ namespace Quoridor.Model
 
         public Wall[] GetPossibleWallsPlaces() => _walls.ToArray();
 
-        public Wall[] GetPlacedWalls() => PlacedWalls.ToArray();
+        public Wall[] GetPlacedWalls() => _placedWalls.ToArray();
 
         Cell GetCellById(int id) => _cells[id / Size, id % Size];
 
-        Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
+        public Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
     }
 }

@@ -18,6 +18,8 @@ namespace Quoridor.OutputConsole.App
             ViewOutput viewOutput = new(game);
             viewOutput.DrawBoard();
 
+
+
             //IElement[,] _board = new IElement[3, 3]
             //{
             //    {

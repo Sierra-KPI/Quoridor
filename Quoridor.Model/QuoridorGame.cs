@@ -25,8 +25,9 @@
             return false;
         }
 
-        public bool MakeMove(Cell from, Cell to)
+        public bool MakeMove(Cell to)
         {
+            var from = CurrentPlayer.CurrentCell;
             if (CurrentBoard.MakeMove(from, to))
             {
                 CurrentPlayer.ChangeCoordinates(to);

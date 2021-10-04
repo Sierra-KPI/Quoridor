@@ -14,7 +14,7 @@ namespace Quoridor.Model
             _edges = new int[2 * size * (size - 1), 2];
 
             int edgeId = 0;
-            for (var v = 0; v < size; v++)
+            for (var v = 0; v < _size; v++)
             {
                 if (v - 1 >= 0 && (v % size != 0))
                 {
@@ -109,7 +109,6 @@ namespace Quoridor.Model
             }
             return distances;
         }
-
 
     }
 }
