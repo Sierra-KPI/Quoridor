@@ -1,11 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using Quoridor.Model;
 
 namespace Quoridor.OutputConsole.Input
 {
     public class ConsoleInput
     {
-        QuoridorGame _game;
+        private readonly QuoridorGame _game;
+
+        // private Dictionary<string, Action<>> _stringValues = new();
+
+        private readonly string _greetingMessage = "Hi! Now You are " +
+            "playing Quoridor. The object of the game is to advance " +
+            "your pawn to the opposite edge of the board. On your " +
+            "turn you may either move your pawn or place a wall. " +
+            "You may hinder your opponent with wall placement, " +
+            "but not completely block them off. Meanwhile, " +
+            "they are trying to do the same to you. The first " +
+            "pawn to reach the opposite side wins.";
+        private readonly string _nullOrEmptyMessage = "Your input " +
+            "is empty! Try again";
+        private readonly string _helpMessage = "Here's some tips " +
+            "tips on how to play the game:\n1. player x y - move " +
+            "Your player from x cell to y cell\n2. wall x y - place " +
+            "wall from x cell to y cell\n3. help - print this " +
+            "helpbox\n4. quit - quit the game";
 
         public ConsoleInput(QuoridorGame game)
         {
