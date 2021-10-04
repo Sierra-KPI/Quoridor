@@ -116,6 +116,6 @@ namespace Quoridor.Model
 
         Cell GetCellById(int id) => _cells[id / Size, id % Size];
 
-        Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
+        public Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
     }
 }

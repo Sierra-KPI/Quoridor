@@ -8,7 +8,7 @@ namespace Quoridor.OutputConsole.Input
     {
         private readonly QuoridorGame _game;
 
-        // private Dictionary<string, Action<>> _stringValues = new();
+        private Dictionary<string, int> chars = new();
 
         private readonly string _greetingMessage = "Hi! Now You are " +
             "playing Quoridor. The object of the game is to advance " +
@@ -22,8 +22,8 @@ namespace Quoridor.OutputConsole.Input
             "is empty! Try again";
         private readonly string _helpMessage = "Here's some tips " +
             "tips on how to play the game:\n1. player x y - move " +
-            "Your player from x cell to y cell\n2. wall x y - place " +
-            "wall from x cell to y cell\n3. help - print this " +
+            "Your player from x cell to y cell\n2. wall x1 y1 x2 y2 - place " +
+            "wall from x1 y1 cell to x2 y2 cell\n3. help - print this " +
             "helpbox\n4. quit - quit the game";
 
         public ConsoleInput(QuoridorGame game)
@@ -54,9 +54,16 @@ namespace Quoridor.OutputConsole.Input
                     switch (inputValues[0])
                     {
                         case "player":
-                            _game.MakeMove(inputValues[1], inputValues[2]);
+                            MovePlayer(inputValues);
                             break;
                         case "wall":
+                            Coordinates firstCoordinates = new(int.Parse(inputValues[1]),
+                                int.Parse(inputValues[2]));
+                            Coordinates secondCoordinates = new(int.Parse(inputValues[3]),
+                                int.Parse(inputValues[4]));
+                            Cell from = _game.CurrentBoard.GetCellByCoordinates(firstCoordinates);
+                            Cell to = _game.CurrentBoard.GetCellByCoordinates(secondCoordinates);
+
                             _game.PlaceWall(inputValues[1], inputValues[2]);
                             break;
                         case "quit":
@@ -70,6 +77,15 @@ namespace Quoridor.OutputConsole.Input
                     }
                 }
             }
+        }
+
+        private void MovePlayer(string[] values)
+        {
+            Coordinates coordinates = new(int.Parse(values[1]),
+                int.Parse(values[2]));
+            Cell from = _game.CurrentPlayer.CurrentCell;
+            Cell to = _game.CurrentBoard.GetCellByCoordinates(coordinates);
+            _game.MakeMove(from, to);
         }
     }
 }
