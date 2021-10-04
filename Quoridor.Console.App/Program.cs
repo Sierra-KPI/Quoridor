@@ -10,8 +10,6 @@ namespace Quoridor.OutputConsole.App
         private static void Main()
         {
             ConsoleInput input = new();
-            ViewOutput viewOutput = new(game);
-            viewOutput.DrawBoard();
             input.ReadMove();
         }
     }

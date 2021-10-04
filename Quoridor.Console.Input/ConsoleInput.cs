@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Quoridor.Model;
+using Quoridor.View;
 
 namespace Quoridor.OutputConsole.Input
 {
     public class ConsoleInput
     {
-        private QuoridorGame _game;
+        public QuoridorGame CurrentGame;
+        public ViewOutput View;
 
         private Dictionary<string, int> _chars = new();
         private bool _endLoop;
@@ -79,7 +81,6 @@ namespace Quoridor.OutputConsole.Input
             }
         }
 
-        // TO-DO bot vs player and player vs player
         private void ExecuteCommand(string[] values)
         {
             try
@@ -105,6 +106,7 @@ namespace Quoridor.OutputConsole.Input
                         WriteIncorrectMessage();
                         break;
                 }
+                View.DrawBoard();
             }
             catch (Exception)
             {
@@ -122,35 +124,37 @@ namespace Quoridor.OutputConsole.Input
             {
                 Bot secondPlayer = new(board.GetStartCellForPlayer(2),
                 board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
-                _game = new QuoridorGame(firstPlayer, secondPlayer, board);
+                CurrentGame = new QuoridorGame(firstPlayer, secondPlayer, board);
             }
             else
             {
                 Player secondPlayer = new(board.GetStartCellForPlayer(2),
                 board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
-                _game = new QuoridorGame(firstPlayer, secondPlayer, board);
+                CurrentGame = new QuoridorGame(firstPlayer, secondPlayer, board);
             }
+
+            View = new(CurrentGame);
         }
 
         private void MovePlayer(string[] values)
         {
             Coordinates coordinates = new(int.Parse(values[1]),
                 _chars[values[2]]);
-            Cell to = _game.CurrentBoard.GetCellByCoordinates(coordinates);
+            Cell to = CurrentGame.CurrentBoard.GetCellByCoordinates(coordinates);
 
-            _game.MakeMove(to);
+            CurrentGame.MakeMove(to);
         }
 
         private void PlaceWall(string[] values)
         {
             Coordinates firstCoordinates = new(int.Parse(values[1]),
-                int.Parse(values[2]));
+                _chars[values[2]]);
             Coordinates secondCoordinates = new(int.Parse(values[3]),
-                int.Parse(values[4]));
-            Cell from = _game.CurrentBoard.GetCellByCoordinates(firstCoordinates);
-            Cell to = _game.CurrentBoard.GetCellByCoordinates(secondCoordinates);
+                _chars[values[4]]);
+            Cell from = CurrentGame.CurrentBoard.GetCellByCoordinates(firstCoordinates);
+            Cell to = CurrentGame.CurrentBoard.GetCellByCoordinates(secondCoordinates);
 
-            _game.PlaceWall(from, to);
+            CurrentGame.PlaceWall(from, to);
         }
 
         private void WriteIncorrectMessage()
