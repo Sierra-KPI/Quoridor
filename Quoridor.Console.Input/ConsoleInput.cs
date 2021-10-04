@@ -10,19 +10,45 @@ namespace Quoridor.OutputConsole.Input
         public ConsoleInput(QuoridorGame game)
         {
             _game = game;
+            WriteGreeting();
+        }
+
+        public void WriteGreeting()
+        {
+            Console.WriteLine(_greetingMessage);
+            Console.WriteLine(_helpMessage);
         }
 
         public void ReadMove()
         {
-            string input = "";
-
-            while(true)
+            var endLoop = false;
+            while(!endLoop)
             {
-                input = Console.ReadLine();
-                var splitCommand = input.Split(new char[0]);
-                foreach (var command in splitCommand)
+                string input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine(command);
+                    Console.WriteLine(_nullOrEmptyMessage);
+                }
+                else
+                {
+                    string[] inputValues = input.Split(Array.Empty<char>());
+                    switch (inputValues[0])
+                    {
+                        case "player":
+                            _game.MakeMove(inputValues[1], inputValues[2]);
+                            break;
+                        case "wall":
+                            _game.PlaceWall(inputValues[1], inputValues[2]);
+                            break;
+                        case "quit":
+                            endLoop = true;
+                            break;
+                        case "help":
+                            Console.WriteLine(_helpMessage);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
