@@ -9,8 +9,7 @@ namespace Quoridor.OutputConsole.Input
         private readonly QuoridorGame _game;
 
         private Dictionary<string, int> chars = new();
-
-        bool _endLoop;
+        private bool _endLoop;
 
         private readonly string _greetingMessage = "Hi! Now You are " +
             "playing Quoridor. The object of the game is to advance " +
@@ -27,19 +26,38 @@ namespace Quoridor.OutputConsole.Input
             "Your player from x cell to y cell\n2. wall x1 y1 x2 y2 - place " +
             "wall from x1 y1 cell to x2 y2 cell\n3. help - print this " +
             "helpbox\n4. quit - quit the game";
-        private readonly string _IncorrectMessage = "Incorrect command! " +
+        private readonly string _incorrectMessage = "Incorrect command! " +
             "Try something else";
 
         public ConsoleInput(QuoridorGame game)
         {
             _game = game;
             WriteGreeting();
+            InitializeDictionaries();
         }
 
         public void WriteGreeting()
         {
             Console.WriteLine(_greetingMessage);
             Console.WriteLine(_helpMessage);
+        }
+
+        private void InitializeDictionaries()
+        {
+            chars = new Dictionary<string, int>
+            {
+                { "A", 1 },
+                { "B", 2 },
+                { "C", 3 },
+                { "D", 4 },
+                { "E", 5 },
+                { "F", 6 },
+                { "G", 7 },
+                { "H", 8 },
+                { "I", 9 }
+            };
+
+
         }
 
         public void ReadMove()
@@ -112,7 +130,7 @@ namespace Quoridor.OutputConsole.Input
 
         private void WriteIncorrectMessage()
         {
-            Console.WriteLine(_IncorrectMessage);
+            Console.WriteLine(_incorrectMessage);
         }
 
         private void WriteHelpMessage()
