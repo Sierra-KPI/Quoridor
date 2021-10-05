@@ -13,9 +13,9 @@ namespace Quoridor.View
         private const string SecondPlayerSymbol = " 2 ";
         private const string EmptyCellSymbol = "   ";
         private const string HorizontalWallSymbol = "───";
-        private const string VerticalWallSymbol = " │ ";
-        private const string HorizontalPlacedWallSymbol = "═══"; // try "███"
-        private const string VerticalPlacedWallSymbol = " ║ ";
+        private const string VerticalWallSymbol = "│";
+        private const string HorizontalPlacedWallSymbol = "■■■";
+        private const string VerticalPlacedWallSymbol = "█";
 
         private int _size;
         private string[,] _board;
@@ -78,13 +78,15 @@ namespace Quoridor.View
 
                 if (walls[i].Orientation == Orientation.Vertical)
                 {
-                    _board[x1 - 1, y2 - y1] = VerticalPlacedWallSymbol;
+                    //_board[x1 - 1, y2 - y1] = VerticalPlacedWallSymbol;
                     _board[x1, y2 - y1] = VerticalPlacedWallSymbol;
                     _board[x1 + 1, y2 - y1] = VerticalPlacedWallSymbol;
+                    _board[x1 + 2, y2 - y1] = VerticalPlacedWallSymbol;
                 }
                 if (walls[i].Orientation == Orientation.Horizontal)
                 {
                     _board[x2 - x1, y1] = HorizontalPlacedWallSymbol;
+                    _board[x2 - x1, y1 + 2] = HorizontalPlacedWallSymbol;
                 }
             }
         }
@@ -95,7 +97,7 @@ namespace Quoridor.View
 
             Console.Write("  ");
             for (int i = 0; i < _size; i++)
-                Console.Write("     " + (char)(i + 65));
+                Console.Write("   " + (char)(i + 65));
             Console.WriteLine();
 
             for (var i = 0; i < _board.GetLength(0); i++)
@@ -121,11 +123,11 @@ namespace Quoridor.View
             return EmptyCellSymbol;
         }
 
-        public string DrawWall(Wall wall)
+        /*public string DrawWall(Wall wall)
         {
             (Orientation Orientation, bool HasWall) wallTuple
                 = (wall.Orientation, wall.HasWall);
             return _stringValues[wallTuple.ToTuple()];
-        }
+        }*/
     }
 }
