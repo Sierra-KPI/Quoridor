@@ -40,6 +40,8 @@
 
         public bool PlaceWall(Cell cell1, Cell cell2)
         {
+            if (CurrentPlayer.WallsCount == 0) return false;
+
             if (CurrentBoard.RemoveWall(cell1, cell2))
             {
                 bool resPlayer1 = CurrentBoard.CheckPaths
