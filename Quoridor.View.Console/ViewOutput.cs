@@ -73,20 +73,20 @@ namespace Quoridor.View
             {
                 var x1 = walls[i].Coordinates.X * 2 + 1;
                 var y1 = walls[i].Coordinates.Y * 2 + 1;
-                var x2 = walls[i].EndCoordinates.X * 2 + 1;
-                var y2 = walls[i].EndCoordinates.Y * 2 + 1;
+                var x2 = walls[i].EndCoordinates.X * 2;
+                var y2 = walls[i].EndCoordinates.Y * 2;
 
                 if (walls[i].Orientation == Orientation.Vertical)
                 {
-                    //_board[x1 - 1, y2 - y1] = VerticalPlacedWallSymbol;
-                    _board[x1, y2 - y1] = VerticalPlacedWallSymbol;
-                    _board[x1 + 1, y2 - y1] = VerticalPlacedWallSymbol;
-                    _board[x1 + 2, y2 - y1] = VerticalPlacedWallSymbol;
+                    //_board[x1 - 1, y2] = VerticalPlacedWallSymbol;
+                    _board[x1, y2] = VerticalPlacedWallSymbol;
+                    _board[x1 + 1, y2] = VerticalPlacedWallSymbol;
+                    _board[x1 + 2, y2] = VerticalPlacedWallSymbol;
                 }
                 if (walls[i].Orientation == Orientation.Horizontal)
                 {
-                    _board[x2 - x1, y1] = HorizontalPlacedWallSymbol;
-                    _board[x2 - x1, y1 + 2] = HorizontalPlacedWallSymbol;
+                    _board[x2, y1] = HorizontalPlacedWallSymbol;
+                    _board[x2, y1 + 2] = HorizontalPlacedWallSymbol;
                 }
             }
         }

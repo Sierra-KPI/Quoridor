@@ -138,22 +138,20 @@ namespace Quoridor.OutputConsole.Input
 
         private void MovePlayer(string[] values)
         {
-            Coordinates coordinates = new(int.Parse(values[1]),
-                _chars[values[2]]);
+            Coordinates coordinates = new(int.Parse(values[1]) - 1,
+                _chars[values[2]] - 1);
             Cell to = CurrentGame.CurrentBoard.GetCellByCoordinates(coordinates);
-
             CurrentGame.MakeMove(to);
         }
 
         private void PlaceWall(string[] values)
         {
-            Coordinates firstCoordinates = new(int.Parse(values[1]),
-                _chars[values[2]]);
-            Coordinates secondCoordinates = new(int.Parse(values[3]),
-                _chars[values[4]]);
+            Coordinates firstCoordinates = new(int.Parse(values[1]) - 1,
+                _chars[values[2]] - 1);
+            Coordinates secondCoordinates = new(int.Parse(values[3]) - 1,
+                _chars[values[4]] - 1);
             Cell from = CurrentGame.CurrentBoard.GetCellByCoordinates(firstCoordinates);
             Cell to = CurrentGame.CurrentBoard.GetCellByCoordinates(secondCoordinates);
-
             CurrentGame.PlaceWall(from, to);
         }
 
