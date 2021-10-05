@@ -1,4 +1,6 @@
-﻿namespace Quoridor.Model
+﻿using System;
+
+namespace Quoridor.Model
 {
     public class QuoridorGame
     {
@@ -28,7 +30,11 @@
         public bool MakeMove(Cell to)
         {
             var from = CurrentPlayer.CurrentCell;
-            if (CurrentBoard.MakeMove(from, to))
+            SwapPlayer();
+            var throught = CurrentPlayer.CurrentCell;
+            SwapPlayer();
+
+            if (CurrentBoard.MakeMove(from, to, throught))
             {
                 CurrentPlayer.ChangeCoordinates(to);
                 CheckGameEnd();
