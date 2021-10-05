@@ -33,6 +33,7 @@ namespace Quoridor.OutputConsole.Input
             "helpbox\n5. quit - quit the game";
         private readonly string _incorrectMessage = "Incorrect command! " +
             "Try something else";
+        private readonly string _currentPlayerMessage = "Current player is ";
 
         public ConsoleInput()
         {
@@ -107,6 +108,7 @@ namespace Quoridor.OutputConsole.Input
                         break;
                 }
                 View.DrawBoard();
+                WritePlayerMessage();
             }
             catch (Exception)
             {
@@ -118,19 +120,24 @@ namespace Quoridor.OutputConsole.Input
         {
             Board board = new BoardFactory().CreateBoard();
             Player firstPlayer = new(board.GetStartCellForPlayer(1),
-                board.GetEndCellsForPlayer(board.GetStartCellForPlayer(1)));
+                board.GetEndCellsForPlayer(board.
+                    GetStartCellForPlayer(1)));
 
             if (values[1] == "1")
             {
                 Bot secondPlayer = new(board.GetStartCellForPlayer(2),
                 board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
-                CurrentGame = new QuoridorGame(firstPlayer, secondPlayer, board);
+                CurrentGame = new QuoridorGame(firstPlayer,
+                    secondPlayer, board);
             }
             else
             {
-                Player secondPlayer = new(board.GetStartCellForPlayer(2),
-                board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
-                CurrentGame = new QuoridorGame(firstPlayer, secondPlayer, board);
+                Player secondPlayer = new(board.
+                    GetStartCellForPlayer(2),
+                board.GetEndCellsForPlayer(board.
+                    GetStartCellForPlayer(2)));
+                CurrentGame = new QuoridorGame(firstPlayer,
+                    secondPlayer, board);
             }
 
             View = new(CurrentGame);
@@ -140,7 +147,8 @@ namespace Quoridor.OutputConsole.Input
         {
             Coordinates coordinates = new(int.Parse(values[1]) - 1,
                 _chars[values[2]] - 1);
-            Cell to = CurrentGame.CurrentBoard.GetCellByCoordinates(coordinates);
+            Cell to = CurrentGame.CurrentBoard.
+                GetCellByCoordinates(coordinates);
             CurrentGame.MakeMove(to);
         }
 
@@ -150,8 +158,10 @@ namespace Quoridor.OutputConsole.Input
                 _chars[values[2]] - 1);
             Coordinates secondCoordinates = new(int.Parse(values[3]) - 1,
                 _chars[values[4]] - 1);
-            Cell from = CurrentGame.CurrentBoard.GetCellByCoordinates(firstCoordinates);
-            Cell to = CurrentGame.CurrentBoard.GetCellByCoordinates(secondCoordinates);
+            Cell from = CurrentGame.CurrentBoard.
+                GetCellByCoordinates(firstCoordinates);
+            Cell to = CurrentGame.CurrentBoard.
+                GetCellByCoordinates(secondCoordinates);
             CurrentGame.PlaceWall(from, to);
         }
 
@@ -163,6 +173,17 @@ namespace Quoridor.OutputConsole.Input
         private void WriteHelpMessage()
         {
             Console.WriteLine(_helpMessage);
+        }
+
+        private void WritePlayerMessage()
+        {
+            string _playerName = "First Player";
+            if (CurrentGame.CurrentPlayer == CurrentGame.SecondPlayer)
+            {
+                _playerName = "Second Player";
+            }
+
+            Console.WriteLine(_currentPlayerMessage + $"{_playerName}");
         }
 
         private static bool QuitLoop() => true;

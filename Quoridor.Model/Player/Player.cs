@@ -19,7 +19,7 @@
 
         public bool HasWon()
         {
-            foreach (var cell in EndCells)
+            foreach (Cell cell in EndCells)
             {
                 if (CurrentCell.Coordinates == cell.Coordinates)
                 {
