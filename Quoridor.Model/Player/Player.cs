@@ -23,7 +23,7 @@
             {
                 if (CurrentCell.Coordinates == cell.Coordinates)
                 {
-                    return HasWon();
+                    return true;
                 }
             }
             return false;

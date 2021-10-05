@@ -12,7 +12,7 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<string, int> _chars = new();
         private bool _endLoop;
-        string _currentPlayerName = "First Player";
+        private string _currentPlayerName = "First Player";
 
         private readonly string _greetingMessage = "Hi! Now You are " +
             "playing Quoridor.\nThe object of the game is to advance " +
@@ -101,7 +101,7 @@ namespace Quoridor.OutputConsole.Input
                         PlaceWall(values);
                         break;
                     case "quit":
-                        _endLoop = QuitLoop();
+                        QuitLoop();
                         break;
                     case "help":
                         WriteHelpMessage();
@@ -152,6 +152,11 @@ namespace Quoridor.OutputConsole.Input
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
             CurrentGame.MakeMove(to);
+
+            if (CurrentGame.CheckGameEnd())
+            {
+                QuitLoop();
+            }
         }
 
         private void PlaceWall(string[] values)
@@ -201,6 +206,9 @@ namespace Quoridor.OutputConsole.Input
                 _currentPlayerName);
         }
 
-        private static bool QuitLoop() => true;
+        private void QuitLoop()
+        {
+            _endLoop = true;
+        }
     }
 }

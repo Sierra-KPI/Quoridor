@@ -40,7 +40,14 @@ namespace Quoridor.Model
 
         public bool HasWon()
         {
-            return true;
+            foreach (Cell cell in EndCells)
+            {
+                if (CurrentCell.Coordinates == cell.Coordinates)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Bot(Cell currentCell, Cell[] endCells)
