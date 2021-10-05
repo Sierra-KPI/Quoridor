@@ -20,26 +20,10 @@ namespace Quoridor.Model
             _placedWalls = new List<Wall>();
         }
 
-        public bool MakeMove(Cell from, Cell to, Cell throught)
+        public bool MakeMove(Cell from, Cell to, Cell through)
         {
-            var moves = GetPossiblePlayersMoves(from, throught);
+            var moves = GetPossiblePlayersMoves(from, through);
             return System.Array.Exists(moves, element => element == to);
-        }
-
-        private Cell[] CheckJump(Cell from, Cell throught)
-        {
-            var to = new List<Cell>();
-            var diffX = throught.Coordinates.X - from.Coordinates.X;
-            var diffY = throught.Coordinates.Y - from.Coordinates.Y;
-            if ((diffX == 0 || diffX == 1 || diffX == -1) &&
-                (diffY == 0 || diffY == 1 || diffY == -1))
-            {
-                var toX = from.Coordinates.X + diffX * 2;
-                var toY = from.Coordinates.Y + diffY * 2;
-                var toCell = GetCellByCoordinates(new Coordinates(toX, toY));
-                to.Add(toCell);
-            }
-            return to.ToArray();
         }
 
         public bool PlaceWall(Cell cell1, Cell cell2)
@@ -124,13 +108,41 @@ namespace Quoridor.Model
             return endCells;
         }
 
-        public Cell[] GetPossiblePlayersMoves(Cell from, Cell throught)
+        private Cell[] CheckJump(Cell from, Cell through)
+        {
+            var to = new List<Cell>();
+            var diffX = through.Coordinates.X - from.Coordinates.X;
+            var diffY = through.Coordinates.Y - from.Coordinates.Y;
+            if ((diffX == 0 || diffX == 1 || diffX == -1) &&
+                (diffY == 0 || diffY == 1 || diffY == -1))
+            {
+                var toX = from.Coordinates.X + diffX * 2;
+                var toY = from.Coordinates.Y + diffY * 2;
+                var toCell1 = GetCellByCoordinates(new Coordinates(toX, toY));
+                if (HasPath(from, toCell1))
+                {
+                    to.Add(toCell1);
+                    var coordinates2 = new Coordinates(through.Coordinates.X + diffX,
+                                                    through.Coordinates.Y + diffY);
+                    var toCell2 = GetCellByCoordinates(coordinates2);
+                    if (HasPath(from, toCell2)) to.Add(toCell2);
+
+                    var coordinates3 = new Coordinates(through.Coordinates.X - diffX,
+                                                    through.Coordinates.Y - diffY);
+                    var toCell3 = GetCellByCoordinates(coordinates3);
+                    if (HasPath(from, toCell3)) to.Add(toCell3);
+                }
+            }
+            return to.ToArray();
+        }
+
+        public Cell[] GetPossiblePlayersMoves(Cell from, Cell through)
         {
             var edges = _graph.GetEdgesForVertex(from.Id);
             Cell[] possibleCells = new Cell[edges.GetLength(0)];
             for (int i = 0; i < edges.GetLength(0); i++)
                 possibleCells[i] = GetCellById(edges[i]);
-            var jumps = CheckJump(from, throught);
+            var jumps = CheckJump(from, through);
             return possibleCells.Concat(jumps).ToArray();
         }
 

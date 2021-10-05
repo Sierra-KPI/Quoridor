@@ -26,10 +26,10 @@ namespace Quoridor.Model
         {
             var from = CurrentPlayer.CurrentCell;
             SwapPlayer();
-            var throught = CurrentPlayer.CurrentCell;
+            var through = CurrentPlayer.CurrentCell;
             SwapPlayer();
 
-            if (CurrentBoard.MakeMove(from, to, throught))
+            if (CurrentBoard.MakeMove(from, to, through))
             {
                 CurrentPlayer.ChangeCoordinates(to);
                 CheckGameEnd();
