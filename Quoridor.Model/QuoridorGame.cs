@@ -19,12 +19,7 @@ namespace Quoridor.Model
 
         public bool CheckGameEnd()
         {
-            if (CurrentPlayer.HasWon())
-            {
-                EndGame();
-                return true;
-            }
-            return false;
+            return CurrentPlayer.HasWon();
         }
 
         public bool MakeMove(Cell to)
@@ -71,8 +66,6 @@ namespace Quoridor.Model
             }
             return false;
         }
-
-        private void EndGame() => CurrentPlayer.HasWon();
 
         public void SwapPlayer()
         {

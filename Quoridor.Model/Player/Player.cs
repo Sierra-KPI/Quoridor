@@ -19,8 +19,14 @@
 
         public bool HasWon()
         {
-            // TO-DO check current CurrentCell and EndCells
-            return true;
+            foreach (var cell in EndCells)
+            {
+                if (CurrentCell.Coordinates == cell.Coordinates)
+                {
+                    return HasWon();
+                }
+            }
+            return false;
         }
 
         public Player(Cell currentCell, Cell[] endCells)

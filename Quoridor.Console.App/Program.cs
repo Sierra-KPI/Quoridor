@@ -1,7 +1,4 @@
-﻿using Quoridor.View;
-using Quoridor.Model;
-using System;
-using Quoridor.OutputConsole.Input;
+﻿using Quoridor.OutputConsole.Input;
 
 namespace Quoridor.OutputConsole.App
 {
