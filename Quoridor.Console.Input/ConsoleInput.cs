@@ -12,6 +12,7 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<string, int> _chars = new();
         private bool _endLoop;
+        string _currentPlayerName = "First Player";
 
         private readonly string _greetingMessage = "Hi! Now You are " +
             "playing Quoridor.\nThe object of the game is to advance " +
@@ -37,11 +38,11 @@ namespace Quoridor.OutputConsole.Input
 
         public ConsoleInput()
         {
-            WriteGreeting();
+            WriteStartingMessage();
             InitializeDictionaries();
         }
 
-        public void WriteGreeting()
+        public void WriteStartingMessage()
         {
             Console.WriteLine(_greetingMessage);
             Console.WriteLine(_helpMessage);
@@ -107,8 +108,7 @@ namespace Quoridor.OutputConsole.Input
                         WriteIncorrectMessage();
                         break;
                 }
-                View.DrawBoard();
-                WritePlayerMessage();
+                DoAfterCommand();
             }
             catch (Exception)
             {
@@ -165,6 +165,13 @@ namespace Quoridor.OutputConsole.Input
             CurrentGame.PlaceWall(from, to);
         }
 
+        // TO-DO rename Me PLS
+        private void DoAfterCommand()
+        {
+            View.DrawBoard();
+            WritePlayerMessage();
+        }
+
         private void WriteIncorrectMessage()
         {
             Console.WriteLine(_incorrectMessage);
@@ -177,13 +184,13 @@ namespace Quoridor.OutputConsole.Input
 
         private void WritePlayerMessage()
         {
-            string _playerName = "First Player";
             if (CurrentGame.CurrentPlayer == CurrentGame.SecondPlayer)
             {
-                _playerName = "Second Player";
+                _currentPlayerName = "Second Player";
             }
 
-            Console.WriteLine(_currentPlayerMessage + $"{_playerName}");
+            Console.WriteLine(_currentPlayerMessage +
+                _currentPlayerName);
         }
 
         private static bool QuitLoop() => true;
