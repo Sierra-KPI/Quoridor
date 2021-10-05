@@ -34,6 +34,7 @@ namespace Quoridor.OutputConsole.Input
             "helpbox\n5. quit - quit the game";
         private readonly string _incorrectMessage = "Incorrect command! " +
             "Try something else";
+        private readonly string _congratulationsMessage = " Has won!";
         private readonly string _currentPlayerMessage = "Current player is ";
         private readonly string _delimiterMessage = "-----------------" +
             "----------------------------";
@@ -151,11 +152,12 @@ namespace Quoridor.OutputConsole.Input
                 _chars[values[2]] - 1);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
+            IPlayer _currentPlayer = CurrentGame.CurrentPlayer;
             CurrentGame.MakeMove(to);
 
-            if (CurrentGame.CheckGameEnd())
+            if (_currentPlayer.HasWon())
             {
-                QuitLoop();
+                WriteCongratulations();
             }
         }
 
@@ -204,6 +206,11 @@ namespace Quoridor.OutputConsole.Input
 
             Console.WriteLine(_currentPlayerMessage +
                 _currentPlayerName);
+        }
+
+        private void WriteCongratulations()
+        {
+            Console.WriteLine(_currentPlayerName + _congratulationsMessage);
         }
 
         private void QuitLoop()
