@@ -35,6 +35,8 @@ namespace Quoridor.OutputConsole.Input
         private readonly string _incorrectMessage = "Incorrect command! " +
             "Try something else";
         private readonly string _currentPlayerMessage = "Current player is ";
+        private readonly string _delimiterMessage = "-----------------" +
+            "----------------------------";
 
         public ConsoleInput()
         {
@@ -168,6 +170,7 @@ namespace Quoridor.OutputConsole.Input
         // TO-DO rename Me PLS
         private void DoAfterCommand()
         {
+            WriteDelimiter();
             View.DrawBoard();
             WritePlayerMessage();
         }
@@ -180,6 +183,11 @@ namespace Quoridor.OutputConsole.Input
         private void WriteHelpMessage()
         {
             Console.WriteLine(_helpMessage);
+        }
+
+        private void WriteDelimiter()
+        {
+            Console.WriteLine(_delimiterMessage);
         }
 
         private void WritePlayerMessage()
