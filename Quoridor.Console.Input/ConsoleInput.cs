@@ -13,8 +13,9 @@ namespace Quoridor.OutputConsole.Input
         private Dictionary<string, int> _chars = new();
         private bool _endLoop;
         private string _currentPlayerName = "First Player";
+        private IPlayer _currentPlayer;
 
-        private readonly string _greetingMessage = "Hi! Now You are " +
+        private const string GreetingMessage = "Hi! Now You are " +
             "playing Quoridor.\nThe object of the game is to advance " +
             "your pawn to the opposite edge of the board.\nOn your " +
             "turn you may either move your pawn or place a wall. " +
@@ -22,9 +23,9 @@ namespace Quoridor.OutputConsole.Input
             "but not completely block them off.\nMeanwhile, " +
             "they are trying to do the same to you.\nThe first " +
             "pawn to reach the opposite side wins.";
-        private readonly string _nullOrEmptyMessage = "Your input " +
+        private const string NullOrEmptyMessage = "Your input " +
             "is empty! Try again";
-        private readonly string _helpMessage = "Here's some tips " +
+        private const string HelpMessage = "Here's some tips " +
             "tips on how to play the game:\n1. start x - start new " +
             "game, where is the number of real players " +
             "(1 for 1 real and 1 bot. 2 for two real players)" +
@@ -32,11 +33,11 @@ namespace Quoridor.OutputConsole.Input
             " y cell\n3. wall x1 y1 x2 y2 - place wall from " +
             "x1 y1 cell to x2 y2 cell\n4. help - print this " +
             "helpbox\n5. quit - quit the game";
-        private readonly string _incorrectMessage = "Incorrect command! " +
+        private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
-        private readonly string _congratulationsMessage = " Has won!";
-        private readonly string _currentPlayerMessage = "Current player is ";
-        private readonly string _delimiterMessage = "-----------------" +
+        private const string CongratulationsMessage = " Has won!";
+        private const string CurrentPlayerMessage = "Current player is ";
+        private const string DelimiterMessage = "-----------------" +
             "----------------------------";
 
         public ConsoleInput()
@@ -47,8 +48,8 @@ namespace Quoridor.OutputConsole.Input
 
         public void WriteStartingMessage()
         {
-            Console.WriteLine(_greetingMessage);
-            Console.WriteLine(_helpMessage);
+            Console.WriteLine(GreetingMessage);
+            Console.WriteLine(HelpMessage);
         }
 
         private void InitializeDictionaries()
@@ -76,7 +77,7 @@ namespace Quoridor.OutputConsole.Input
                 string input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine(_nullOrEmptyMessage);
+                    Console.WriteLine(NullOrEmptyMessage);
                 }
                 else
                 {
@@ -182,39 +183,39 @@ namespace Quoridor.OutputConsole.Input
             WritePlayerMessage();
         }
 
-        private void WriteIncorrectMessage()
+        private static void WriteIncorrectMessage()
         {
-            Console.WriteLine(_incorrectMessage);
+            Console.WriteLine(IncorrectMessage);
         }
 
-        private void WriteHelpMessage()
+        private static void WriteHelpMessage()
         {
-            Console.WriteLine(_helpMessage);
+            Console.WriteLine(HelpMessage);
         }
 
-        private void WriteDelimiter()
+        private static void WriteDelimiter()
         {
-            Console.WriteLine(_delimiterMessage);
+            Console.WriteLine(DelimiterMessage);
         }
 
         private void WritePlayerMessage()
         {
-            if (CurrentGame.CurrentPlayer == CurrentGame.SecondPlayer)
-            {
-                _currentPlayerName = "Second Player";
-            }
-            else
+            if (CurrentGame.CurrentPlayer == CurrentGame.FirstPlayer)
             {
                 _currentPlayerName = "First Player";
             }
+            else
+            {
+                _currentPlayerName = "Second Player";
+            }
 
-            Console.WriteLine(_currentPlayerMessage +
+            Console.WriteLine(CurrentPlayerMessage +
                 _currentPlayerName);
         }
 
         private void WriteCongratulations()
         {
-            Console.WriteLine(_currentPlayerName + _congratulationsMessage);
+            Console.WriteLine(_currentPlayerName + CongratulationsMessage);
         }
 
         private void QuitLoop()
