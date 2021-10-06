@@ -66,8 +66,6 @@ namespace Quoridor.OutputConsole.Input
                 { "H", 8 },
                 { "I", 9 }
             };
-
-
         }
 
         public void ReadMove()
@@ -168,10 +166,12 @@ namespace Quoridor.OutputConsole.Input
                 _chars[values[2]] - 1);
             Coordinates secondCoordinates = new(int.Parse(values[3]) - 1,
                 _chars[values[4]] - 1);
+
             Cell from = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(firstCoordinates);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(secondCoordinates);
+
             CurrentGame.PlaceWall(from, to);
         }
 
