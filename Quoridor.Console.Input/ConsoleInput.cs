@@ -186,6 +186,7 @@ namespace Quoridor.OutputConsole.Input
                 WriteCongratulations();
             }
             WritePlayerMessage();
+            //Bot.DoSomething()
         }
 
         private static void WriteIncorrectMessage()

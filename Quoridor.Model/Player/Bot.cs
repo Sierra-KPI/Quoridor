@@ -15,6 +15,8 @@ namespace Quoridor.Model
             return currentCell;
         }
 
+        // TO-DO add method with random action
+
         public Cell ChooseRandomCell(Cell[] possibleCells)
         {
             var random = new Random();
