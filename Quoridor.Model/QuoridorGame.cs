@@ -29,6 +29,8 @@ namespace Quoridor.Model
             var through = CurrentPlayer.CurrentCell;
             SwapPlayer();
 
+            if (through == to) return false;
+
             if (CurrentBoard.MakeMove(from, to, through))
             {
                 CurrentPlayer.ChangeCoordinates(to);
