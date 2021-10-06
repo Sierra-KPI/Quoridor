@@ -203,6 +203,10 @@ namespace Quoridor.OutputConsole.Input
             {
                 _currentPlayerName = "Second Player";
             }
+            else
+            {
+                _currentPlayerName = "First Player";
+            }
 
             Console.WriteLine(_currentPlayerMessage +
                 _currentPlayerName);
