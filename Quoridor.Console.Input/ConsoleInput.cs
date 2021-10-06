@@ -158,13 +158,8 @@ namespace Quoridor.OutputConsole.Input
                 _chars[values[2]] - 1);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
-            IPlayer _currentPlayer = CurrentGame.CurrentPlayer;
+            _currentPlayer = CurrentGame.CurrentPlayer;
             CurrentGame.MakeMove(to);
-
-            if (_currentPlayer.HasWon())
-            {
-                WriteCongratulations();
-            }
         }
 
         private void PlaceWall(string[] values)
@@ -185,6 +180,11 @@ namespace Quoridor.OutputConsole.Input
         {
             WriteDelimiter();
             View.DrawBoard();
+
+            if (_currentPlayer.HasWon())
+            {
+                WriteCongratulations();
+            }
             WritePlayerMessage();
         }
 
