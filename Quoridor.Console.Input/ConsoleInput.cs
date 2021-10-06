@@ -123,23 +123,28 @@ namespace Quoridor.OutputConsole.Input
         private void StartGame(string[] values)
         {
             Board board = new BoardFactory().CreateBoard();
-            Player firstPlayer = new(board.GetStartCellForPlayer(1),
-                board.GetEndCellsForPlayer(board.
-                    GetStartCellForPlayer(1)));
+
+            Cell firstPlayerCell = board.GetStartCellForPlayer
+                ((int)PlayerID.First);
+            Cell[] firstPlayerEndCells = board.GetEndCellsForPlayer
+                (board.GetStartCellForPlayer((int)PlayerID.First));
+            Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
+            _currentPlayer = firstPlayer;
+
+            Cell secondPlayerCell = board.GetStartCellForPlayer
+                ((int)PlayerID.Second);
+            Cell[] secondPlayerEndCells = board.GetEndCellsForPlayer
+                (board.GetStartCellForPlayer((int)PlayerID.Second));
 
             if (values[1] == "1")
             {
-                Bot secondPlayer = new(board.GetStartCellForPlayer(2),
-                board.GetEndCellsForPlayer(board.GetStartCellForPlayer(2)));
+                Bot secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 CurrentGame = new QuoridorGame(firstPlayer,
                     secondPlayer, board);
             }
             else
             {
-                Player secondPlayer = new(board.
-                    GetStartCellForPlayer(2),
-                board.GetEndCellsForPlayer(board.
-                    GetStartCellForPlayer(2)));
+                Player secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 CurrentGame = new QuoridorGame(firstPlayer,
                     secondPlayer, board);
             }
