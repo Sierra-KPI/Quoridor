@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace Quoridor.Model
         public bool MakeMove(Cell from, Cell to, Cell through)
         {
             var moves = GetPossiblePlayersMoves(from, through);
-            return System.Array.Exists(moves, element => element == to);
+            return Array.Exists(moves, element => element == to);
         }
 
         public bool PlaceWall(Cell cell1, Cell cell2)
@@ -119,18 +120,19 @@ namespace Quoridor.Model
                 var toX = from.Coordinates.X + diffX * 2;
                 var toY = from.Coordinates.Y + diffY * 2;
                 var toCell1 = GetCellByCoordinates(new Coordinates(toX, toY));
-                if (HasPath(from, toCell1))
+                var edges = _graph.GetEdgesForVertex(through.Id);
+                if (Array.Exists(edges, element => element == toCell1.Id)) to.Add(toCell1);
+                else
                 {
-                    to.Add(toCell1);
-                    var coordinates2 = new Coordinates(through.Coordinates.X + diffX,
-                                                    through.Coordinates.Y + diffY);
+                    var coordinates2 = new Coordinates(through.Coordinates.X + diffY,
+                                                    through.Coordinates.Y + diffX);
                     var toCell2 = GetCellByCoordinates(coordinates2);
-                    if (HasPath(from, toCell2)) to.Add(toCell2);
+                    if (Array.Exists(edges, element => element == toCell2.Id)) to.Add(toCell2);
 
-                    var coordinates3 = new Coordinates(through.Coordinates.X - diffX,
-                                                    through.Coordinates.Y - diffY);
+                    var coordinates3 = new Coordinates(through.Coordinates.X - diffY,
+                                                    through.Coordinates.Y - diffX);
                     var toCell3 = GetCellByCoordinates(coordinates3);
-                    if (HasPath(from, toCell3)) to.Add(toCell3);
+                    if (Array.Exists(edges, element => element == toCell3.Id)) to.Add(toCell3);
                 }
             }
             return to.ToArray();
