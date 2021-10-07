@@ -27,54 +27,65 @@ namespace Quoridor.Model
             return Array.Exists(moves, element => element == to);
         }
 
-        public bool PlaceWall(Cell cell1, Cell cell2)
+        public bool PlaceWall(Wall wall)
         {
+            // rename cell1 to cell1ID 
+            var cell1 = GetIdOfCellByCoordinates(wall.Coordinates);
+            var cell2 = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1, cell2);
 
+            
             _walls = _walls.Where(elem =>
             {
+                //replace to GetIdOfCellByCoordinates
                 var wallCell1 = GetCellByCoordinates(elem.Coordinates);
                 var wallCell2 = GetCellByCoordinates(elem.EndCoordinates);
-                return (wallCell1.Id != cell1.Id || wallCell2.Id != cell2.Id) &&
-                (wallCell1.Id != cell1.Id - diff || wallCell2.Id != cell2.Id - diff) &&
-                (wallCell1.Id != cell1.Id + diff || wallCell2.Id != cell2.Id + diff) &&
-                (wallCell1.Id != cell1.Id || wallCell2.Id != cell1.Id + diff);
+                return (wallCell1.Id != cell1 || wallCell2.Id != cell2) &&
+                (wallCell1.Id != cell1 - diff || wallCell2.Id != cell2 - diff) &&
+                (wallCell1.Id != cell1 + diff || wallCell2.Id != cell2 + diff) &&
+                (wallCell1.Id != cell1 || wallCell2.Id != cell1 + diff);
             }).ToList();
 
-            var orientation = diff == 1 ? Orientation.Horizontal : Orientation.Vertical;
-            var wall = new Wall(cell1.Coordinates, cell2.Coordinates, orientation);
+            //var orientation = diff == 1 ? Orientation.Horizontal : Orientation.Vertical;
+            //var wall = new Wall(cell1.Coordinates, cell2.Coordinates, orientation);
             _placedWalls.Add(wall);
 
             return true;
         }
 
-        int GetDiffId(Cell cell1, Cell cell2)
+        int GetDiffId(int cell1, int cell2)
         {
-            if (cell2.Id - cell1.Id == 1) return Size;
-            else if (cell2.Id - cell1.Id == Size) return 1;
+            if (cell2 - cell1 == 1) return Size;
+            else if (cell2 - cell1 == Size) return 1;
             else throw new Exception("Wrong coordinates for walls");
         }
 
-        public bool RemoveWall(Cell cell1, Cell cell2)
+        public bool RemoveWall(Wall wall)
         {
+            // rename cell1 to cell1ID 
+            var cell1 = GetIdOfCellByCoordinates(wall.Coordinates);
+            var cell2 = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1, cell2);
 
-            var from1 = cell1.Id;
-            var to1 = cell2.Id;
-            var from2 = cell1.Id + diff;
-            var to2 = cell2.Id + diff;
+            var from1 = cell1;
+            var to1 = cell2;
+            var from2 = cell1 + diff;
+            var to2 = cell2 + diff;
 
             return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
         }
 
-        public bool AddWall(Cell cell1, Cell cell2)
+        public bool AddWall(Wall wall)
         {
+            // rename cell1 to cell1ID 
+            var cell1 = GetIdOfCellByCoordinates(wall.Coordinates);
+            var cell2 = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1, cell2);
 
-            var from1 = cell1.Id;
-            var to1 = cell2.Id;
-            var from2 = cell1.Id + diff;
-            var to2 = cell2.Id + diff;
+            var from1 = cell1;
+            var to1 = cell2;
+            var from2 = cell1 + diff;
+            var to2 = cell2 + diff;
 
             return _graph.AddEdge(from1, to1) && _graph.AddEdge(from2, to2);
         }
@@ -153,6 +164,22 @@ namespace Quoridor.Model
 
         Cell GetCellById(int id) => _cells[id / Size, id % Size];
 
+        int GetIdOfCellByCoordinates(Coordinates coordinates) => GetCellByCoordinates(coordinates).Id;
+
         public Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
+
+        // rewrite
+        public Wall GetWallByCoordinates(Coordinates coordinates, Coordinates endCoordinates)
+        {
+            //return _walls.Single(element => element.Coordinates == coordinates && element.EndCoordinates == endCoordinates);
+            
+            foreach (Wall element in _walls)
+            {
+                //Console.WriteLine(element.Coordinates.X + " " + element.Coordinates.Y + " " + element.EndCoordinates.X + " " + element.EndCoordinates.Y);
+                if (element.Coordinates.X == coordinates.X && element.Coordinates.Y == coordinates.Y &&
+                    element.EndCoordinates.X == endCoordinates.X && element.EndCoordinates.Y == endCoordinates.Y) return element;
+            }
+            throw new Exception("In GetWallByCoordinates");
+        }
     }
 }

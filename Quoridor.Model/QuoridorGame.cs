@@ -41,13 +41,12 @@ namespace Quoridor.Model
             throw new Exception("Wrong Move");
         }
 
-        public bool PlaceWall(Cell cell1, Cell cell2)
+        public bool PlaceWall(Wall wall)
         {
             if (CurrentPlayer.WallsCount == 0) throw new Exception("Current player has no walls");
 
-            if (CurrentBoard.RemoveWall(cell1, cell2))
+            if (CurrentBoard.RemoveWall(wall))
             {
-                Console.WriteLine("CurrentBoard.RemoveWall(cell1, cell2) == true");
                 bool resPlayer1 = CurrentBoard.CheckPaths
                     (FirstPlayer.CurrentCell, FirstPlayer.EndCells);
                 bool resPlayer2 = CurrentBoard.CheckPaths
@@ -55,7 +54,7 @@ namespace Quoridor.Model
 
                 if (resPlayer1 && resPlayer2)
                 {
-                    if (CurrentBoard.PlaceWall(cell1, cell2))
+                    if (CurrentBoard.PlaceWall(wall))
                     {
                         CurrentPlayer.DecreaseWallCount();
                         SwapPlayer();
@@ -64,7 +63,7 @@ namespace Quoridor.Model
                 }
                 else
                 {
-                    CurrentBoard.AddWall(cell1, cell2);
+                    CurrentBoard.AddWall(wall);
                 }
             }
             throw new Exception("Wrong Wall");
