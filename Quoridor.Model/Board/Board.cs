@@ -29,27 +29,22 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
-            // rename cell1 to cell1ID 
-            var cell1 = GetIdOfCellByCoordinates(wall.Coordinates);
-            var cell2 = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffId(cell1, cell2);
-
+            var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int diff = GetDiffId(cell1ID, cell2ID);
             
             _walls = _walls.Where(elem =>
             {
                 //replace to GetIdOfCellByCoordinates
                 var wallCell1 = GetCellByCoordinates(elem.Coordinates);
                 var wallCell2 = GetCellByCoordinates(elem.EndCoordinates);
-                return (wallCell1.Id != cell1 || wallCell2.Id != cell2) &&
-                (wallCell1.Id != cell1 - diff || wallCell2.Id != cell2 - diff) &&
-                (wallCell1.Id != cell1 + diff || wallCell2.Id != cell2 + diff) &&
-                (wallCell1.Id != cell1 || wallCell2.Id != cell1 + diff);
+                return (wallCell1.Id != cell1ID || wallCell2.Id != cell2ID) &&
+                (wallCell1.Id != cell1ID - diff || wallCell2.Id != cell2ID - diff) &&
+                (wallCell1.Id != cell1ID + diff || wallCell2.Id != cell2ID + diff) &&
+                (wallCell1.Id != cell1ID || wallCell2.Id != cell1ID + diff);
             }).ToList();
 
-            //var orientation = diff == 1 ? Orientation.Horizontal : Orientation.Vertical;
-            //var wall = new Wall(cell1.Coordinates, cell2.Coordinates, orientation);
             _placedWalls.Add(wall);
-
             return true;
         }
 
@@ -61,31 +56,29 @@ namespace Quoridor.Model
         }
 
         public bool RemoveWall(Wall wall)
-        {
-            // rename cell1 to cell1ID 
-            var cell1 = GetIdOfCellByCoordinates(wall.Coordinates);
-            var cell2 = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffId(cell1, cell2);
+        { 
+            var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int diff = GetDiffId(cell1ID, cell2ID);
 
-            var from1 = cell1;
-            var to1 = cell2;
-            var from2 = cell1 + diff;
-            var to2 = cell2 + diff;
+            var from1 = cell1ID;
+            var to1 = cell2ID;
+            var from2 = cell1ID + diff;
+            var to2 = cell2ID + diff;
 
             return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
         }
 
         public bool AddWall(Wall wall)
         {
-            // rename cell1 to cell1ID 
-            var cell1 = GetIdOfCellByCoordinates(wall.Coordinates);
-            var cell2 = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffId(cell1, cell2);
+            var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int diff = GetDiffId(cell1ID, cell2ID);
 
-            var from1 = cell1;
-            var to1 = cell2;
-            var from2 = cell1 + diff;
-            var to2 = cell2 + diff;
+            var from1 = cell1ID;
+            var to1 = cell2ID;
+            var from2 = cell1ID + diff;
+            var to2 = cell2ID + diff;
 
             return _graph.AddEdge(from1, to1) && _graph.AddEdge(from2, to2);
         }
