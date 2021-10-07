@@ -196,7 +196,15 @@ namespace Quoridor.OutputConsole.Input
                 View.DrawBoard();
             }
             WritePlayerMessage();
-            //Bot.DoSomething()
+            if (CurrentGame.SecondPlayer is Bot bot)
+            {
+                var possiblePlayerPlaces = CurrentGame.
+                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell, );
+                var possibleWallPlaces = CurrentGame.
+                    CurrentBoard.GetPossibleWallsPlaces();
+
+                bot.DoRandomMove(possiblePlayerPlaces, possibleWallPlaces);
+            }
         }
 
         private static void WriteIncorrectMessage()

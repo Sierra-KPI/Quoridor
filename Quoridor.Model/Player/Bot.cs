@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Quoridor.Model
 {
@@ -16,6 +15,20 @@ namespace Quoridor.Model
         }
 
         // TO-DO add method with random action
+        public void DoRandomMove(Cell[] possibleCells,
+            Wall[] possibleWalls)
+        {
+            var random = new Random();
+            int choice = random.Next(2);
+            if (choice % 2 == 0)
+            {
+                ChooseRandomCell(possibleCells);
+            }
+            else
+            {
+                ChooseRandomWall(possibleWalls);
+            }
+        }
 
         public Cell ChooseRandomCell(Cell[] possibleCells)
         {
