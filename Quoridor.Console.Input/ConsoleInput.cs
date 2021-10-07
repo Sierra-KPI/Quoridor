@@ -178,7 +178,8 @@ namespace Quoridor.OutputConsole.Input
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(secondCoordinates);
 
-            CurrentGame.PlaceWall(from, to);
+            Wall wall = CurrentGame.CurrentBoard.GetWallByCoordinates(firstCoordinates, secondCoordinates);
+            CurrentGame.PlaceWall(wall);
         }
 
         // TO-DO rename Me PLS
