@@ -14,6 +14,7 @@ namespace Quoridor.OutputConsole.Input
         private bool _endLoop;
         private string _currentPlayerName = "First Player";
         private IPlayer _currentPlayer;
+        private string[] _gameModePreference;
 
         private const string GreetingMessage = "Hi! Now You are " +
             "playing Quoridor.\nThe object of the game is to advance " +
@@ -120,6 +121,7 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartGame(string[] values)
         {
+            _gameModePreference = values;
             Board board = new BoardFactory().CreateBoard();
 
             Cell firstPlayerCell = board.GetStartCellForPlayer
@@ -139,12 +141,16 @@ namespace Quoridor.OutputConsole.Input
                 Bot secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 CurrentGame = new QuoridorGame(firstPlayer,
                     secondPlayer, board);
+
+                Console.WriteLine("New Singleplayer Game has started!");
             }
             else
             {
                 Player secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 CurrentGame = new QuoridorGame(firstPlayer,
                     secondPlayer, board);
+
+                Console.WriteLine("New Multiplayer Game has started!");
             }
 
             View = new(CurrentGame);
@@ -184,6 +190,10 @@ namespace Quoridor.OutputConsole.Input
             if (_currentPlayer.HasWon())
             {
                 WriteCongratulations();
+                WriteDelimiter();
+
+                StartGame(_gameModePreference);
+                View.DrawBoard();
             }
             WritePlayerMessage();
             //Bot.DoSomething()
