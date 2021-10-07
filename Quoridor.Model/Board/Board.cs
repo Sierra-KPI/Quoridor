@@ -116,9 +116,9 @@ namespace Quoridor.Model
             if ((diffX == 0 || diffX == 1 || diffX == -1) &&
                 (diffY == 0 || diffY == 1 || diffY == -1))
             {
-                var toX = from.Coordinates.X + diffX * 2;
-                var toY = from.Coordinates.Y + diffY * 2;
-                var toCell1 = GetCellByCoordinates(new Coordinates(toX, toY));
+                var coordinates1 = new Coordinates(from.Coordinates.X + diffX * 2,
+                                                    from.Coordinates.Y + diffY * 2);
+                var toCell1 = GetCellByCoordinates(coordinates1);
                 var edges = _graph.GetEdgesForVertex(through.Id);
                 if (Array.Exists(edges, element => element == toCell1.Id)) to.Add(toCell1);
                 else
