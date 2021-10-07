@@ -164,28 +164,7 @@ namespace Quoridor.OutputConsole.Input
                 GetCellByCoordinates(coordinates);
             _currentPlayer = CurrentGame.CurrentPlayer;
             CurrentGame.MakeMove(to);
-        }
 
-        private void PlaceWall(string[] values)
-        {
-            Coordinates firstCoordinates = new(int.Parse(values[1]) - 1,
-                _chars[values[2]] - 1);
-            Coordinates secondCoordinates = new(int.Parse(values[3]) - 1,
-                _chars[values[4]] - 1);
-
-            Cell from = CurrentGame.CurrentBoard.
-                GetCellByCoordinates(firstCoordinates);
-            Cell to = CurrentGame.CurrentBoard.
-                GetCellByCoordinates(secondCoordinates);
-
-            Wall wall = CurrentGame.CurrentBoard.GetWallByCoordinates(firstCoordinates, secondCoordinates);
-            CurrentGame.PlaceWall(wall);
-        }
-
-        // TO-DO rename Me PLS
-        private void DoAfterCommand()
-        {
-            WriteDelimiter();
             if (CurrentGame.SecondPlayer is Bot bot)
             {
                 var possiblePlayerPlaces = CurrentGame.
@@ -206,6 +185,45 @@ namespace Quoridor.OutputConsole.Input
                     CurrentGame.PlaceWall((Wall)element);
                 }
             }
+        }
+
+        private void PlaceWall(string[] values)
+        {
+            Coordinates firstCoordinates = new(int.Parse(values[1]) - 1,
+                _chars[values[2]] - 1);
+            Coordinates secondCoordinates = new(int.Parse(values[3]) - 1,
+                _chars[values[4]] - 1);
+
+            Wall wall = CurrentGame.CurrentBoard.
+                GetWallByCoordinates(firstCoordinates, secondCoordinates);
+            CurrentGame.PlaceWall(wall);
+
+            if (CurrentGame.SecondPlayer is Bot bot)
+            {
+                var possiblePlayerPlaces = CurrentGame.
+                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
+                    CurrentGame.FirstPlayer.CurrentCell);
+                var possibleWallPlaces = CurrentGame.
+                    CurrentBoard.GetPossibleWallsPlaces();
+
+                IElement element = bot.DoRandomMove(possiblePlayerPlaces,
+                    possibleWallPlaces);
+
+                if (element is Cell cell)
+                {
+                    CurrentGame.MakeMove(cell);
+                }
+                else
+                {
+                    CurrentGame.PlaceWall((Wall)element);
+                }
+            }
+        }
+
+        // TO-DO rename Me PLS
+        private void DoAfterCommand()
+        {
+            WriteDelimiter();
 
             View.DrawBoard();
 

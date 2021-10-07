@@ -10,8 +10,8 @@ namespace Quoridor.Model
 
         public Cell ChangeCoordinates(Cell newCell)
         {
-            Cell currentCell = newCell;
-            return currentCell;
+            CurrentCell = newCell;
+            return CurrentCell;
         }
 
         // TO-DO add method with random action
