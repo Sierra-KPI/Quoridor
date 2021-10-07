@@ -29,7 +29,7 @@ namespace Quoridor.Model
             var through = CurrentPlayer.CurrentCell;
             SwapPlayer();
 
-            if (through == to) return false;
+            if (through == to) throw new Exception("Cell is taken");
 
             if (CurrentBoard.MakeMove(from, to, through))
             {
@@ -38,15 +38,16 @@ namespace Quoridor.Model
                 SwapPlayer();
                 return true;
             }
-            return false;
+            throw new Exception("Wrong Move");
         }
 
         public bool PlaceWall(Cell cell1, Cell cell2)
         {
-            if (CurrentPlayer.WallsCount == 0) return false;
+            if (CurrentPlayer.WallsCount == 0) throw new Exception("Current player has no walls");
 
             if (CurrentBoard.RemoveWall(cell1, cell2))
             {
+                Console.WriteLine("CurrentBoard.RemoveWall(cell1, cell2) == true");
                 bool resPlayer1 = CurrentBoard.CheckPaths
                     (FirstPlayer.CurrentCell, FirstPlayer.EndCells);
                 bool resPlayer2 = CurrentBoard.CheckPaths
@@ -66,7 +67,7 @@ namespace Quoridor.Model
                     CurrentBoard.AddWall(cell1, cell2);
                 }
             }
-            return false;
+            throw new Exception("Wrong Wall");
         }
 
         public void SwapPlayer()
