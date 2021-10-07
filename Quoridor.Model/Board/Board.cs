@@ -93,8 +93,8 @@ namespace Quoridor.Model
         {
             switch (id)
             {
-                case 1: return _cells[Size / 2, 0];
-                case 2: return _cells[Size / 2, Size - 1];
+                case (int)PlayerID.First: return _cells[Size / 2, 0];
+                case (int)PlayerID.Second: return _cells[Size / 2, Size - 1];
                 default: return Cell.Default;
             }
         }
