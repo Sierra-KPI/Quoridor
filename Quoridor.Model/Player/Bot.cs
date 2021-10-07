@@ -15,19 +15,16 @@ namespace Quoridor.Model
         }
 
         // TO-DO add method with random action
-        public void DoRandomMove(Cell[] possibleCells,
+        public IElement DoRandomMove(Cell[] possibleCells,
             Wall[] possibleWalls)
         {
             var random = new Random();
             int choice = random.Next(2);
             if (choice % 2 == 0)
             {
-                ChooseRandomCell(possibleCells);
+                return ChooseRandomCell(possibleCells);
             }
-            else
-            {
-                ChooseRandomWall(possibleWalls);
-            }
+            return ChooseRandomWall(possibleWalls);
         }
 
         public Cell ChooseRandomCell(Cell[] possibleCells)

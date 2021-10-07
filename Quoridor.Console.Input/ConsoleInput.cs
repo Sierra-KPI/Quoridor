@@ -185,6 +185,27 @@ namespace Quoridor.OutputConsole.Input
         private void DoAfterCommand()
         {
             WriteDelimiter();
+            if (CurrentGame.SecondPlayer is Bot bot)
+            {
+                var possiblePlayerPlaces = CurrentGame.
+                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
+                    CurrentGame.FirstPlayer.CurrentCell);
+                var possibleWallPlaces = CurrentGame.
+                    CurrentBoard.GetPossibleWallsPlaces();
+
+                IElement element = bot.DoRandomMove(possiblePlayerPlaces,
+                    possibleWallPlaces);
+
+                if (element is Cell cell)
+                {
+                    CurrentGame.MakeMove(cell);
+                }
+                else
+                {
+                    CurrentGame.PlaceWall((Wall)element);
+                }
+            }
+
             View.DrawBoard();
 
             if (_currentPlayer.HasWon())
@@ -196,15 +217,6 @@ namespace Quoridor.OutputConsole.Input
                 View.DrawBoard();
             }
             WritePlayerMessage();
-            if (CurrentGame.SecondPlayer is Bot bot)
-            {
-                var possiblePlayerPlaces = CurrentGame.
-                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell, );
-                var possibleWallPlaces = CurrentGame.
-                    CurrentBoard.GetPossibleWallsPlaces();
-
-                bot.DoRandomMove(possiblePlayerPlaces, possibleWallPlaces);
-            }
         }
 
         private static void WriteIncorrectMessage()
