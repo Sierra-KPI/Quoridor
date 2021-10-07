@@ -50,10 +50,9 @@ namespace Quoridor.Model
 
         int GetDiffId(Cell cell1, Cell cell2)
         {
-            int diff = 0;
-            if (cell2.Id - cell1.Id == 1) diff = Size;
-            else if (cell2.Id - cell1.Id == Size) diff = 1;
-            return diff;
+            if (cell2.Id - cell1.Id == 1) return Size;
+            else if (cell2.Id - cell1.Id == Size) return 1;
+            else throw new Exception("Wrong coordinates for walls");
         }
 
         public bool RemoveWall(Cell cell1, Cell cell2)
