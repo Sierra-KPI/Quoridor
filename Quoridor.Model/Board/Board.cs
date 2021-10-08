@@ -32,7 +32,7 @@ namespace Quoridor.Model
             var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
             var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1ID, cell2ID);
-            
+
             _walls = _walls.Where(elem =>
             {
                 //replace to GetIdOfCellByCoordinates
@@ -56,7 +56,7 @@ namespace Quoridor.Model
         }
 
         public bool RemoveWall(Wall wall)
-        { 
+        {
             var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
             var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1ID, cell2ID);
@@ -159,7 +159,11 @@ namespace Quoridor.Model
 
         int GetIdOfCellByCoordinates(Coordinates coordinates) => GetCellByCoordinates(coordinates).Id;
 
-        public Cell GetCellByCoordinates(Coordinates coordinates) => _cells[coordinates.X, coordinates.Y];
+        public Cell GetCellByCoordinates(Coordinates coordinates) {
+            if (coordinates.X < 0 || coordinates.X >= Size ||
+                coordinates.Y < 0 || coordinates.Y >= Size) return Cell.Default;
+            return _cells[coordinates.X, coordinates.Y];
+        }
 
         // rewrite
         public Wall GetWallByCoordinates(Coordinates coordinates, Coordinates endCoordinates)
