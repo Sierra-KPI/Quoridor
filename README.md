@@ -25,34 +25,33 @@ The abstract strategy game Quoridor is surprisingly deep for its simple rules. T
 ## Example (Optional)
 
 ```csharp
-/// <summary>
-	/// Class for Api Client
-	/// </summary>
-	public static class ApiHelper
-	{
-		// Create static, 'cause We need one client per application
-		public static HttpClient ApiClient { get; set; }
+public bool MakeMove(Cell from, Cell to, Cell through)
+{
+    var moves = GetPossiblePlayersMoves(from, through);
+    return Array.Exists(moves, element => element == to);
+}
 
-		/// <summary>
-		/// Initializes API client
-		/// </summary>
-		public static void Initialize()
-		{
-			ApiClient = new HttpClient
-			{
-				// a lot of adresses will begin with the same string,
-				// so We can put the beginning here
-				// but won't, because We need more than one adress
-				/*
-				BaseAddress = new Uri("http://somesite.com/")
-				*/
-			};
-			ApiClient.DefaultRequestHeaders.Accept.Clear();
-			// give Us json, not webpage or etc.
-			ApiClient.DefaultRequestHeaders.Accept.Add(new
-				MediaTypeWithQualityHeaderValue("application/json"));
-		}
-	}
+public bool PlaceWall(Wall wall)
+{
+    var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+    var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+    int diff = GetDiffId(cell1ID, cell2ID);
+            
+    _walls = _walls.Where(elem =>
+    {
+        //replace to GetIdOfCellByCoordinates
+        var wallCell1 = GetCellByCoordinates(elem.Coordinates);
+        var wallCell2 = GetCellByCoordinates(elem.EndCoordinates);
+        return (wallCell1.Id != cell1ID || wallCell2.Id != cell2ID) &&
+        (wallCell1.Id != cell1ID - diff || wallCell2.Id != cell2ID - diff) &&
+        (wallCell1.Id != cell1ID + diff || wallCell2.Id != cell2ID + diff) &&
+        (wallCell1.Id != cell1ID || wallCell2.Id != cell1ID + diff);
+            }).ToList();
+
+        _placedWalls.Add(wall);
+        return true;
+    }
+}
 ```
 
 ---
