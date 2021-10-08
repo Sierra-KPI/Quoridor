@@ -17,7 +17,8 @@ The abstract strategy game Quoridor is surprisingly deep for its simple rules. T
 
 ## Badges
 
-
+[![Theme](https://img.shields.io/badge/Theme-GameDev-blueviolet)](https://img.shields.io/badge/Theme-GameDev-blueviolet)
+[![Game](https://img.shields.io/badge/Game-Quoridor-blueviolet)](https://img.shields.io/badge/Game-Quoridor-blueviolet)
 
 ---
 
