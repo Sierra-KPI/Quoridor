@@ -40,6 +40,11 @@ namespace Quoridor.OutputConsole.Input
         private const string CurrentPlayerMessage = "Current player is ";
         private const string DelimiterMessage = "-----------------" +
             "----------------------------";
+        private const string SingleplayerMessage = "New Singleplayer" +
+            " Game has started!";
+        private const string MultiplayerMessage = "New Multiplayer" +
+            " Game has started!";
+        private const string SingleModeInput = "1";
 
         public ConsoleInput()
         {
@@ -161,6 +166,7 @@ namespace Quoridor.OutputConsole.Input
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
             _currentPlayer = CurrentGame.CurrentPlayer;
+
             CurrentGame.MakeMove(to);
 
             MakeBotMove();
