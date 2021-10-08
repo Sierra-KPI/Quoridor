@@ -14,7 +14,6 @@ namespace Quoridor.Model
             return CurrentCell;
         }
 
-        // TO-DO add method with random action
         public IElement DoRandomMove(Cell[] possibleCells,
             Wall[] possibleWalls)
         {

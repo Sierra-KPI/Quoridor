@@ -165,26 +165,7 @@ namespace Quoridor.OutputConsole.Input
             _currentPlayer = CurrentGame.CurrentPlayer;
             CurrentGame.MakeMove(to);
 
-            if (CurrentGame.SecondPlayer is Bot bot)
-            {
-                var possiblePlayerPlaces = CurrentGame.
-                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
-                    CurrentGame.FirstPlayer.CurrentCell);
-                var possibleWallPlaces = CurrentGame.
-                    CurrentBoard.GetPossibleWallsPlaces();
-
-                IElement element = bot.DoRandomMove(possiblePlayerPlaces,
-                    possibleWallPlaces);
-
-                if (element is Cell cell)
-                {
-                    CurrentGame.MakeMove(cell);
-                }
-                else
-                {
-                    CurrentGame.PlaceWall((Wall)element);
-                }
-            }
+            MakeBotMove();
         }
 
         private void PlaceWall(string[] values)
@@ -198,26 +179,7 @@ namespace Quoridor.OutputConsole.Input
                 GetWallByCoordinates(firstCoordinates, secondCoordinates);
             CurrentGame.PlaceWall(wall);
 
-            if (CurrentGame.SecondPlayer is Bot bot)
-            {
-                var possiblePlayerPlaces = CurrentGame.
-                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
-                    CurrentGame.FirstPlayer.CurrentCell);
-                var possibleWallPlaces = CurrentGame.
-                    CurrentBoard.GetPossibleWallsPlaces();
-
-                IElement element = bot.DoRandomMove(possiblePlayerPlaces,
-                    possibleWallPlaces);
-
-                if (element is Cell cell)
-                {
-                    CurrentGame.MakeMove(cell);
-                }
-                else
-                {
-                    CurrentGame.PlaceWall((Wall)element);
-                }
-            }
+            MakeBotMove();
         }
 
         // TO-DO rename Me PLS
@@ -236,6 +198,30 @@ namespace Quoridor.OutputConsole.Input
                 View.DrawBoard();
             }
             WritePlayerMessage();
+        }
+
+        private void MakeBotMove()
+        {
+            if (CurrentGame.SecondPlayer is Bot bot)
+            {
+                Cell[] possiblePlayerPlaces = CurrentGame.
+                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
+                    CurrentGame.FirstPlayer.CurrentCell);
+                Wall[] possibleWallPlaces = CurrentGame.
+                    CurrentBoard.GetPossibleWallsPlaces();
+
+                IElement element = bot.DoRandomMove(possiblePlayerPlaces,
+                    possibleWallPlaces);
+
+                if (element is Cell cell)
+                {
+                    CurrentGame.MakeMove(cell);
+                }
+                else
+                {
+                    CurrentGame.PlaceWall((Wall)element);
+                }
+            }
         }
 
         private static void WriteIncorrectMessage()
