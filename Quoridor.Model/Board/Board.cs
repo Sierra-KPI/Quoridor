@@ -172,9 +172,7 @@ namespace Quoridor.Model
             
             foreach (Wall element in _walls)
             {
-                //Console.WriteLine(element.Coordinates.X + " " + element.Coordinates.Y + " " + element.EndCoordinates.X + " " + element.EndCoordinates.Y);
-                if (element.Coordinates.X == coordinates.X && element.Coordinates.Y == coordinates.Y &&
-                    element.EndCoordinates.X == endCoordinates.X && element.EndCoordinates.Y == endCoordinates.Y) return element;
+                if (element.Coordinates == coordinates && element.EndCoordinates == endCoordinates) return element;
             }
             throw new Exception("In GetWallByCoordinates");
         }
