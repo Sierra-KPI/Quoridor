@@ -53,8 +53,7 @@ namespace Quoridor.OutputConsole.Input
             Console.WriteLine(HelpMessage);
         }
 
-        private void InitializeDictionaries()
-        {
+        private void InitializeDictionaries() =>
             _chars = new Dictionary<string, int>
             {
                 { "A", 1 },
@@ -67,11 +66,10 @@ namespace Quoridor.OutputConsole.Input
                 { "H", 8 },
                 { "I", 9 }
             };
-        }
 
         public void ReadMove()
         {
-            while(!_endLoop)
+            while (!_endLoop)
             {
                 string input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
@@ -182,7 +180,6 @@ namespace Quoridor.OutputConsole.Input
             MakeBotMove();
         }
 
-        // TO-DO rename Me PLS
         private void DoAfterCommand()
         {
             WriteDelimiter();
@@ -224,20 +221,14 @@ namespace Quoridor.OutputConsole.Input
             }
         }
 
-        private static void WriteIncorrectMessage()
-        {
+        private static void WriteIncorrectMessage() =>
             Console.WriteLine(IncorrectMessage);
-        }
 
-        private static void WriteHelpMessage()
-        {
+        private static void WriteHelpMessage() =>
             Console.WriteLine(HelpMessage);
-        }
 
-        private static void WriteDelimiter()
-        {
+        private static void WriteDelimiter() =>
             Console.WriteLine(DelimiterMessage);
-        }
 
         private void WritePlayerMessage()
         {
@@ -254,14 +245,9 @@ namespace Quoridor.OutputConsole.Input
                 _currentPlayerName);
         }
 
-        private void WriteCongratulations()
-        {
+        private void WriteCongratulations() =>
             Console.WriteLine(_currentPlayerName + CongratulationsMessage);
-        }
 
-        private void QuitLoop()
-        {
-            _endLoop = true;
-        }
+        private void QuitLoop() => _endLoop = true;
     }
 }

@@ -26,7 +26,10 @@ namespace Quoridor.Model
             var through = CurrentPlayer.CurrentCell;
             SwapPlayer();
 
-            if (through == to) throw new Exception("Cell is taken");
+            if (through == to)
+            {
+                throw new Exception("Cell is taken");
+            }
 
             if (CurrentBoard.MakeMove(from, to, through))
             {
@@ -40,7 +43,10 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
-            if (CurrentPlayer.WallsCount == 0) throw new Exception("Current player has no walls");
+            if (CurrentPlayer.WallsCount == 0)
+            {
+                throw new Exception("Current player has no walls");
+            }
 
             if (CurrentBoard.RemoveWall(wall))
             {

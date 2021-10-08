@@ -32,13 +32,21 @@
 
         public static bool operator ==(Coordinates coordinates1, Coordinates coordinates2)
         {
-            if (coordinates1.X == coordinates2.X && coordinates1.Y == coordinates2.Y) return true;
+            if (coordinates1.X == coordinates2.X && coordinates1.Y == coordinates2.Y)
+            {
+                return true;
+            }
+
             return false;
         }
 
         public static bool operator !=(Coordinates coordinates1, Coordinates coordinates2)
         {
-            if (coordinates1.X != coordinates2.X || coordinates1.Y != coordinates2.Y) return true;
+            if (coordinates1.X != coordinates2.X || coordinates1.Y != coordinates2.Y)
+            {
+                return true;
+            }
+
             return false;
         }
     }

@@ -2,7 +2,7 @@ namespace Quoridor.Model
 {
     public class BoardFactory : IBoardFactory
     {
-        private int _size = 9;
+        private readonly int _size = 9;
 
         public Board CreateBoard()
         {
@@ -19,15 +19,22 @@ namespace Quoridor.Model
                     cellId++;
 
                     if (i != 0 && j != _size - 1)
-                        walls.Add(new Wall(coordinates.Left(), coordinates, Orientation.Vertical));
+                    {
+                        walls.Add(new Wall(coordinates.Left(),
+                            coordinates, Orientation.Vertical));
+                    }
 
                     if (j != 0 && i != _size - 1)
-                        walls.Add(new Wall(coordinates.Up(), coordinates, Orientation.Horizontal));
+                    {
+                        walls.Add(new Wall(coordinates.Up(),
+                            coordinates, Orientation.Horizontal));
+                    }
                 }
             }
 
             var graph = new Graph(_size);
             var board = new Board(cells, walls, graph);
+
             return board;
         }
     }

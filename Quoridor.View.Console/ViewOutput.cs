@@ -15,7 +15,7 @@ namespace Quoridor.View
         private const string HorizontalPlacedWallSymbol = "■■■";
         private const string VerticalPlacedWallSymbol = "█";
 
-        private int _size;
+        private readonly int _size;
         private string[,] _board;
 
         public ViewOutput(QuoridorGame game)
@@ -31,12 +31,20 @@ namespace Quoridor.View
             CleanCells();
 
             for (var i = 0; i < _size * 2 + 1; i += 2)
+            {
                 for (var j = 0; j < _size * 2 + 1; j++)
+                {
                     _board[i, j] = HorizontalWallSymbol;
+                }
+            }
 
             for (var i = 0; i < _size * 2 + 1; i++)
+            {
                 for (var j = 0; j < _size * 2 + 1; j += 2)
+                {
                     _board[i, j] = VerticalWallSymbol;
+                }
+            }
         }
 
         private void UpdateBoard()
@@ -48,15 +56,19 @@ namespace Quoridor.View
         private void CleanCells()
         {
             for (var i = 1; i < _size * 2 + 1; i += 2)
+            {
                 for (var j = 1; j < _size * 2 + 1; j += 2)
+                {
                     _board[i, j] = EmptyCellSymbol;
+                }
+            }
         }
 
         private void UpdateCells()
         {
             CleanCells();
-            var x = _currentGame.FirstPlayer.CurrentCell.Coordinates.X * 2 + 1;
-            var y = _currentGame.FirstPlayer.CurrentCell.Coordinates.Y * 2 + 1;
+            int x = _currentGame.FirstPlayer.CurrentCell.Coordinates.X * 2 + 1;
+            int y = _currentGame.FirstPlayer.CurrentCell.Coordinates.Y * 2 + 1;
             _board[x, y] = FirstPlayerSymbol;
 
             x = _currentGame.SecondPlayer.CurrentCell.Coordinates.X * 2 + 1;
@@ -94,16 +106,29 @@ namespace Quoridor.View
             UpdateBoard();
 
             Console.Write("  ");
-            for (int i = 0; i < _size; i++)
+            for (var i = 0; i < _size; i++)
+            {
                 Console.Write("   " + (char)(i + 65));
+            }
+
             Console.WriteLine();
 
             for (var i = 0; i < _board.GetLength(0); i++)
             {
-                if (i % 2 == 1) Console.Write(" " + ((i / 2) + 1) + " ");
-                else Console.Write("   ");
+                if (i % 2 == 1)
+                {
+                    Console.Write(" " + ((i / 2) + 1) + " ");
+                }
+                else
+                {
+                    Console.Write("   ");
+                }
+
                 for (var j = 0; j < _board.GetLength(0); j++)
+                {
                     Console.Write(_board[i, j]);
+                }
+
                 Console.WriteLine();
             }
         }
