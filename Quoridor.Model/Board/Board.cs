@@ -164,16 +164,9 @@ namespace Quoridor.Model
             return _cells[coordinates.X, coordinates.Y];
         }
 
-        // rewrite
         public Wall GetWallByCoordinates(Coordinates coordinates, Coordinates endCoordinates)
         {
-            //return _walls.Single(element => element.Coordinates == coordinates && element.EndCoordinates == endCoordinates);
-            
-            foreach (Wall element in _walls)
-            {
-                if (element.Coordinates == coordinates && element.EndCoordinates == endCoordinates) return element;
-            }
-            throw new Exception("In GetWallByCoordinates");
+            return _walls.Single(element => element.Coordinates == coordinates && element.EndCoordinates == endCoordinates);
         }
     }
 }
