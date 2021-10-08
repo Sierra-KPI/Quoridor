@@ -35,13 +35,12 @@ namespace Quoridor.Model
 
             _walls = _walls.Where(elem =>
             {
-                //replace to GetIdOfCellByCoordinates
-                var wallCell1 = GetCellByCoordinates(elem.Coordinates);
-                var wallCell2 = GetCellByCoordinates(elem.EndCoordinates);
-                return (wallCell1.Id != cell1ID || wallCell2.Id != cell2ID) &&
-                (wallCell1.Id != cell1ID - diff || wallCell2.Id != cell2ID - diff) &&
-                (wallCell1.Id != cell1ID + diff || wallCell2.Id != cell2ID + diff) &&
-                (wallCell1.Id != cell1ID || wallCell2.Id != cell1ID + diff);
+                var wallCell1 = GetIdOfCellByCoordinates(elem.Coordinates);
+                var wallCell2 = GetIdOfCellByCoordinates(elem.EndCoordinates);
+                return (wallCell1 != cell1ID || wallCell2 != cell2ID) &&
+                (wallCell1 != cell1ID - diff || wallCell2 != cell2ID - diff) &&
+                (wallCell1 != cell1ID + diff || wallCell2 != cell2ID + diff) &&
+                (wallCell1 != cell1ID || wallCell2 != cell1ID + diff);
             }).ToList();
 
             _placedWalls.Add(wall);
