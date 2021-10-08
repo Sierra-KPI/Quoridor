@@ -107,19 +107,5 @@ namespace Quoridor.View
                 Console.WriteLine();
             }
         }
-
-        public string DrawCell(Cell cell)
-        {
-            if (cell == _currentGame.FirstPlayer.CurrentCell)
-            {
-                return FirstPlayerSymbol;
-            }
-            else if (cell == _currentGame.SecondPlayer.CurrentCell)
-            {
-                return SecondPlayerSymbol;
-            }
-            return EmptyCellSymbol;
-        }
-
     }
 }
