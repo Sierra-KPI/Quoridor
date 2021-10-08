@@ -169,7 +169,10 @@ namespace Quoridor.OutputConsole.Input
 
             CurrentGame.MakeMove(to);
 
-            MakeBotMove();
+            if (!_currentPlayer.HasWon())
+            {
+                MakeBotMove();
+            }
         }
 
         private void PlaceWall(string[] values)
