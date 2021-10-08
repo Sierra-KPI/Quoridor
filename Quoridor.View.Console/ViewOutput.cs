@@ -71,8 +71,6 @@ namespace Quoridor.View
             var walls = _currentGame.CurrentBoard.GetPlacedWalls();
             for (var i = 0; i < walls.GetLength(0); i++)
             {
-                //Console.WriteLine(walls[i].Coordinates.X + " " + walls[i].Coordinates.Y + " " + walls[i].EndCoordinates.X + " " + walls[i].EndCoordinates.Y);
-
                 var x1 = walls[i].Coordinates.X * 2 + 1;
                 var y1 = walls[i].Coordinates.Y * 2 + 1;
                 var x2 = walls[i].EndCoordinates.X * 2;
@@ -81,7 +79,6 @@ namespace Quoridor.View
                 // somewhere mistake
                 if (walls[i].Orientation == Orientation.Horizontal)
                 {
-                    //_board[x1 - 1, y2] = VerticalPlacedWallSymbol;
                     _board[x1, y2] = VerticalPlacedWallSymbol;
                     _board[x1 + 1, y2] = VerticalPlacedWallSymbol;
                     _board[x1 + 2, y2] = VerticalPlacedWallSymbol;
@@ -126,11 +123,5 @@ namespace Quoridor.View
             return EmptyCellSymbol;
         }
 
-        /*public string DrawWall(Wall wall)
-        {
-            (Orientation Orientation, bool HasWall) wallTuple
-                = (wall.Orientation, wall.HasWall);
-            return _stringValues[wallTuple.ToTuple()];
-        }*/
     }
 }
