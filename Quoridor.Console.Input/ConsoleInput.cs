@@ -127,36 +127,47 @@ namespace Quoridor.OutputConsole.Input
             _gameModePreference = values;
             Board board = new BoardFactory().CreateBoard();
 
-            Cell firstPlayerCell = board.GetStartCellForPlayer
-                ((int)PlayerID.First);
-            Cell[] firstPlayerEndCells = board.GetEndCellsForPlayer
-                (board.GetStartCellForPlayer((int)PlayerID.First));
+            (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
+                GetPlayerCells(board, PlayerID.First);
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
             _currentPlayer = firstPlayer;
 
-            Cell secondPlayerCell = board.GetStartCellForPlayer
-                ((int)PlayerID.Second);
-            Cell[] secondPlayerEndCells = board.GetEndCellsForPlayer
-                (board.GetStartCellForPlayer((int)PlayerID.Second));
-
-            if (values[1] == "1")
-            {
-                Bot secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
-                CurrentGame = new QuoridorGame(firstPlayer,
-                    secondPlayer, board);
-
-                Console.WriteLine("New Singleplayer Game has started!");
-            }
-            else
-            {
-                Player secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
-                CurrentGame = new QuoridorGame(firstPlayer,
-                    secondPlayer, board);
-
-                Console.WriteLine("New Multiplayer Game has started!");
-            }
+            CurrentGame = CreateSecondPlayer(values, firstPlayer, board);
 
             View = new(CurrentGame);
+        }
+
+        private static (Cell playerCell, Cell[] playerEndCells)
+            GetPlayerCells(Board board, PlayerID playerID)
+        {
+            Cell playerCell = board.GetStartCellForPlayer
+                ((int)playerID);
+            Cell[] playerEndCells = board.GetEndCellsForPlayer
+                (board.GetStartCellForPlayer((int)playerID));
+
+            return (playerCell, playerEndCells); 
+        }
+
+        private QuoridorGame CreateSecondPlayer(string[] values,
+            Player firstPlayer, Board board)
+        {
+            (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
+                GetPlayerCells(board, PlayerID.Second);
+
+            if (values[1] == SingleModeInput)
+            {
+                Bot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+                Console.WriteLine(SingleplayerMessage);
+
+                return CurrentGame = new QuoridorGame(firstPlayer,
+                    botPlayer, board);
+            }
+
+            Player realPlayer = new(secondPlayerCell, secondPlayerEndCells);
+            Console.WriteLine(MultiplayerMessage);
+
+            return CurrentGame = new QuoridorGame(firstPlayer,
+                    realPlayer, board);
         }
 
         private void MovePlayer(string[] values)
