@@ -17,10 +17,7 @@ namespace Quoridor.Model
             CurrentBoard = board;
         }
 
-        public bool CheckGameEnd()
-        {
-            return CurrentPlayer.HasWon();
-        }
+        public bool CheckGameEnd() => CurrentPlayer.HasWon();
 
         public bool MakeMove(Cell to)
         {

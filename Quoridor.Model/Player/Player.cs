@@ -12,10 +12,7 @@
             return CurrentCell;
         }
 
-        public void DecreaseWallCount()
-        {
-            WallsCount--;
-        }
+        public void DecreaseWallCount() => WallsCount--;
 
         public bool HasWon()
         {

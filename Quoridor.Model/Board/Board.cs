@@ -158,15 +158,13 @@ namespace Quoridor.Model
 
         int GetIdOfCellByCoordinates(Coordinates coordinates) => GetCellByCoordinates(coordinates).Id;
 
-        public Cell GetCellByCoordinates(Coordinates coordinates) {
+        public Cell GetCellByCoordinates(Coordinates coordinates)
+        {
             if (coordinates.X < 0 || coordinates.X >= Size ||
                 coordinates.Y < 0 || coordinates.Y >= Size) return Cell.Default;
             return _cells[coordinates.X, coordinates.Y];
         }
 
-        public Wall GetWallByCoordinates(Coordinates coordinates, Coordinates endCoordinates)
-        {
-            return _walls.Single(element => element.Coordinates == coordinates && element.EndCoordinates == endCoordinates);
-        }
+        public Wall GetWallByCoordinates(Coordinates coordinates, Coordinates endCoordinates) => _walls.Single(element => element.Coordinates == coordinates && element.EndCoordinates == endCoordinates);
     }
 }

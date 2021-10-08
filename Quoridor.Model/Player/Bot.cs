@@ -44,10 +44,7 @@ namespace Quoridor.Model
             return chosenWall;
         }
 
-        public void DecreaseWallCount()
-        {
-            WallsCount--;
-        }
+        public void DecreaseWallCount() => WallsCount--;
 
         public bool HasWon()
         {
