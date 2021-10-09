@@ -32,13 +32,6 @@ namespace Quoridor.Model
             MakeAdjacencyList();
         }
 
-        public Graph(int[,] edges, int size)
-        {
-            _size = size;
-            _edges = edges;
-            MakeAdjacencyList();
-        }
-
         private void MakeAdjacencyList()
         {
             _adjacencyList = new LinkedList<int>[_size];
