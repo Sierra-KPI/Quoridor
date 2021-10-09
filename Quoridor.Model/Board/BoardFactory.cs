@@ -6,15 +6,15 @@ namespace Quoridor.Model
 
         public Board CreateBoard()
         {
-            var cells = new Cell[_size, _size];
+            Cell[,] cells = new Cell[_size, _size];
             var walls = new System.Collections.Generic.List<Wall>();
 
-            var cellId = 0;
+            int cellId = 0;
             for (var i = 0; i < _size; i++)
             {
                 for (var j = 0; j < _size; j++)
                 {
-                    var coordinates = new Coordinates(i, j);
+                    Coordinates coordinates = new Coordinates(i, j);
                     cells[i, j] = new Cell(coordinates, cellId);
                     cellId++;
 
@@ -32,8 +32,8 @@ namespace Quoridor.Model
                 }
             }
 
-            var graph = new Graph(_size);
-            var board = new Board(cells, walls, graph);
+            Graph graph = new Graph(_size);
+            Board board = new Board(cells, walls, graph);
 
             return board;
         }
