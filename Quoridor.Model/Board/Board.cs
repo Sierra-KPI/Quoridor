@@ -32,7 +32,7 @@ namespace Quoridor.Model
         {
             int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
             int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffId(cell1ID, cell2ID);
+            int diff = GetDiffCellId(cell1ID, cell2ID);
 
             _walls = _walls.Where(elem =>
             {
@@ -48,7 +48,7 @@ namespace Quoridor.Model
             return true;
         }
 
-        private int GetDiffId(int cell1, int cell2)
+        private int GetDiffCellId(int cell1, int cell2)
         {
             if (cell2 - cell1 == 1)
             {
@@ -68,7 +68,7 @@ namespace Quoridor.Model
         {
             int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
             int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffId(cell1ID, cell2ID);
+            int diff = GetDiffCellId(cell1ID, cell2ID);
 
             int from1 = cell1ID;
             int to1 = cell2ID;
@@ -82,7 +82,7 @@ namespace Quoridor.Model
         {
             int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
             int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffId(cell1ID, cell2ID);
+            int diff = GetDiffCellId(cell1ID, cell2ID);
 
             int from1 = cell1ID;
             int to1 = cell2ID;
@@ -95,7 +95,7 @@ namespace Quoridor.Model
         public bool CheckPaths(Cell cellFrom, Cell[] cellsTo)
         {
             int[] idOfCells = new int[cellsTo.GetLength(0)];
-            for (int i = 0; i < cellsTo.GetLength(0); i++)
+            for (var i = 0; i < cellsTo.GetLength(0); i++)
             {
                 idOfCells[i] = cellsTo[i].Id;
             }
@@ -170,17 +170,17 @@ namespace Quoridor.Model
             return cellsTo.ToArray();
         }
 
-        public Cell[] GetPossiblePlayersMoves(Cell from, Cell through)
+        public Cell[] GetPossiblePlayersMoves(Cell cellFrom, Cell cellThrough)
         {
-            int[] edges = _graph.GetEdgesForVertex(from.Id);
-            var possibleCells = new Cell[edges.GetLength(0)];
+            int[] edges = _graph.GetEdgesForVertex(cellFrom.Id);
+            Cell[] possibleCells = new Cell[edges.GetLength(0)];
 
             for (var i = 0; i < edges.GetLength(0); i++)
             {
                 possibleCells[i] = GetCellById(edges[i]);
             }
 
-            Cell[] jumps = CheckJump(from, through);
+            Cell[] jumps = CheckJump(cellFrom, cellThrough);
 
             return possibleCells.Concat(jumps).ToArray();
         }
