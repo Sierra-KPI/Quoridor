@@ -7,7 +7,6 @@
         public Orientation Orientation { get; private set; }
         public Coordinates Coordinates { get; private set; }
         public Coordinates EndCoordinates { get; private set; }
-        public bool HasWall { get; set; }
 
         #endregion Properties
 
