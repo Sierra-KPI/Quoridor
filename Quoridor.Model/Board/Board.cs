@@ -22,10 +22,10 @@ namespace Quoridor.Model
             _placedWalls = new List<Wall>();
         }
 
-        public bool MakeMove(Cell from, Cell to, Cell through)
+        public bool MakeMove(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
-            var moves = GetPossiblePlayersMoves(from, through);
-            return Array.Exists(moves, element => element == to);
+            Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
+            return Array.Exists(moves, element => element == cellTo);
         }
 
         public bool PlaceWall(Wall wall)
