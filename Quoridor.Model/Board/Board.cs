@@ -11,10 +11,11 @@ namespace Quoridor.Model
         private List<Wall> _walls;
         private readonly List<Wall> _placedWalls;
 
-        public int Size => _cells.GetLength(0);
+        public int Size { get; }
 
         public Board(Cell[,] cells, List<Wall> walls, Graph graph)
         {
+            Size = cells.GetLength(0);
             _cells = cells;
             _graph = graph;
             _walls = walls;
