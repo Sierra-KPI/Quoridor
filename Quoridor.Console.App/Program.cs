@@ -7,6 +7,7 @@ namespace Quoridor.OutputConsole.App
         private static void Main()
         {
             ConsoleInput input = new();
+            input.OnStart();
             input.ReadMove();
         }
     }

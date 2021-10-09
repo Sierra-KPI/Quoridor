@@ -7,6 +7,8 @@ namespace Quoridor.OutputConsole.Input
 {
     public class ConsoleInput
     {
+        #region Fields
+
         public QuoridorGame CurrentGame;
         public ViewOutput View;
 
@@ -46,10 +48,14 @@ namespace Quoridor.OutputConsole.Input
             " Game has started!";
         private const string SingleModeInput = "1";
 
-        public ConsoleInput()
+        #endregion Fields
+
+        #region Methods
+
+        public void OnStart()
         {
             WriteStartingMessage();
-            InitializeDictionaries();
+            InitializeDictionary();
         }
 
         public void WriteStartingMessage()
@@ -58,7 +64,7 @@ namespace Quoridor.OutputConsole.Input
             Console.WriteLine(HelpMessage);
         }
 
-        private void InitializeDictionaries() =>
+        private void InitializeDictionary() =>
             _chars = new Dictionary<string, int>
             {
                 { "A", 1 },
@@ -84,42 +90,47 @@ namespace Quoridor.OutputConsole.Input
                 else
                 {
                     string[] inputValues = input.Split(Array.Empty<char>());
-                    ExecuteCommand(inputValues);
+                    TryToExecuteCommand(inputValues);
                 }
             }
         }
 
-        private void ExecuteCommand(string[] values)
+        private void TryToExecuteCommand(string[] values)
         {
             try
             {
-                switch (values[0])
-                {
-                    case "start":
-                        StartGame(values);
-                        break;
-                    case "player":
-                        MovePlayer(values);
-                        break;
-                    case "wall":
-                        PlaceWall(values);
-                        break;
-                    case "quit":
-                        QuitLoop();
-                        break;
-                    case "help":
-                        WriteHelpMessage();
-                        break;
-                    default:
-                        WriteIncorrectMessage();
-                        break;
-                }
-                DoAfterCommand();
+                ExecuteCommand(values);
             }
             catch (Exception)
             {
                 WriteIncorrectMessage();
             }
+        }
+
+        private void ExecuteCommand(string [] values)
+        {
+            switch (values[0])
+            {
+                case "start":
+                    StartGame(values);
+                    break;
+                case "player":
+                    MovePlayer(values);
+                    break;
+                case "wall":
+                    PlaceWall(values);
+                    break;
+                case "quit":
+                    QuitLoop();
+                    break;
+                case "help":
+                    WriteHelpMessage();
+                    break;
+                default:
+                    WriteIncorrectMessage();
+                    break;
+            }
+            DoAfterCommand();
         }
 
         private void StartGame(string[] values)
@@ -269,5 +280,7 @@ namespace Quoridor.OutputConsole.Input
             Console.WriteLine(_currentPlayerName + CongratulationsMessage);
 
         private void QuitLoop() => _endLoop = true;
+
+        #endregion Methods
     }
 }
