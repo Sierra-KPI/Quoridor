@@ -118,8 +118,8 @@ namespace Quoridor.Model
 
         public Cell[] GetEndCellsForPlayer(Cell cell)
         {
-            var endCells = new Cell[Size];
-            var endY = cell.Coordinates.Y == 0 ? Size - 1 : 0;
+            Cell[] endCells = new Cell[Size];
+            int endY = cell.Coordinates.Y == 0 ? Size - 1 : 0;
             for (var i = 0; i < Size; i++)
             {
                 endCells[i] = _cells[i, endY];
@@ -128,46 +128,46 @@ namespace Quoridor.Model
             return endCells;
         }
 
-        private Cell[] CheckJump(Cell from, Cell through)
+        private Cell[] CheckJump(Cell cellFrom, Cell cellThrough)
         {
-            var to = new List<Cell>();
-            var diffX = through.Coordinates.X - from.Coordinates.X;
-            var diffY = through.Coordinates.Y - from.Coordinates.Y;
+            List<Cell> cellsTo = new List<Cell>();
+            int diffX = cellThrough.Coordinates.X - cellFrom.Coordinates.X;
+            int diffY = cellThrough.Coordinates.Y - cellFrom.Coordinates.Y;
 
             if ((diffX == 0 || diffX == 1 || diffX == -1) &&
                 (diffY == 0 || diffY == 1 || diffY == -1))
             {
-                var coordinates1 = new Coordinates(from.Coordinates.X + diffX * 2,
-                                                    from.Coordinates.Y + diffY * 2);
-                var toCell1 = GetCellByCoordinates(coordinates1);
-                int[] edges = _graph.GetEdgesForVertex(through.Id);
+                Coordinates coordinates1 = new Coordinates(cellFrom.Coordinates.X + diffX * 2,
+                                                    cellFrom.Coordinates.Y + diffY * 2);
+                Cell toCell1 = GetCellByCoordinates(coordinates1);
+                int[] edges = _graph.GetEdgesForVertex(cellThrough.Id);
 
                 if (Array.Exists(edges, element => element == toCell1.Id))
                 {
-                    to.Add(toCell1);
+                    cellsTo.Add(toCell1);
                 }
                 else
                 {
-                    var coordinates2 = new Coordinates(through.Coordinates.X + diffY,
-                                                    through.Coordinates.Y + diffX);
-                    var toCell2 = GetCellByCoordinates(coordinates2);
+                    Coordinates coordinates2 = new Coordinates(cellThrough.Coordinates.X + diffY,
+                                                    cellThrough.Coordinates.Y + diffX);
+                    Cell toCell2 = GetCellByCoordinates(coordinates2);
 
                     if (Array.Exists(edges, element => element == toCell2.Id))
                     {
-                        to.Add(toCell2);
+                        cellsTo.Add(toCell2);
                     }
 
-                    var coordinates3 = new Coordinates(through.Coordinates.X - diffY,
-                                                    through.Coordinates.Y - diffX);
-                    var toCell3 = GetCellByCoordinates(coordinates3);
+                    Coordinates coordinates3 = new Coordinates(cellThrough.Coordinates.X - diffY,
+                                                    cellThrough.Coordinates.Y - diffX);
+                    Cell toCell3 = GetCellByCoordinates(coordinates3);
 
                     if (Array.Exists(edges, element => element == toCell3.Id))
                     {
-                        to.Add(toCell3);
+                        cellsTo.Add(toCell3);
                     }
                 }
             }
-            return to.ToArray();
+            return cellsTo.ToArray();
         }
 
         public Cell[] GetPossiblePlayersMoves(Cell from, Cell through)
