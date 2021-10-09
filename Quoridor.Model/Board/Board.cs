@@ -92,22 +92,23 @@ namespace Quoridor.Model
             return _graph.AddEdge(from1, to1) && _graph.AddEdge(from2, to2);
         }
 
-        public bool CheckPaths(Cell from, Cell[] to)
+        public bool CheckPaths(Cell cellFrom, Cell[] cellsTo)
         {
-            var idOfCells = new int[to.GetLength(0)];
-            for (int i = 0; i < to.GetLength(0); i++)
+            int[] idOfCells = new int[cellsTo.GetLength(0)];
+            for (int i = 0; i < cellsTo.GetLength(0); i++)
             {
-                idOfCells[i] = to[i].Id;
+                idOfCells[i] = cellsTo[i].Id;
             }
 
-            return _graph.CheckPaths(from.Id, idOfCells);
+            return _graph.CheckPaths(cellFrom.Id, idOfCells);
         }
 
-        public bool HasPath(Cell from, Cell to) => _graph.HasPath(from.Id, to.Id);
+        public bool HasPath(Cell cellFrom, Cell cellTo) =>
+            _graph.HasPath(cellFrom.Id, cellTo.Id);
 
-        public Cell GetStartCellForPlayer(int id)
+        public Cell GetStartCellForPlayer(int playerId)
         {
-            return id switch
+            return playerId switch
             {
                 (int)PlayerID.First => _cells[Size / 2, 0],
                 (int)PlayerID.Second => _cells[Size / 2, Size - 1],
