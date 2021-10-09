@@ -54,11 +54,11 @@ namespace Quoridor.Model
             {
                 return true;
             }
-
             return false;
         }
 
-        public bool RemoveEdge(int vertex1, int vertex2) => _adjacencyList[vertex1].Remove(vertex2) && _adjacencyList[vertex2].Remove(vertex1);
+        public bool RemoveEdge(int vertex1, int vertex2) =>
+            _adjacencyList[vertex1].Remove(vertex2) && _adjacencyList[vertex2].Remove(vertex1);
 
         public int[] GetEdgesForVertex(int vertex)
         {
@@ -78,7 +78,6 @@ namespace Quoridor.Model
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -99,7 +98,6 @@ namespace Quoridor.Model
             }
 
             distances[startVertex] = 0;
-
             for (var i = 0; i < _size; i++)
             {
                 int curr = -1;
