@@ -30,14 +30,14 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
-            var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1ID, cell2ID);
 
             _walls = _walls.Where(elem =>
             {
-                var wallCell1 = GetIdOfCellByCoordinates(elem.Coordinates);
-                var wallCell2 = GetIdOfCellByCoordinates(elem.EndCoordinates);
+                int wallCell1 = GetIdOfCellByCoordinates(elem.Coordinates);
+                int wallCell2 = GetIdOfCellByCoordinates(elem.EndCoordinates);
                 return (wallCell1 != cell1ID || wallCell2 != cell2ID) &&
                 (wallCell1 != cell1ID - diff || wallCell2 != cell2ID - diff) &&
                 (wallCell1 != cell1ID + diff || wallCell2 != cell2ID + diff) &&
@@ -66,28 +66,28 @@ namespace Quoridor.Model
 
         public bool RemoveWall(Wall wall)
         {
-            var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1ID, cell2ID);
 
-            var from1 = cell1ID;
-            var to1 = cell2ID;
-            var from2 = cell1ID + diff;
-            var to2 = cell2ID + diff;
+            int from1 = cell1ID;
+            int to1 = cell2ID;
+            int from2 = cell1ID + diff;
+            int to2 = cell2ID + diff;
 
             return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
         }
 
         public bool AddWall(Wall wall)
         {
-            var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffId(cell1ID, cell2ID);
 
-            var from1 = cell1ID;
-            var to1 = cell2ID;
-            var from2 = cell1ID + diff;
-            var to2 = cell2ID + diff;
+            int from1 = cell1ID;
+            int to1 = cell2ID;
+            int from2 = cell1ID + diff;
+            int to2 = cell2ID + diff;
 
             return _graph.AddEdge(from1, to1) && _graph.AddEdge(from2, to2);
         }
