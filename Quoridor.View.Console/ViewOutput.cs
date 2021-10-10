@@ -40,19 +40,12 @@ namespace Quoridor.View
             _viewBoard = new string[_viewBoardSize, _viewBoardSize];
             CleanCells();
 
-            for (var i = 0; i < _viewBoardSize; i += 2)
+            for (var i = 0; i < _viewBoardSize; i++)
             {
                 for (var j = 0; j < _viewBoardSize; j++)
                 {
-                    _viewBoard[i, j] = HorizontalWallSymbol;
-                }
-            }
-
-            for (var i = 0; i < _viewBoardSize; i++)
-            {
-                for (var j = 0; j < _viewBoardSize; j += 2)
-                {
-                    _viewBoard[i, j] = VerticalWallSymbol;
+                    if (i % 2 == 0) _viewBoard[i, j] = HorizontalWallSymbol;
+                    if (j % 2 == 0) _viewBoard[i, j] = VerticalWallSymbol;
                 }
             }
         }
