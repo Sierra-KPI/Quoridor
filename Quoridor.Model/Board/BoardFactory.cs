@@ -2,7 +2,13 @@ namespace Quoridor.Model
 {
     public class BoardFactory : IBoardFactory
     {
+        #region Fields
+
         private readonly int _size = 9;
+
+        #endregion Fields
+
+        #region Methods
 
         public Board CreateBoard()
         {
@@ -37,5 +43,7 @@ namespace Quoridor.Model
 
             return board;
         }
+
+        #endregion Methods
     }
 }

@@ -4,9 +4,26 @@ namespace Quoridor.Model
 {
     public class Bot : IPlayer
     {
+        #region Properties
+
         public int WallsCount { get; private set; }
         public Cell CurrentCell { get; private set; }
         public Cell[] EndCells { get; private set; }
+
+        #endregion Properties
+
+        #region Constructor
+
+        public Bot(Cell currentCell, Cell[] endCells)
+        {
+            CurrentCell = currentCell;
+            WallsCount = 10;
+            EndCells = endCells;
+        }
+
+        #endregion Constructor
+
+        #region Methods
 
         public Cell ChangeCoordinates(Cell newCell)
         {
@@ -58,11 +75,6 @@ namespace Quoridor.Model
             return false;
         }
 
-        public Bot(Cell currentCell, Cell[] endCells)
-        {
-            CurrentCell = currentCell;
-            WallsCount = 10;
-            EndCells = endCells;
-        }
+        #endregion Methods
     }
 }

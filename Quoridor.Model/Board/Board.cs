@@ -6,12 +6,22 @@ namespace Quoridor.Model
 {
     public class Board
     {
+        #region Properties
+
+        public int Size { get; }
+
+        #endregion Properties
+
+        #region Fields
+
         private readonly Graph _graph;
         private readonly Cell[,] _cells;
         private List<Wall> _walls;
         private readonly List<Wall> _placedWalls;
 
-        public int Size { get; }
+        #endregion Fields
+
+        #region Constructor
 
         public Board(Cell[,] cells, List<Wall> walls, Graph graph)
         {
@@ -21,6 +31,10 @@ namespace Quoridor.Model
             _walls = walls;
             _placedWalls = new List<Wall>();
         }
+
+        #endregion Constructor
+
+        #region Methods
 
         public bool MakeMove(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
@@ -137,8 +151,9 @@ namespace Quoridor.Model
             if ((diffX == 0 || diffX == 1 || diffX == -1) &&
                 (diffY == 0 || diffY == 1 || diffY == -1))
             {
-                Coordinates coordinates1 = new Coordinates(cellFrom.Coordinates.X + diffX * 2,
-                                                    cellFrom.Coordinates.Y + diffY * 2);
+                Coordinates coordinates1 = new Coordinates
+                    (cellFrom.Coordinates.X + diffX * 2,
+                        cellFrom.Coordinates.Y + diffY * 2);
                 Cell toCell1 = GetCellByCoordinates(coordinates1);
                 int[] edges = _graph.GetEdgesForVertex(cellThrough.Id);
 
@@ -148,8 +163,9 @@ namespace Quoridor.Model
                 }
                 else
                 {
-                    Coordinates coordinates2 = new Coordinates(cellThrough.Coordinates.X + diffY,
-                                                    cellThrough.Coordinates.Y + diffX);
+                    Coordinates coordinates2 = new Coordinates
+                        (cellThrough.Coordinates.X + diffY,
+                            cellThrough.Coordinates.Y + diffX);
                     Cell toCell2 = GetCellByCoordinates(coordinates2);
 
                     if (Array.Exists(edges, element => element == toCell2.Id))
@@ -157,8 +173,9 @@ namespace Quoridor.Model
                         cellsTo.Add(toCell2);
                     }
 
-                    Coordinates coordinates3 = new Coordinates(cellThrough.Coordinates.X - diffY,
-                                                    cellThrough.Coordinates.Y - diffX);
+                    Coordinates coordinates3 = new Coordinates
+                        (cellThrough.Coordinates.X - diffY,
+                            cellThrough.Coordinates.Y - diffX);
                     Cell toCell3 = GetCellByCoordinates(coordinates3);
 
                     if (Array.Exists(edges, element => element == toCell3.Id))
@@ -210,4 +227,6 @@ namespace Quoridor.Model
             element.Coordinates == coordinates &&
             element.EndCoordinates == endCoordinates);
     }
+
+    #endregion Methods
 }

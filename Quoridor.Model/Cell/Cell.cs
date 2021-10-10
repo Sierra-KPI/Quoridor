@@ -15,6 +15,16 @@
 
         #endregion Properties
 
+        #region Constructor
+
+        public Cell(Coordinates coordinates, int id)
+        {
+            Coordinates = coordinates;
+            Id = id;
+        }
+
+        #endregion Constructor
+
         #region Fields
 
         private const int DefaultId = 500;
@@ -22,11 +32,5 @@
             s_defaultCoordinates = new(0, 0);
 
         #endregion Fields
-
-        public Cell(Coordinates coordinates, int id)
-        {
-            Coordinates = coordinates;
-            Id = id;
-        }
     }
 }

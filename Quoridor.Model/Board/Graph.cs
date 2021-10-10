@@ -4,9 +4,15 @@ namespace Quoridor.Model
 {
     public class Graph
     {
+        #region Fields
+
         private readonly int _size;
         private readonly int[,] _edges;
         private LinkedList<int>[] _adjacencyList;
+
+        #endregion Fields
+
+        #region Constructor
 
         public Graph(int size)
         {
@@ -31,6 +37,10 @@ namespace Quoridor.Model
             }
             MakeAdjacencyList();
         }
+
+        #endregion Constructor
+
+        #region Methods
 
         private void MakeAdjacencyList()
         {
@@ -58,7 +68,8 @@ namespace Quoridor.Model
         }
 
         public bool RemoveEdge(int vertex1, int vertex2) =>
-            _adjacencyList[vertex1].Remove(vertex2) && _adjacencyList[vertex2].Remove(vertex1);
+            _adjacencyList[vertex1].Remove(vertex2) &&
+            _adjacencyList[vertex2].Remove(vertex1);
 
         public int[] GetEdgesForVertex(int vertex)
         {
@@ -128,5 +139,6 @@ namespace Quoridor.Model
             return distances;
         }
 
+        #endregion Methods
     }
 }

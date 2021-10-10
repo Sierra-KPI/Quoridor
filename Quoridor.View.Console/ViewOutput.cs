@@ -5,6 +5,8 @@ namespace Quoridor.View
 {
     public class ViewOutput
     {
+        #region Fields
+
         private readonly QuoridorGame _currentGame;
 
         private const string FirstPlayerSymbol = " 1 ";
@@ -18,12 +20,20 @@ namespace Quoridor.View
         private readonly int _size;
         private string[,] _board;
 
+        #endregion Fields
+
+        #region Constructor
+
         public ViewOutput(QuoridorGame game)
         {
             _currentGame = game;
             _size = game.CurrentBoard.Size;
             CreateBoard();
         }
+
+        #endregion Constructor
+
+        #region Methods
 
         private void CreateBoard()
         {
@@ -131,5 +141,7 @@ namespace Quoridor.View
                 Console.WriteLine();
             }
         }
+
+        #endregion Methods
     }
 }

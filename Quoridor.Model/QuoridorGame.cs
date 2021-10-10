@@ -4,10 +4,16 @@ namespace Quoridor.Model
 {
     public class QuoridorGame
     {
+        #region Properties
+
         public IPlayer FirstPlayer { get; set; }
         public IPlayer SecondPlayer { get; set; }
         public IPlayer CurrentPlayer { get; private set; }
         public Board CurrentBoard { get; private set; }
+
+        #endregion Properties
+
+        #region Constructor
 
         public QuoridorGame(IPlayer firstPlayer, IPlayer secondPlayer,
             Board board)
@@ -16,6 +22,10 @@ namespace Quoridor.Model
             SecondPlayer = secondPlayer;
             CurrentBoard = board;
         }
+
+        #endregion Constructor
+
+        #region Methods
 
         public bool CheckGameEnd() => CurrentPlayer.HasWon();
 
@@ -83,5 +93,7 @@ namespace Quoridor.Model
                 CurrentPlayer = FirstPlayer;
             }
         }
+
+        #endregion Methods
     }
 }
