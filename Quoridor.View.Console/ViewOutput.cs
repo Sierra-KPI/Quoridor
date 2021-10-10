@@ -44,8 +44,14 @@ namespace Quoridor.View
             {
                 for (var j = 0; j < _viewBoardSize; j++)
                 {
-                    if (i % 2 == 0) _viewBoard[i, j] = HorizontalWallSymbol;
-                    if (j % 2 == 0) _viewBoard[i, j] = VerticalWallSymbol;
+                    if (i % 2 == 0)
+                    {
+                        _viewBoard[i, j] = HorizontalWallSymbol;
+                    }
+                    if (j % 2 == 0)
+                    {
+                        _viewBoard[i, j] = VerticalWallSymbol;
+                    }
                 }
             }
         }
