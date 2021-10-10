@@ -90,10 +90,10 @@ namespace Quoridor.View
             var walls = _currentGame.CurrentBoard.GetPlacedWalls();
             for (var i = 0; i < walls.GetLength(0); i++)
             {
-                var x1 = walls[i].Coordinates.X * 2 + 1;
-                var y1 = walls[i].Coordinates.Y * 2 + 1;
-                var x2 = walls[i].EndCoordinates.X * 2;
-                var y2 = walls[i].EndCoordinates.Y * 2;
+                int x1 = walls[i].Coordinates.X * 2 + 1;
+                int y1 = walls[i].Coordinates.Y * 2 + 1;
+                int x2 = walls[i].EndCoordinates.X * 2;
+                int y2 = walls[i].EndCoordinates.Y * 2;
 
                 if (walls[i].Orientation == Orientation.Vertical)
                 {
@@ -118,10 +118,9 @@ namespace Quoridor.View
             {
                 Console.Write("   " + (char)(i + 65));
             }
-
             Console.WriteLine();
 
-            for (var i = 0; i < _viewBoard.GetLength(0); i++)
+            for (var i = 0; i < _viewBoardSize; i++)
             {
                 if (i % 2 == 1)
                 {
@@ -132,11 +131,10 @@ namespace Quoridor.View
                     Console.Write("   ");
                 }
 
-                for (var j = 0; j < _viewBoard.GetLength(0); j++)
+                for (var j = 0; j < _viewBoardSize; j++)
                 {
                     Console.Write(_viewBoard[i, j]);
                 }
-
                 Console.WriteLine();
             }
         }
