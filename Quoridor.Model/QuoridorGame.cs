@@ -60,12 +60,12 @@ namespace Quoridor.Model
 
             if (CurrentBoard.RemoveWall(wall))
             {
-                bool resPlayer1 = CurrentBoard.CheckPaths
+                bool Player1HasPath = CurrentBoard.CheckPaths
                     (FirstPlayer.CurrentCell, FirstPlayer.EndCells);
-                bool resPlayer2 = CurrentBoard.CheckPaths
+                bool Player2HasPath = CurrentBoard.CheckPaths
                     (SecondPlayer.CurrentCell, SecondPlayer.EndCells);
 
-                if (resPlayer1 && resPlayer2)
+                if (Player1HasPath && Player2HasPath)
                 {
                     if (CurrentBoard.PlaceWall(wall))
                     {
