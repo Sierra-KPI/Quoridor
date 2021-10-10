@@ -143,7 +143,7 @@ namespace Quoridor.OutputConsole.Input
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
             _currentPlayer = firstPlayer;
 
-            CurrentGame = CreateSecondPlayer(values, firstPlayer, board);
+            CurrentGame = CreateGame(values, firstPlayer, board);
 
             View = new(CurrentGame);
         }
@@ -159,7 +159,7 @@ namespace Quoridor.OutputConsole.Input
             return (playerCell, playerEndCells); 
         }
 
-        private QuoridorGame CreateSecondPlayer(string[] values,
+        private QuoridorGame CreateGame(string[] values,
             Player firstPlayer, Board board)
         {
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
