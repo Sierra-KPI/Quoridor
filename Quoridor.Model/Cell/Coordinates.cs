@@ -1,4 +1,6 @@
-﻿namespace Quoridor.Model
+﻿using System;
+
+namespace Quoridor.Model
 {
     public class Coordinates
     {
@@ -72,6 +74,19 @@
 
             return false;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (X == ((Coordinates)obj).X &&
+                Y == ((Coordinates)obj).Y)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode() => HashCode.Combine(X, Y);
 
         #endregion Operators
     }
