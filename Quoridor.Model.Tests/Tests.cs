@@ -76,5 +76,26 @@ namespace Quoridor.Model.Tests
         }
 
         #endregion MakeMove
+
+        #region GetStartCellForPlayer
+
+        [Theory]
+        [InlineData(4, 0, PlayerID.First)]
+        [InlineData(4, 8, PlayerID.Second)]
+        public void GetStartCellForPlayer_Player_Equals(int x,
+            int y, PlayerID playerID)
+        {
+            Board board = new BoardFactory().CreateBoard();
+
+            Cell firstPlayerCell = board.GetStartCellForPlayer
+                ((int)playerID);
+
+            Coordinates coordinates = new(x, y);
+            Cell cell = new(coordinates, 5);
+
+            Assert.Equal(firstPlayerCell.Coordinates, cell.Coordinates);
+        }
+
+        #endregion GetStartCellForPlayer
     }
 }
