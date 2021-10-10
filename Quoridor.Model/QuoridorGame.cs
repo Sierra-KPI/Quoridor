@@ -29,21 +29,21 @@ namespace Quoridor.Model
 
         public bool CheckGameEnd() => CurrentPlayer.HasWon();
 
-        public bool MakeMove(Cell to)
+        public bool MakeMove(Cell cellTo)
         {
-            var from = CurrentPlayer.CurrentCell;
+            var cellFrom = CurrentPlayer.CurrentCell;
             SwapPlayer();
-            var through = CurrentPlayer.CurrentCell;
+            var cellThrough = CurrentPlayer.CurrentCell;
             SwapPlayer();
 
-            if (through == to)
+            if (cellThrough == cellTo)
             {
                 throw new Exception("Cell is taken");
             }
 
-            if (CurrentBoard.MakeMove(from, to, through))
+            if (CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough))
             {
-                CurrentPlayer.ChangeCoordinates(to);
+                CurrentPlayer.ChangeCoordinates(cellTo);
                 CheckGameEnd();
                 SwapPlayer();
                 return true;
