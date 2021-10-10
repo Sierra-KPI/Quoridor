@@ -89,17 +89,17 @@ namespace Quoridor.OutputConsole.Input
                 }
                 else
                 {
-                    string[] inputValues = input.Split(Array.Empty<char>());
-                    TryToExecuteCommand(inputValues);
+                    string[] inputString = input.Split(Array.Empty<char>());
+                    TryToExecuteCommand(inputString);
                 }
             }
         }
 
-        private void TryToExecuteCommand(string[] values)
+        private void TryToExecuteCommand(string[] inputString)
         {
             try
             {
-                ExecuteCommand(values);
+                ExecuteCommand(inputString);
             }
             catch (Exception)
             {
@@ -107,18 +107,18 @@ namespace Quoridor.OutputConsole.Input
             }
         }
 
-        private void ExecuteCommand(string [] values)
+        private void ExecuteCommand(string[] inputString)
         {
-            switch (values[0])
+            switch (inputString[0])
             {
                 case "start":
-                    StartGame(values);
+                    StartGame(inputString);
                     break;
                 case "player":
-                    MovePlayer(values);
+                    MovePlayer(inputString);
                     break;
                 case "wall":
-                    PlaceWall(values);
+                    PlaceWall(inputString);
                     break;
                 case "quit":
                     QuitLoop();
@@ -130,7 +130,7 @@ namespace Quoridor.OutputConsole.Input
                     WriteIncorrectMessage();
                     break;
             }
-            DoAfterCommand();
+            StartNewTurn();
         }
 
         private void StartGame(string[] values)
@@ -178,7 +178,7 @@ namespace Quoridor.OutputConsole.Input
             Console.WriteLine(MultiplayerMessage);
 
             return CurrentGame = new QuoridorGame(firstPlayer,
-                    realPlayer, board);
+                realPlayer, board);
         }
 
         private void MovePlayer(string[] values)
@@ -193,7 +193,7 @@ namespace Quoridor.OutputConsole.Input
 
             if (!_currentPlayer.HasWon())
             {
-                MakeBotMove();
+                StartBotTurn();
             }
         }
 
@@ -208,10 +208,10 @@ namespace Quoridor.OutputConsole.Input
                 GetWallByCoordinates(firstCoordinates, secondCoordinates);
             CurrentGame.PlaceWall(wall);
 
-            MakeBotMove();
+            StartBotTurn();
         }
 
-        private void DoAfterCommand()
+        private void StartNewTurn()
         {
             WriteDelimiter();
 
@@ -225,10 +225,11 @@ namespace Quoridor.OutputConsole.Input
                 StartGame(_gameModePreference);
                 View.DrawBoard();
             }
+
             WritePlayerMessage();
         }
 
-        private void MakeBotMove()
+        private void StartBotTurn()
         {
             if (CurrentGame.SecondPlayer is Bot bot)
             {
