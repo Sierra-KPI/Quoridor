@@ -38,7 +38,7 @@ namespace Quoridor.Model
 
             if (cellThrough == cellTo)
             {
-                throw new Exception("Cell is taken");
+                throw new Exception("Cell is taken by another Player");
             }
 
             if (CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough))
@@ -48,14 +48,14 @@ namespace Quoridor.Model
                 SwapPlayer();
                 return true;
             }
-            throw new Exception("Wrong Move");
+            throw new Exception("Wrong Player Move");
         }
 
         public bool PlaceWall(Wall wall)
         {
             if (CurrentPlayer.WallsCount == 0)
             {
-                throw new Exception("Current player has no walls");
+                throw new Exception("Current player has no walls left");
             }
 
             if (CurrentBoard.RemoveWall(wall))
@@ -79,7 +79,7 @@ namespace Quoridor.Model
                     CurrentBoard.AddWall(wall);
                 }
             }
-            throw new Exception("Wrong Wall");
+            throw new Exception("Wrong place for Wall");
         }
 
         public void SwapPlayer()
