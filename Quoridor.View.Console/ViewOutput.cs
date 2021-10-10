@@ -27,7 +27,7 @@ namespace Quoridor.View
         public ViewOutput(QuoridorGame game)
         {
             _currentGame = game;
-            _viewBoardSize = game.CurrentBoard.Size;
+            _viewBoardSize = game.CurrentBoard.Size * 2 + 1;
             CreateBoard();
         }
 
@@ -37,20 +37,20 @@ namespace Quoridor.View
 
         private void CreateBoard()
         {
-            _viewBoard = new string[_viewBoardSize * 2 + 1, _viewBoardSize * 2 + 1];
+            _viewBoard = new string[_viewBoardSize, _viewBoardSize];
             CleanCells();
 
-            for (var i = 0; i < _viewBoardSize * 2 + 1; i += 2)
+            for (var i = 0; i < _viewBoardSize; i += 2)
             {
-                for (var j = 0; j < _viewBoardSize * 2 + 1; j++)
+                for (var j = 0; j < _viewBoardSize; j++)
                 {
                     _viewBoard[i, j] = HorizontalWallSymbol;
                 }
             }
 
-            for (var i = 0; i < _viewBoardSize * 2 + 1; i++)
+            for (var i = 0; i < _viewBoardSize; i++)
             {
-                for (var j = 0; j < _viewBoardSize * 2 + 1; j += 2)
+                for (var j = 0; j < _viewBoardSize; j += 2)
                 {
                     _viewBoard[i, j] = VerticalWallSymbol;
                 }
@@ -65,9 +65,9 @@ namespace Quoridor.View
 
         private void CleanCells()
         {
-            for (var i = 1; i < _viewBoardSize * 2 + 1; i += 2)
+            for (var i = 1; i < _viewBoardSize; i += 2)
             {
-                for (var j = 1; j < _viewBoardSize * 2 + 1; j += 2)
+                for (var j = 1; j < _viewBoardSize; j += 2)
                 {
                     _viewBoard[i, j] = EmptyCellSymbol;
                 }
@@ -115,7 +115,7 @@ namespace Quoridor.View
             UpdateBoard();
 
             Console.Write("  ");
-            for (var i = 0; i < _viewBoardSize; i++)
+            for (var i = 0; i < _currentGame.CurrentBoard.Size; i++)
             {
                 Console.Write("   " + (char)(i + 65));
             }
