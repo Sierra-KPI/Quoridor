@@ -1,10 +1,11 @@
+using System;
 using Xunit;
 
 namespace Quoridor.Model.Tests
 {
     public class Tests
     {
-        #region Coordinates
+        #region CheckGameEnd
 
         public QuoridorGame CreateGame()
         {
@@ -37,7 +38,43 @@ namespace Quoridor.Model.Tests
             Assert.False(game.CheckGameEnd());
         }
 
-        #endregion Coordinates
+        #endregion CheckGameEnd
 
+        #region MakeMove
+
+        [Theory]
+        [InlineData(4, 1)]
+        [InlineData(3, 0)]
+        [InlineData(5, 0)]
+        public void MakeMove_FirstPlayerPossibleMove_True(int x, int y)
+        {
+            QuoridorGame game = CreateGame();
+
+            Coordinates coordinates = new(x, y);
+            Cell to = game.CurrentBoard.
+                GetCellByCoordinates(coordinates);
+
+            Assert.True(game.MakeMove(to));
+        }
+
+        [Theory]
+        [InlineData(5, 1)]
+        [InlineData(4, 2)]
+        [InlineData(3, 3)]
+        [InlineData(6, 7)]
+        [InlineData(8, 9)]
+        [InlineData(0, 9)]
+        public void MakeMove_FirstPlayerImpossibleMove_Exception(int x, int y)
+        {
+            QuoridorGame game = CreateGame();
+
+            Coordinates coordinates = new(x, y);
+            Cell to = game.CurrentBoard.
+                GetCellByCoordinates(coordinates);
+
+            Assert.Throws<Exception>(() => game.MakeMove(to));
+        }
+
+        #endregion MakeMove
     }
 }
