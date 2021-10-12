@@ -60,7 +60,5 @@ namespace Quoridor.Model.Tests
         }
 
         #endregion GetPossiGetPossiblePlayersMoves
-
-
     }
 }
