@@ -5,7 +5,6 @@
         #region Properties
 
         public int Id { get; private set; }
-        public IPlayer Player { get; set; }
         public Coordinates Coordinates { get; private set; }
 
         #endregion Properties
