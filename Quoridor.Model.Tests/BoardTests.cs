@@ -5,7 +5,6 @@ namespace Quoridor.Model.Tests
 {
     public class BoardTests
     {
-
         #region CheckBoardFactory
 
         [Fact]
