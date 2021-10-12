@@ -88,13 +88,13 @@ namespace Quoridor.Model.Tests
         {
             Board board = new BoardFactory().CreateBoard();
 
-            Cell playerCell = board.GetStartCellForPlayer
+            Cell expected = board.GetStartCellForPlayer
                 ((int)playerID);
 
             Coordinates coordinates = new(x, y);
-            Cell cell = new(coordinates, 5);
+            Cell actual = new(coordinates, 5);
 
-            Assert.Equal(playerCell.Coordinates, cell.Coordinates);
+            Assert.Equal(expected.Coordinates, actual.Coordinates);
         }
 
         #endregion GetStartCellForPlayer
@@ -119,13 +119,12 @@ namespace Quoridor.Model.Tests
 
             Cell firstPlayerCell = board.GetStartCellForPlayer
                 ((int)PlayerID.First);
-            Cell[] firstPlayerEndCells =
+            Cell[] actual =
                 board.GetEndCellsForPlayer(firstPlayerCell);
 
-            Coordinates expectCoordinates = new Coordinates(x, y);
+            Coordinates expected = new Coordinates(x, y);
 
-            Assert.Equal(firstPlayerEndCells[x].Coordinates,
-                expectCoordinates);
+            Assert.Equal(actual[x].Coordinates, expected);
         }
 
         // maybe this should be in Board tests
@@ -146,13 +145,12 @@ namespace Quoridor.Model.Tests
 
             Cell secondPlayerCell = board.GetStartCellForPlayer
                 ((int)PlayerID.Second);
-            Cell[] secondPlayerEndCells =
+            Cell[] actual =
                 board.GetEndCellsForPlayer(secondPlayerCell);
 
-            Coordinates expectCoordinates = new Coordinates(x, y);
+            Coordinates expected = new Coordinates(x, y);
 
-            Assert.Equal(secondPlayerEndCells[x].Coordinates,
-                expectCoordinates);
+            Assert.Equal(actual[x].Coordinates, expected);
         }
 
         #endregion GetEndCellForPlayer
