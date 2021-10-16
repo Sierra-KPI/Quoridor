@@ -1,0 +1,65 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "Quoridor.OutputConsole.App/1.0.0": {
+        "dependencies": {
+          "Quoridor.Model": "1.0.0",
+          "Quoridor.OutputConsole.Input": "1.0.0",
+          "Quoridor.View": "1.0.0"
+        },
+        "runtime": {
+          "Quoridor.OutputConsole.App.dll": {}
+        }
+      },
+      "Quoridor.Model/1.0.0": {
+        "runtime": {
+          "Quoridor.Model.dll": {}
+        }
+      },
+      "Quoridor.OutputConsole.Input/1.0.0": {
+        "dependencies": {
+          "Quoridor.Model": "1.0.0",
+          "Quoridor.View": "1.0.0"
+        },
+        "runtime": {
+          "Quoridor.OutputConsole.Input.dll": {}
+        }
+      },
+      "Quoridor.View/1.0.0": {
+        "dependencies": {
+          "Quoridor.Model": "1.0.0"
+        },
+        "runtime": {
+          "Quoridor.View.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Quoridor.OutputConsole.App/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Quoridor.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Quoridor.OutputConsole.Input/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Quoridor.View/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
