@@ -24,6 +24,10 @@ The abstract strategy game Quoridor is surprisingly deep for its simple rules. T
 
 ## Example
 
+Wall Placement
+
+[![Picture1](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)
+
 ```csharp
 public bool MakeMove(Cell from, Cell to, Cell through)
 {
@@ -59,8 +63,6 @@ public bool PlaceWall(Wall wall)
 ## Pictures
 
 [![Picture1](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/ConsoleGame.png)](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/ConsoleGame.png)
-
-[![Picture1](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)
 
 ---
 
