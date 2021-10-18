@@ -60,6 +60,8 @@ public bool PlaceWall(Wall wall)
 
 [![Picture1](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/ConsoleGame.png)](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/ConsoleGame.png)
 
+[![Picture1](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)
+
 ---
 
 ## Contributing
