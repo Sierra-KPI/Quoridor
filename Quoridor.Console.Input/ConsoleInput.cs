@@ -14,7 +14,7 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<string, int> _chars = new();
         private bool _endLoop;
-        private string _currentPlayerName = "First Player";
+        private string _currentPlayerName = "White Player";
         private IPlayer _currentPlayer;
         private string[] _gameModePreference;
 
@@ -156,7 +156,7 @@ namespace Quoridor.OutputConsole.Input
             Cell[] playerEndCells = board.GetEndCellsForPlayer
                 (board.GetStartCellForPlayer((int)playerID));
 
-            return (playerCell, playerEndCells); 
+            return (playerCell, playerEndCells);
         }
 
         private QuoridorGame CreateGame(string[] values,
@@ -266,11 +266,11 @@ namespace Quoridor.OutputConsole.Input
         {
             if (CurrentGame.CurrentPlayer == CurrentGame.FirstPlayer)
             {
-                _currentPlayerName = "First Player";
+                _currentPlayerName = "White Player";
             }
             else
             {
-                _currentPlayerName = "Second Player";
+                _currentPlayerName = "Black Player";
             }
 
             Console.WriteLine(CurrentPlayerMessage +

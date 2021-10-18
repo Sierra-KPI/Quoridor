@@ -124,8 +124,8 @@ namespace Quoridor.Model
         {
             return playerId switch
             {
-                (int)PlayerID.First => _cells[Size / 2, 0],
-                (int)PlayerID.Second => _cells[Size / 2, Size - 1],
+                (int)PlayerID.First => _cells[Size - 1, Size / 2],
+                (int)PlayerID.Second => _cells[0, Size / 2],
                 _ => Cell.Default,
             };
         }
@@ -133,10 +133,11 @@ namespace Quoridor.Model
         public Cell[] GetEndCellsForPlayer(Cell cell)
         {
             Cell[] endCells = new Cell[Size];
-            int endY = cell.Coordinates.Y == 0 ? Size - 1 : 0;
+
+            int endX = cell.Coordinates.X == 0 ? Size - 1 : 0;
             for (var i = 0; i < Size; i++)
             {
-                endCells[i] = _cells[i, endY];
+                endCells[i] = _cells[endX, i];
             }
 
             return endCells;

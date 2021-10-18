@@ -9,8 +9,8 @@ namespace Quoridor.View
 
         private readonly QuoridorGame _currentGame;
 
-        private const string FirstPlayerSymbol = " 1 ";
-        private const string SecondPlayerSymbol = " 2 ";
+        private const string FirstPlayerSymbol = " W ";
+        private const string SecondPlayerSymbol = " B ";
         private const string EmptyCellSymbol = "   ";
         private const string HorizontalWallSymbol = "───";
         private const string VerticalWallSymbol = "│";
