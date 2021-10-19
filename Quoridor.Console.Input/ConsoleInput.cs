@@ -32,9 +32,9 @@ namespace Quoridor.OutputConsole.Input
             "tips on how to play the game:\n1. start x - start new " +
             "game, where is the number of real players " +
             "(1 for 1 real and 1 bot. 2 for two real players)" +
-            "\n2. player x y - move Your player from x cell to" +
-            " y cell\n3. wall x1 y1 x2 y2 - place wall from " +
-            "x1 y1 cell to x2 y2 cell\n4. help - print this " +
+            "\n2. move xy - move Your player to cell xy, for " +
+            "example: move E8\n3. wall xyh - place wall in xy, h - horisontal," +
+            "v - vertical, for example: wall V7h\n4. help - print this " +
             "helpbox\n5. quit - quit the game";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
@@ -114,7 +114,7 @@ namespace Quoridor.OutputConsole.Input
                 case "start":
                     StartGame(inputString);
                     break;
-                case "player":
+                case "move":
                     MovePlayer(inputString);
                     break;
                 case "wall":
