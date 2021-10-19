@@ -63,6 +63,8 @@ namespace Quoridor.Model
 
         public void DecreaseWallCount() => WallsCount--;
 
+        public void IncreaseWallCount() => WallsCount++;
+
         public bool HasWon()
         {
             foreach (Cell cell in EndCells)

@@ -14,6 +14,7 @@
 
         Cell ChangeCoordinates(Cell cell);
         void DecreaseWallCount();
+        void IncreaseWallCount();
         bool HasWon();
 
         #endregion Methods
