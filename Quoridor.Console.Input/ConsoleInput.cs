@@ -117,6 +117,9 @@ namespace Quoridor.OutputConsole.Input
                 case "move":
                     MovePlayer(inputString);
                     break;
+                case "jump":
+                    MovePlayer(inputString);
+                    break;
                 case "wall":
                     PlaceWall(inputString);
                     break;
@@ -238,7 +241,7 @@ namespace Quoridor.OutputConsole.Input
             if (CurrentGame.SecondPlayer is Bot bot)
             {
                 Cell[] possiblePlayerPlaces = CurrentGame.
-                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
+                    CurrentBoard.GetPossiblePlayersMovesWithJumps(bot.CurrentCell,
                     CurrentGame.FirstPlayer.CurrentCell);
                 Wall[] possibleWallPlaces = CurrentGame.
                     CurrentBoard.GetPossibleWallsPlaces();

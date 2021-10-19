@@ -38,7 +38,14 @@ namespace Quoridor.Model
 
         public bool MakeMove(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
-            Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
+            //Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
+            Cell[] moves = GetPossiblePlayersMovesWithJumps(cellFrom, cellThrough);
+            return Array.Exists(moves, element => element == cellTo);
+        }
+
+        public bool MakeJump(Cell cellFrom, Cell cellTo, Cell cellThrough)
+        {
+            Cell[] moves = CheckJump(cellFrom, cellThrough);
             return Array.Exists(moves, element => element == cellTo);
         }
 
@@ -197,9 +204,13 @@ namespace Quoridor.Model
             {
                 possibleCells[i] = GetCellById(edges[i]);
             }
+            return possibleCells;
+        }
 
+        public Cell[] GetPossiblePlayersMovesWithJumps(Cell cellFrom, Cell cellThrough)
+        {
+            Cell[] possibleCells = GetPossiblePlayersMoves(cellFrom, cellThrough);
             Cell[] jumps = CheckJump(cellFrom, cellThrough);
-
             return possibleCells.Concat(jumps).ToArray();
         }
 

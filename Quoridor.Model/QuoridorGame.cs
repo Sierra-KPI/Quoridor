@@ -29,7 +29,7 @@ namespace Quoridor.Model
 
         public bool CheckGameEnd() => CurrentPlayer.HasWon();
 
-        public bool MakeMove(Cell cellTo)
+        public bool MakeMove(Cell cellTo, bool isJump = false)
         {
             var cellFrom = CurrentPlayer.CurrentCell;
             SwapPlayer();
@@ -41,6 +41,8 @@ namespace Quoridor.Model
                 throw new Exception("Cell is taken by another Player");
             }
 
+            //if ((!isJump && CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough)) ||
+            //(isJump && CurrentBoard.MakeJump(cellFrom, cellTo, cellThrough)))
             if (CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough))
             {
                 CurrentPlayer.ChangeCoordinates(cellTo);
