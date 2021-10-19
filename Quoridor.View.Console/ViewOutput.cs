@@ -39,21 +39,7 @@ namespace Quoridor.View
         {
             _viewBoard = new string[_viewBoardSize, _viewBoardSize];
             CleanCells();
-
-            for (var i = 0; i < _viewBoardSize; i++)
-            {
-                for (var j = 0; j < _viewBoardSize; j++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        _viewBoard[i, j] = HorizontalWallSymbol;
-                    }
-                    if (j % 2 == 0)
-                    {
-                        _viewBoard[i, j] = VerticalWallSymbol;
-                    }
-                }
-            }
+            CleanWalls();
         }
 
         private void UpdateBoard()
@@ -73,6 +59,24 @@ namespace Quoridor.View
             }
         }
 
+        private void CleanWalls()
+        {
+            for (var i = 0; i < _viewBoardSize; i++)
+            {
+                for (var j = 0; j < _viewBoardSize; j++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        _viewBoard[i, j] = HorizontalWallSymbol;
+                    }
+                    if (j % 2 == 0)
+                    {
+                        _viewBoard[i, j] = VerticalWallSymbol;
+                    }
+                }
+            }
+        }
+
         private void UpdateCells()
         {
             CleanCells();
@@ -87,6 +91,7 @@ namespace Quoridor.View
 
         private void UpdateWalls()
         {
+            CleanWalls();
             var walls = _currentGame.CurrentBoard.GetPlacedWalls();
             for (var i = 0; i < walls.GetLength(0); i++)
             {
