@@ -62,6 +62,40 @@ namespace Quoridor.Model
             return true;
         }
 
+        public bool UnplaceWall(Wall wall)
+        {
+            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int diff = GetDiffCellId(cell1ID, cell2ID);
+
+            if (_placedWalls.Contains(wall))
+            {
+                Console.WriteLine("In Board.UnplaceWall");
+                _placedWalls.Remove(wall);
+                AddWall(wall);
+
+                var wallsId = new int[,]
+                {
+                    { cell1ID, cell2ID },
+                    { cell1ID - diff, cell2ID - diff},
+                    { cell1ID + diff, cell2ID + diff},
+                    { cell1ID, cell1ID + diff}
+                };
+
+                for (int i = 0; i < wallsId.GetLength(0); i++)
+                {
+                    Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Horizontal : Orientation.Vertical;
+                    Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
+                    Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
+                    Wall tempWall = new Wall(coordinates, endCoordinates, orientation);
+                    if (!_walls.Contains(tempWall)) _walls.Add(tempWall);
+                }
+
+                return true;
+            }
+            return false;
+        }
+
         private int GetDiffCellId(int cell1, int cell2)
         {
             if (cell2 - cell1 == 1)
