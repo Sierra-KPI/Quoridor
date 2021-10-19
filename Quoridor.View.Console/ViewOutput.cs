@@ -135,8 +135,24 @@ namespace Quoridor.View
                 {
                     Console.Write(_viewBoard[i, j]);
                 }
+
+                if (i % 2 == 0 && i != 0 && i != _viewBoardSize - 1)
+                {
+                    Console.Write(" " + (i / 2) + " ");
+                }
+                else
+                {
+                    Console.Write("   ");
+                }
                 Console.WriteLine();
             }
+
+            Console.Write("    ");
+            for (var i = 0; i < _currentGame.CurrentBoard.Size - 1; i++)
+            {
+                Console.Write("   " + (char)(i + 83));
+            }
+            Console.WriteLine();
         }
 
         #endregion Methods
