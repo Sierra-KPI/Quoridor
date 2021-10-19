@@ -204,7 +204,9 @@ namespace Quoridor.Model
             {
                 possibleCells[i] = GetCellById(edges[i]);
             }
-            return possibleCells;
+            //return possibleCells;
+            Cell[] jumps = CheckJump(cellFrom, cellThrough);
+            return possibleCells.Concat(jumps).ToArray();
         }
 
         public Cell[] GetPossiblePlayersMovesWithJumps(Cell cellFrom, Cell cellThrough)
