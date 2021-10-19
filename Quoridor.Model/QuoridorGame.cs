@@ -82,6 +82,18 @@ namespace Quoridor.Model
             throw new Exception("Wrong place for Wall");
         }
 
+        public bool UnplaceWall(Wall wall)
+        {
+            if (CurrentBoard.UnplaceWall(wall))
+            {
+                SwapPlayer();
+                CurrentPlayer.IncreaseWallCount();
+                SwapPlayer();
+                return true;
+            }
+            else throw new Exception("Unable to unplace the Wall");
+        }
+
         public void SwapPlayer()
         {
             if (CurrentPlayer == FirstPlayer)
