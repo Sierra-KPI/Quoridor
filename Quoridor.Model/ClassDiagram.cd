@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Quoridor.Model.Board">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAAAAAAgkSABAAAIAgIAAgAAQsAEAKAgCAAAAAA=</HashCode>
+      <FileName>Board\Board.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Quoridor.Model.BoardFactory" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAA=</HashCode>
+      <FileName>Board\BoardFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Quoridor.Model.Graph">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAEACAAAACAFAAAAAAAAAQAAAAIAAAAYAAAA=</HashCode>
+      <FileName>Board\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Quoridor.Model.Cell" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAIAAAIAAAAAAAAAAAAAECAAA=</HashCode>
+      <FileName>Cell\Cell.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Quoridor.Model.Coordinates">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAgAAAAAAAAAAAAIAACACAAAAAYiI=</HashCode>
+      <FileName>Cell\Coordinates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Quoridor.Model.Wall" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAABAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cell\Wall.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Quoridor.Model.Bot" BaseTypeListCollapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAiACAAAIAQAAAAQACAACAAAA=</HashCode>
+      <FileName>Player\Bot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Quoridor.Model.Player" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgACAAAAAQAAAAQACAACAAAA=</HashCode>
+      <FileName>Player\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Quoridor.Model.QuoridorGame">
+    <Position X="6.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAABAAAAAQAAAAAAAAAAAAoAQAAAAgAAAAQA=</HashCode>
+      <FileName>QuoridorGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Quoridor.Model.IBoardFactory">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Board\IBoardFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Quoridor.Model.IElement">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cell\IElement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Quoridor.Model.IPlayer">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgACAAAAAQAAAAQACAACAAAA=</HashCode>
+      <FileName>Player\IPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Quoridor.Model.Orientation">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cell\Orientation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Quoridor.Model.PlayerID">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Player\PlayerID.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
