@@ -33,12 +33,11 @@ namespace Quoridor.Model
 
         public IElement DoMove(QuoridorGame game)
         {
-
-
             int bestScore = int.MinValue;
+            IElement bestElement;
             int currentScore = 0;
 
-
+            return bestElement;
         }
 
         private (IElement, int) Minimax(QuoridorGame game, int depth,
@@ -57,9 +56,10 @@ namespace Quoridor.Model
             //    return int.MaxValue;
             //}
 
-            Cell[] possibleCells = game.
-                CurrentBoard.GetPossiblePlayersMoves(game.SecondPlayer.CurrentCell,
+            Cell[] possibleCells = game.CurrentBoard.
+                GetPossiblePlayersMoves(game.SecondPlayer.CurrentCell,
                 game.FirstPlayer.CurrentCell);
+
             Wall[] possibleWalls = game.
                 CurrentBoard.GetPossibleWallsPlaces();
 
@@ -76,12 +76,55 @@ namespace Quoridor.Model
 
                 foreach (IElement element in possibleMoves)
                 {
-                    (IElement elementForScore, int score) =
-                        Minimax(game, depth, isMaximisePlayer,
-                        possibleMoves);
-                }
-            }
+                    (IElement minimaxScoreElement, int score) =
+                        Minimax(game, depth - 1, false); // probably should be depth +1
 
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        bestPositon = minimaxScoreElement;
+                    }
+
+                    if (minimaxScoreElement is Cell cell)
+                    {
+                        game.UnmakeMove(cell);
+                    }
+                    else
+                    {
+                        game.UnplaceWall((Wall)minimaxScoreElement);
+                    }
+                }
+
+                return (bestPositon, bestScore);
+            }
+            else
+            {
+                int bestScore = int.MaxValue;
+                IElement bestPositon;
+
+                foreach (IElement element in possibleMoves)
+                {
+                    (IElement minimaxScoreElement, int score) =
+                        Minimax(game, depth - 1, true);
+
+                    if (score < bestScore)
+                    {
+                        bestScore = score;
+                        bestPositon = minimaxScoreElement;
+                    }
+
+                    if (minimaxScoreElement is Cell cell)
+                    {
+                        game.UnmakeMove(cell);
+                    }
+                    else
+                    {
+                        game.UnplaceWall((Wall)minimaxScoreElement);
+                    }
+                }
+
+                return (bestPositon, bestScore);
+            }
         }
 
         public IElement DoRandomMove(Cell[] possibleCells,
