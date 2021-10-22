@@ -47,7 +47,6 @@ namespace Quoridor.Model.Tests
             Cell[] actual = board.GetPossiblePlayersMoves(from, through);
             Cell[] expected = new Cell[] {
                 board.GetCellByCoordinates(new Coordinates(3, 0)),
-            board.GetCellByCoordinates(new Coordinates(4, 1)),
             board.GetCellByCoordinates(new Coordinates(4, 2)),
             board.GetCellByCoordinates(new Coordinates(5, 0))
             };
