@@ -224,11 +224,12 @@ namespace Quoridor.Model
         public Cell[] GetPossiblePlayersMoves(Cell cellFrom, Cell cellThrough)
         {
             int[] edges = _graph.GetEdgesForVertex(cellFrom.Id);
-            Cell[] possibleCells = new Cell[edges.GetLength(0)];
+            List<Cell> possibleCells = new List<Cell>();
 
             for (var i = 0; i < edges.GetLength(0); i++)
             {
-                possibleCells[i] = GetCellById(edges[i]);
+                if (edges[i] == cellThrough.Id) continue;
+                possibleCells.Add(GetCellById(edges[i]));
             }
 
             Cell[] jumps = CheckJump(cellFrom, cellThrough);
