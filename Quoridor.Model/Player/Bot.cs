@@ -31,6 +31,59 @@ namespace Quoridor.Model
             return CurrentCell;
         }
 
+        public IElement DoMove(QuoridorGame game)
+        {
+
+
+            int bestScore = int.MinValue;
+            int currentScore = 0;
+
+
+        }
+
+        private (IElement, int) Minimax(QuoridorGame game, int depth,
+            bool isMaximisePlayer)
+        {
+            //if (depth == 0)
+            //{
+            //    return 0;
+            //}
+            //if (game.FirstPlayer.HasWon())
+            //{
+            //    return int.MinValue;
+            //}
+            //if (HasWon())
+            //{
+            //    return int.MaxValue;
+            //}
+
+            Cell[] possibleCells = game.
+                CurrentBoard.GetPossiblePlayersMoves(game.SecondPlayer.CurrentCell,
+                game.FirstPlayer.CurrentCell);
+            Wall[] possibleWalls = game.
+                CurrentBoard.GetPossibleWallsPlaces();
+
+            IElement[] possibleMoves = new
+                IElement[possibleCells.Length + possibleWalls.Length];
+
+            possibleCells.CopyTo(possibleMoves, 0);
+            possibleWalls.CopyTo(possibleMoves, possibleCells.Length);
+
+            if (isMaximisePlayer)
+            {
+                int bestScore = int.MinValue;
+                IElement bestPositon;
+
+                foreach (IElement element in possibleMoves)
+                {
+                    (IElement elementForScore, int score) =
+                        Minimax(game, depth, isMaximisePlayer,
+                        possibleMoves);
+                }
+            }
+
+        }
+
         public IElement DoRandomMove(Cell[] possibleCells,
             Wall[] possibleWalls)
         {
