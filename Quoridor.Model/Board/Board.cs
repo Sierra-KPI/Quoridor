@@ -154,6 +154,18 @@ namespace Quoridor.Model
         public bool HasPath(Cell cellFrom, Cell cellTo) =>
             _graph.HasPath(cellFrom.Id, cellTo.Id);
 
+        // rewrite
+        public int GetMinPathLength(Cell cellFrom, Cell cellThrough, Cell[] cellsTo)
+        {
+            int[] idOfCells = new int[cellsTo.GetLength(0)];
+            for (var i = 0; i < cellsTo.GetLength(0); i++)
+            {
+                idOfCells[i] = cellsTo[i].Id;
+            }
+
+            return _graph.GetMinPathLength(cellFrom.Id, cellThrough.Id, idOfCells);
+        }
+
         public Cell GetStartCellForPlayer(int playerId)
         {
             return playerId switch
