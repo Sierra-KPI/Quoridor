@@ -71,6 +71,9 @@ namespace Quoridor.Model
             _adjacencyList[vertex1].Remove(vertex2) &&
             _adjacencyList[vertex2].Remove(vertex1);
 
+        private bool HasEdge(int vertex1, int vertex2) =>
+            _adjacencyList[vertex1].Contains(vertex2);
+
         public int[] GetEdgesForVertex(int vertex)
         {
             LinkedList<int> list = _adjacencyList[vertex];
