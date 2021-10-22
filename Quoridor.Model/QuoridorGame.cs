@@ -55,7 +55,6 @@ namespace Quoridor.Model
         {
             SwapPlayer();
             CurrentPlayer.ChangeCoordinates(cell);
-            SwapPlayer();
             return true;
         }
 
@@ -96,7 +95,6 @@ namespace Quoridor.Model
             {
                 SwapPlayer();
                 CurrentPlayer.IncreaseWallCount();
-                SwapPlayer();
                 return true;
             }
             else throw new Exception("Unable to unplace the Wall");
