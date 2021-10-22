@@ -33,9 +33,8 @@ namespace Quoridor.Model
 
         public IElement DoMove(QuoridorGame game)
         {
-            int bestScore = int.MinValue;
-            IElement bestElement;
-            int currentScore = 0;
+            // probably there should be some more code
+            (IElement bestElement, int _) = Minimax(game, 1, false);
 
             return bestElement;
         }
@@ -57,42 +56,58 @@ namespace Quoridor.Model
             //}
 
             Cell[] possibleCells = game.CurrentBoard.
-                GetPossiblePlayersMoves(game.SecondPlayer.CurrentCell,
+                GetPossiblePlayersMoves(game.CurrentPlayer.CurrentCell,
                 game.FirstPlayer.CurrentCell);
 
-            Wall[] possibleWalls = game.
-                CurrentBoard.GetPossibleWallsPlaces();
+            //Wall[] possibleWalls = game.
+            //    CurrentBoard.GetPossibleWallsPlaces();
 
-            IElement[] possibleMoves = new
-                IElement[possibleCells.Length + possibleWalls.Length];
+            //IElement[] possibleMoves = new
+            //    IElement[possibleCells.Length + possibleWalls.Length];
 
-            possibleCells.CopyTo(possibleMoves, 0);
-            possibleWalls.CopyTo(possibleMoves, possibleCells.Length);
+            //possibleCells.CopyTo(possibleMoves, 0);
+            //possibleWalls.CopyTo(possibleMoves, possibleCells.Length);
 
             if (isMaximisePlayer)
             {
                 int bestScore = int.MinValue;
-                IElement bestPositon;
+                IElement bestPositon = possibleCells[0];
 
-                foreach (IElement element in possibleMoves)
+                foreach (IElement element in possibleCells)
                 {
-                    (IElement minimaxScoreElement, int score) =
-                        Minimax(game, depth - 1, false); // probably should be depth +1
+                    if (element is Cell)
+                    {
+                        game.MakeMove((Cell)element);
+                    }
+                    //else
+                    //{
+                    //    game.PlaceWall((Wall)element);
+                    //}
 
-                    if (score > bestScore)
+                    IElement minimaxScoreElement = possibleCells[0];
+                    int score;
+
+                    if (depth > 0)
                     {
-                        bestScore = score;
-                        bestPositon = minimaxScoreElement;
+                        (minimaxScoreElement, score) =
+                            Minimax(game, depth - 1, false); // probably should be depth +1
+                   
+
+                        if (score > bestScore)
+                        {
+                            bestScore = score;
+                            bestPositon = minimaxScoreElement;
+                        }
                     }
 
-                    if (minimaxScoreElement is Cell cell)
+                    if (minimaxScoreElement is Cell)
                     {
-                        game.UnmakeMove(cell);
+                        game.UnmakeMove((Cell)element);
                     }
-                    else
-                    {
-                        game.UnplaceWall((Wall)minimaxScoreElement);
-                    }
+                    //else
+                    //{
+                    //    game.UnplaceWall((Wall)minimaxScoreElement);
+                    //}
                 }
 
                 return (bestPositon, bestScore);
@@ -100,27 +115,43 @@ namespace Quoridor.Model
             else
             {
                 int bestScore = int.MaxValue;
-                IElement bestPositon;
+                IElement bestPositon = possibleCells[0];
 
-                foreach (IElement element in possibleMoves)
+                foreach (IElement element in possibleCells)
                 {
-                    (IElement minimaxScoreElement, int score) =
-                        Minimax(game, depth - 1, true);
-
-                    if (score < bestScore)
+                    if (element is Cell)
                     {
-                        bestScore = score;
-                        bestPositon = minimaxScoreElement;
+                        game.MakeMove((Cell)element);
+                    }
+                    //else
+                    //{
+                    //    game.PlaceWall((Wall)element);
+                    //}
+
+                    IElement minimaxScoreElement = possibleCells[0];
+                    int score;
+
+                    if (depth > 0)
+                    {
+
+                        (minimaxScoreElement, score) =
+                        Minimax(game, depth - 1, true); // probably should be depth +1
+
+                        if (score < bestScore)
+                        {
+                            bestScore = score;
+                            bestPositon = minimaxScoreElement;
+                        }
                     }
 
                     if (minimaxScoreElement is Cell cell)
                     {
                         game.UnmakeMove(cell);
                     }
-                    else
-                    {
-                        game.UnplaceWall((Wall)minimaxScoreElement);
-                    }
+                    //else
+                    //{
+                    //    game.UnplaceWall((Wall)minimaxScoreElement);
+                    //}
                 }
 
                 return (bestPositon, bestScore);
