@@ -43,9 +43,9 @@ namespace Quoridor.Model.Tests
         #region MakeMove
 
         [Theory]
-        [InlineData(4, 1)]
-        [InlineData(3, 0)]
-        [InlineData(5, 0)]
+        [InlineData(7, 4)]
+        [InlineData(8, 3)]
+        [InlineData(8, 5)]
         public void MakeMove_FirstPlayerPossibleMove_True(int x, int y)
         {
             QuoridorGame game = CreateGame();
@@ -81,8 +81,8 @@ namespace Quoridor.Model.Tests
 
         // maybe this should be in Board tests
         [Theory]
-        [InlineData(4, 0, PlayerID.First)]
-        [InlineData(4, 8, PlayerID.Second)]
+        [InlineData(0, 4, PlayerID.Second)]
+        [InlineData(8, 4, PlayerID.First)]
         public void GetStartCellForPlayer_Player_Equals(int x,
             int y, PlayerID playerID)
         {
@@ -112,9 +112,9 @@ namespace Quoridor.Model.Tests
         [InlineData(6)]
         [InlineData(7)]
         [InlineData(8)]
-        public void GetEndCellForPlayer_FirstPlayer_Equals(int x)
+        public void GetEndCellForPlayer_FirstPlayer_Equals(int y)
         {
-            int y = 8;
+            int x = 0;
             Board board = new BoardFactory().CreateBoard();
 
             Cell firstPlayerCell = board.GetStartCellForPlayer
@@ -124,7 +124,7 @@ namespace Quoridor.Model.Tests
 
             Coordinates expected = new Coordinates(x, y);
 
-            Assert.Equal(actual[x].Coordinates, expected);
+            Assert.Equal(actual[y].Coordinates, expected);
         }
 
         // maybe this should be in Board tests
@@ -138,9 +138,9 @@ namespace Quoridor.Model.Tests
         [InlineData(6)]
         [InlineData(7)]
         [InlineData(8)]
-        public void GetEndCellForPlayer_SecondPlayer_Equals(int x)
+        public void GetEndCellForPlayer_SecondPlayer_Equals(int y)
         {
-            int y = 0;
+            int x = 8;
             Board board = new BoardFactory().CreateBoard();
 
             Cell secondPlayerCell = board.GetStartCellForPlayer
@@ -150,7 +150,7 @@ namespace Quoridor.Model.Tests
 
             Coordinates expected = new Coordinates(x, y);
 
-            Assert.Equal(actual[x].Coordinates, expected);
+            Assert.Equal(actual[y].Coordinates, expected);
         }
 
         #endregion GetEndCellForPlayer

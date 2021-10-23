@@ -12,9 +12,9 @@ namespace Quoridor.OutputConsole.Input
         public QuoridorGame CurrentGame;
         public ViewOutput View;
 
-        private Dictionary<string, int> _chars = new();
+        private Dictionary<char, int> _chars = new();
         private bool _endLoop;
-        private string _currentPlayerName = "First Player";
+        private string _currentPlayerName = "White Player";
         private IPlayer _currentPlayer;
         private string[] _gameModePreference;
 
@@ -32,9 +32,9 @@ namespace Quoridor.OutputConsole.Input
             "tips on how to play the game:\n1. start x - start new " +
             "game, where is the number of real players " +
             "(1 for 1 real and 1 bot. 2 for two real players)" +
-            "\n2. player x y - move Your player from x cell to" +
-            " y cell\n3. wall x1 y1 x2 y2 - place wall from " +
-            "x1 y1 cell to x2 y2 cell\n4. help - print this " +
+            "\n2. move xy - move Your player to cell xy, for " +
+            "example: move E8\n3. wall xyh - place wall in xy, h - horisontal," +
+            "v - vertical, for example: wall V7h\n4. help - print this " +
             "helpbox\n5. quit - quit the game";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
@@ -65,17 +65,17 @@ namespace Quoridor.OutputConsole.Input
         }
 
         private void InitializeDictionary() =>
-            _chars = new Dictionary<string, int>
+            _chars = new Dictionary<char, int>
             {
-                { "A", 1 },
-                { "B", 2 },
-                { "C", 3 },
-                { "D", 4 },
-                { "E", 5 },
-                { "F", 6 },
-                { "G", 7 },
-                { "H", 8 },
-                { "I", 9 }
+                { 'A', 1 },
+                { 'B', 2 },
+                { 'C', 3 },
+                { 'D', 4 },
+                { 'E', 5 },
+                { 'F', 6 },
+                { 'G', 7 },
+                { 'H', 8 },
+                { 'I', 9 }
             };
 
         public void ReadMove()
@@ -114,7 +114,10 @@ namespace Quoridor.OutputConsole.Input
                 case "start":
                     StartGame(inputString);
                     break;
-                case "player":
+                case "move":
+                    MovePlayer(inputString);
+                    break;
+                case "jump":
                     MovePlayer(inputString);
                     break;
                 case "wall":
@@ -156,7 +159,7 @@ namespace Quoridor.OutputConsole.Input
             Cell[] playerEndCells = board.GetEndCellsForPlayer
                 (board.GetStartCellForPlayer((int)playerID));
 
-            return (playerCell, playerEndCells); 
+            return (playerCell, playerEndCells);
         }
 
         private QuoridorGame CreateGame(string[] values,
@@ -183,8 +186,8 @@ namespace Quoridor.OutputConsole.Input
 
         private void MovePlayer(string[] values)
         {
-            Coordinates coordinates = new(int.Parse(values[1]) - 1,
-                _chars[values[2]] - 1);
+            Coordinates coordinates = new(values[1][1] - '1',
+                _chars[values[1][0]] - 1);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
             _currentPlayer = CurrentGame.CurrentPlayer;
@@ -199,11 +202,15 @@ namespace Quoridor.OutputConsole.Input
 
         private void PlaceWall(string[] values)
         {
-            Coordinates firstCoordinates = new(int.Parse(values[1]) - 1,
-                _chars[values[2]] - 1);
-            Coordinates secondCoordinates = new(int.Parse(values[3]) - 1,
-                _chars[values[4]] - 1);
+            int letter = values[1][0] - 83;
+            int number = values[1][1] - '1';
+            char orientation = values[1][2];
 
+            Coordinates firstCoordinates = new Coordinates(number, letter);
+            Coordinates secondCoordinates = orientation == 'h' ?
+                new Coordinates(number + 1, letter) :
+                new Coordinates(number, letter + 1);
+           
             Wall wall = CurrentGame.CurrentBoard.
                 GetWallByCoordinates(firstCoordinates, secondCoordinates);
             CurrentGame.PlaceWall(wall);
@@ -259,11 +266,11 @@ namespace Quoridor.OutputConsole.Input
         {
             if (CurrentGame.CurrentPlayer == CurrentGame.FirstPlayer)
             {
-                _currentPlayerName = "First Player";
+                _currentPlayerName = "White Player";
             }
             else
             {
-                _currentPlayerName = "Second Player";
+                _currentPlayerName = "Black Player";
             }
 
             Console.WriteLine(CurrentPlayerMessage +

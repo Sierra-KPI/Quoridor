@@ -9,8 +9,8 @@ namespace Quoridor.View
 
         private readonly QuoridorGame _currentGame;
 
-        private const string FirstPlayerSymbol = " 1 ";
-        private const string SecondPlayerSymbol = " 2 ";
+        private const string FirstPlayerSymbol = " W ";
+        private const string SecondPlayerSymbol = " B ";
         private const string EmptyCellSymbol = "   ";
         private const string HorizontalWallSymbol = "───";
         private const string VerticalWallSymbol = "│";
@@ -140,8 +140,24 @@ namespace Quoridor.View
                 {
                     Console.Write(_viewBoard[i, j]);
                 }
+
+                if (i % 2 == 0 && i != 0 && i != _viewBoardSize - 1)
+                {
+                    Console.Write(" " + (i / 2) + " ");
+                }
+                else
+                {
+                    Console.Write("   ");
+                }
                 Console.WriteLine();
             }
+
+            Console.Write("    ");
+            for (var i = 0; i < _currentGame.CurrentBoard.Size - 1; i++)
+            {
+                Console.Write("   " + (char)(i + 83));
+            }
+            Console.WriteLine();
         }
 
         #endregion Methods
