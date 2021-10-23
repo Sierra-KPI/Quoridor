@@ -24,13 +24,13 @@ namespace Quoridor.Model
                     cells[i, j] = new Cell(coordinates, cellId);
                     cellId++;
 
-                    if (i != 0 && i != _size - 1)
+                    if (j != 0 && i != _size - 1)
                     {
                         walls.Add(new Wall(coordinates.Left(),
                             coordinates, Orientation.Vertical));
                     }
 
-                    if (j != 0 && j != _size - 1)
+                    if (i != 0 && j != _size - 1)
                     {
                         walls.Add(new Wall(coordinates.Up(),
                             coordinates, Orientation.Horizontal));
