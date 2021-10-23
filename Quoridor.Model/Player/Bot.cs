@@ -72,6 +72,7 @@ namespace Quoridor.Model
             {
                 int bestScore = int.MinValue;
                 IElement bestPositon = possibleCells[0];
+                IElement positonToReturnTo = game.CurrentPlayer.CurrentCell;
 
                 foreach (IElement element in possibleCells)
                 {
@@ -102,7 +103,7 @@ namespace Quoridor.Model
 
                     if (minimaxScoreElement is Cell)
                     {
-                        game.UnmakeMove((Cell)element);
+                        game.UnmakeMove((Cell)positonToReturnTo);
                     }
                     //else
                     //{
