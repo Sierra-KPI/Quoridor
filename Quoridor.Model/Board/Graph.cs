@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Quoridor.Model
 {
@@ -71,6 +72,9 @@ namespace Quoridor.Model
             _adjacencyList[vertex1].Remove(vertex2) &&
             _adjacencyList[vertex2].Remove(vertex1);
 
+        private bool HasEdge(int vertex1, int vertex2) =>
+            _adjacencyList[vertex1].Contains(vertex2);
+
         public int[] GetEdgesForVertex(int vertex)
         {
             LinkedList<int> list = _adjacencyList[vertex];
@@ -138,6 +142,55 @@ namespace Quoridor.Model
             }
             return distances;
         }
+
+        public int GetMinPathLength(int from, int through, int[] to)
+        {
+            int size = (int)Math.Sqrt(_size);
+            // add jumps
+            int diff = through - from;
+            int revertDiff = Math.Abs(diff) == 1 ? -diff * size : -diff / size;
+            if (Math.Abs(diff) == 1 || Math.Abs(diff) == size)
+            {
+                if (HasEdge(through, through + diff))
+                {
+                    AddEdge(from, through + diff);
+                }
+                else
+                {
+
+                    if (HasEdge(through, through + revertDiff))
+                    {
+                        AddEdge(from, through + revertDiff);
+                    }
+                    if (HasEdge(through, through - revertDiff))
+                    {
+                        AddEdge(from, through - revertDiff);
+                    }
+                }
+            }
+
+            int min = int.MaxValue;
+            var dists = DijkstraAlgorithm(from);
+            for (int i = 0; i < to.GetLength(0); i++)
+            {
+                // rewrite to Math.Min
+                if (dists[to[i]] <= min)
+                {
+                    min = dists[to[i]];
+                }
+            }
+
+            // remove jumps
+            if (Math.Abs(diff) == 1 || Math.Abs(diff) == size)
+            {
+                RemoveEdge(from, through + diff);
+                RemoveEdge(from, through + revertDiff);
+                RemoveEdge(from, through - revertDiff);
+            }
+
+            return min;
+        }
+
 
         #endregion Methods
     }

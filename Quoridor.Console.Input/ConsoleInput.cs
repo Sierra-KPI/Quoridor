@@ -240,14 +240,7 @@ namespace Quoridor.OutputConsole.Input
         {
             if (CurrentGame.SecondPlayer is Bot bot)
             {
-                Cell[] possiblePlayerPlaces = CurrentGame.
-                    CurrentBoard.GetPossiblePlayersMovesWithJumps(bot.CurrentCell,
-                    CurrentGame.FirstPlayer.CurrentCell);
-                Wall[] possibleWallPlaces = CurrentGame.
-                    CurrentBoard.GetPossibleWallsPlaces();
-
-                IElement element = bot.DoRandomMove(possiblePlayerPlaces,
-                    possibleWallPlaces);
+                IElement element = bot.DoMove(CurrentGame);
 
                 if (element is Cell cell)
                 {

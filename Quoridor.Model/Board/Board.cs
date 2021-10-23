@@ -69,6 +69,40 @@ namespace Quoridor.Model
             return true;
         }
 
+        public bool UnplaceWall(Wall wall)
+        {
+            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int diff = GetDiffCellId(cell1ID, cell2ID);
+
+            if (_placedWalls.Contains(wall))
+            {
+                Console.WriteLine("In Board.UnplaceWall");
+                _placedWalls.Remove(wall);
+                AddWall(wall);
+
+                var wallsId = new int[,]
+                {
+                    { cell1ID, cell2ID },
+                    { cell1ID - diff, cell2ID - diff},
+                    { cell1ID + diff, cell2ID + diff},
+                    { cell1ID, cell1ID + diff}
+                };
+
+                for (int i = 0; i < wallsId.GetLength(0); i++)
+                {
+                    Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Horizontal : Orientation.Vertical;
+                    Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
+                    Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
+                    Wall tempWall = new Wall(coordinates, endCoordinates, orientation);
+                    if (!_walls.Contains(tempWall)) _walls.Add(tempWall);
+                }
+
+                return true;
+            }
+            return false;
+        }
+
         private int GetDiffCellId(int cell1, int cell2)
         {
             if (cell2 - cell1 == 1)
@@ -126,6 +160,18 @@ namespace Quoridor.Model
 
         public bool HasPath(Cell cellFrom, Cell cellTo) =>
             _graph.HasPath(cellFrom.Id, cellTo.Id);
+
+        // rewrite
+        public int GetMinPathLength(Cell cellFrom, Cell cellThrough, Cell[] cellsTo)
+        {
+            int[] idOfCells = new int[cellsTo.GetLength(0)];
+            for (var i = 0; i < cellsTo.GetLength(0); i++)
+            {
+                idOfCells[i] = cellsTo[i].Id;
+            }
+
+            return _graph.GetMinPathLength(cellFrom.Id, cellThrough.Id, idOfCells);
+        }
 
         public Cell GetStartCellForPlayer(int playerId)
         {
@@ -198,11 +244,12 @@ namespace Quoridor.Model
         public Cell[] GetPossiblePlayersMoves(Cell cellFrom, Cell cellThrough)
         {
             int[] edges = _graph.GetEdgesForVertex(cellFrom.Id);
-            Cell[] possibleCells = new Cell[edges.GetLength(0)];
+            List<Cell> possibleCells = new List<Cell>();
 
             for (var i = 0; i < edges.GetLength(0); i++)
             {
-                possibleCells[i] = GetCellById(edges[i]);
+                if (edges[i] == cellThrough.Id) continue;
+                possibleCells.Add(GetCellById(edges[i]));
             }
             //return possibleCells;
             Cell[] jumps = CheckJump(cellFrom, cellThrough);

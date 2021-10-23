@@ -53,6 +53,13 @@ namespace Quoridor.Model
             throw new Exception("Wrong Player Move");
         }
 
+        public bool UnmakeMove(Cell cell)
+        {
+            SwapPlayer();
+            CurrentPlayer.ChangeCoordinates(cell);
+            return true;
+        }
+
         public bool PlaceWall(Wall wall)
         {
             if (CurrentPlayer.WallsCount == 0)
@@ -82,6 +89,17 @@ namespace Quoridor.Model
                 }
             }
             throw new Exception("Wrong place for Wall");
+        }
+
+        public bool UnplaceWall(Wall wall)
+        {
+            if (CurrentBoard.UnplaceWall(wall))
+            {
+                SwapPlayer();
+                CurrentPlayer.IncreaseWallCount();
+                return true;
+            }
+            else throw new Exception("Unable to unplace the Wall");
         }
 
         public void SwapPlayer()
