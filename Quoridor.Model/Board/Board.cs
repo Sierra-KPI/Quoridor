@@ -51,53 +51,22 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
-            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffCellId(cell1ID, cell2ID);
-
-            _walls = _walls.Where(elem =>
-            {
-                int wallCell1 = GetIdOfCellByCoordinates(elem.Coordinates);
-                int wallCell2 = GetIdOfCellByCoordinates(elem.EndCoordinates);
-                return (wallCell1 != cell1ID || wallCell2 != cell2ID) &&
-                (wallCell1 != cell1ID - diff || wallCell2 != cell2ID - diff) &&
-                (wallCell1 != cell1ID + diff || wallCell2 != cell2ID + diff) &&
-                (wallCell1 != cell1ID || wallCell2 != cell1ID + diff);
-            }).ToList();
-
-            _placedWalls.Add(wall);
+            var connectedWalls = GetConnectedWalls(wall);
+            _walls.RemoveAll(elem => connectedWalls.Contains(elem));
+            if (!_placedWalls.Contains(wall)) _placedWalls.Add(wall);
             return true;
+
         }
 
         public bool UnplaceWall(Wall wall)
         {
-            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffCellId(cell1ID, cell2ID);
-
             if (_placedWalls.Contains(wall))
             {
-                Console.WriteLine("In Board.UnplaceWall");
                 _placedWalls.Remove(wall);
                 AddWall(wall);
-
-                var wallsId = new int[,]
-                {
-                    { cell1ID, cell2ID },
-                    { cell1ID - diff, cell2ID - diff},
-                    { cell1ID + diff, cell2ID + diff},
-                    { cell1ID, cell1ID + diff}
-                };
-
-                for (int i = 0; i < wallsId.GetLength(0); i++)
-                {
-                    Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Horizontal : Orientation.Vertical;
-                    Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
-                    Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
-                    Wall tempWall = new Wall(coordinates, endCoordinates, orientation);
-                    if (!_walls.Contains(tempWall)) _walls.Add(tempWall);
-                }
-
+                var connectedWalls = GetConnectedWalls(wall);
+                _walls.AddRange(connectedWalls);
+                RenewPlacedWall();
                 return true;
             }
             return false;
