@@ -310,10 +310,21 @@ namespace Quoridor.Model
             return _cells[coordinates.X, coordinates.Y];
         }
 
+        // rewrite
         public Wall GetWallByCoordinates(Coordinates coordinates,
-            Coordinates endCoordinates) => _walls.Single(element =>
-            element.Coordinates == coordinates &&
-            element.EndCoordinates == endCoordinates);
+            Coordinates endCoordinates)
+        {
+            try
+            {
+                return _walls.Single(element =>
+                    element.Coordinates == coordinates &&
+                    element.EndCoordinates == endCoordinates);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 
     #endregion Methods
