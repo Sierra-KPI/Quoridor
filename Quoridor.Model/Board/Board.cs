@@ -103,6 +103,35 @@ namespace Quoridor.Model
             return false;
         }
 
+        private List<Wall> GetConnectedWalls(Wall wall)
+        {
+            List<Wall> connectedWalls = new List<Wall>();
+            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
+            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
+            int diff = GetDiffCellId(cell1ID, cell2ID);
+
+            int[,] wallsId = new int[,]
+                {
+                    { cell1ID, cell2ID },
+                    { cell1ID - diff, cell2ID - diff },
+                    { cell1ID + diff, cell2ID + diff },
+                    { cell1ID, cell1ID + diff }
+                };
+
+            for (int i = 0; i < wallsId.GetLength(0); i++)
+            {
+                if (!CheckCellId(wallsId[i, 0]) || !CheckCellId(wallsId[i, 1])) continue;
+                Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Horizontal : Orientation.Vertical;
+                Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
+                Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
+                if (!CheckCoordinatesForWall(coordinates, endCoordinates)) continue;
+                Wall tempWall = GetWallByCoordinates(coordinates, endCoordinates);
+                if (tempWall == null) tempWall = new Wall(coordinates, endCoordinates, orientation);
+                if (!connectedWalls.Contains(tempWall)) connectedWalls.Add(tempWall);
+            }
+            return connectedWalls;
+        }
+
         private bool CheckCoordinatesForWall(Coordinates c1, Coordinates c2)
         {
             if ((c1.Y == 0 && c1.X == Size - 1) ||
