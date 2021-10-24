@@ -14,7 +14,7 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<char, int> _chars = new();
         private bool _endLoop;
-        private string _currentPlayerName = "White Player";
+        private string _currentPlayerName = FirstPlayerName;
         private IPlayer _currentPlayer;
         private string[] _gameModePreference;
 
@@ -47,6 +47,8 @@ namespace Quoridor.OutputConsole.Input
         private const string MultiplayerMessage = "New Multiplayer" +
             " Game has started!";
         private const string SingleModeInput = "1";
+        private const string FirstPlayerName = "White Player";
+        private const string SecondPlayerName = "Black Player";
 
         #endregion Fields
 
@@ -195,7 +197,7 @@ namespace Quoridor.OutputConsole.Input
 
             CurrentGame.MakeMove(to);
 
-            if (!_currentPlayer.HasWon())
+            if (!CheckWinner(CurrentGame.FirstPlayer))
             {
                 StartBotTurn();
             }
@@ -225,16 +227,23 @@ namespace Quoridor.OutputConsole.Input
 
             View.DrawBoard();
 
-            if (_currentPlayer.HasWon())
+            WritePlayerMessage();
+        }
+
+        private bool CheckWinner(IPlayer player)
+        {
+            if (player.HasWon())
             {
-                WriteCongratulations();
+                WriteCongratulations(player);
                 WriteDelimiter();
 
-                StartGame(_gameModePreference);
                 View.DrawBoard();
+                StartGame(_gameModePreference);
+
+                return true;
             }
 
-            WritePlayerMessage();
+            return false;
         }
 
         private void StartBotTurn()
@@ -253,6 +262,7 @@ namespace Quoridor.OutputConsole.Input
                 if (element is Cell cell)
                 {
                     CurrentGame.MakeMove(cell);
+                    CheckWinner(CurrentGame.SecondPlayer);
                 }
                 else
                 {
@@ -274,19 +284,31 @@ namespace Quoridor.OutputConsole.Input
         {
             if (CurrentGame.CurrentPlayer == CurrentGame.FirstPlayer)
             {
-                _currentPlayerName = "White Player";
+                _currentPlayerName = FirstPlayerName;
             }
             else
             {
-                _currentPlayerName = "Black Player";
+                _currentPlayerName = SecondPlayerName;
             }
 
             Console.WriteLine(CurrentPlayerMessage +
                 _currentPlayerName);
         }
 
-        private void WriteCongratulations() =>
-            Console.WriteLine(_currentPlayerName + CongratulationsMessage);
+        private void WriteCongratulations(IPlayer player)
+        {
+            var winner = "";
+            if (player == CurrentGame.FirstPlayer)
+            {
+                winner = FirstPlayerName;
+            }
+            else
+            {
+                winner = SecondPlayerName;
+            }
+
+            Console.WriteLine(winner + CongratulationsMessage);
+        }
 
         private void QuitLoop() => _endLoop = true;
 
