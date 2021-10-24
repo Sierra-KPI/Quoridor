@@ -170,7 +170,7 @@ namespace Quoridor.OutputConsole.Input
 
             if (values[1] == SingleModeInput)
             {
-                Bot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+                RandomBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 Console.WriteLine(SingleplayerMessage);
 
                 return CurrentGame = new QuoridorGame(firstPlayer,
@@ -238,7 +238,7 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartBotTurn()
         {
-            if (CurrentGame.SecondPlayer is Bot bot)
+            if (CurrentGame.SecondPlayer is RandomBot bot)
             {
                 Cell[] possiblePlayerPlaces = CurrentGame.
                     CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,

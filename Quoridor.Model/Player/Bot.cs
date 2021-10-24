@@ -31,36 +31,6 @@ namespace Quoridor.Model
             return CurrentCell;
         }
 
-        public IElement DoRandomMove(Cell[] possibleCells,
-            Wall[] possibleWalls)
-        {
-            var random = new Random();
-            int choice = random.Next(2);
-            if (choice % 2 == 0)
-            {
-                return ChooseRandomCell(possibleCells);
-            }
-            return ChooseRandomWall(possibleWalls);
-        }
-
-        public Cell ChooseRandomCell(Cell[] possibleCells)
-        {
-            var random = new Random();
-            int index = random.Next(possibleCells.GetLength(0));
-            Cell randomCell = possibleCells[index];
-            Cell chosenCell = randomCell;
-            return chosenCell;
-        }
-
-        public Wall ChooseRandomWall(Wall[] possibleWalls)
-        {
-            var random = new Random();
-            int index = random.Next(possibleWalls.GetLength(0));
-            Wall randomWall = possibleWalls[index];
-            Wall chosenWall = randomWall;
-            return chosenWall;
-        }
-
         public void DecreaseWallCount() => WallsCount--;
 
         public void IncreaseWallCount() => WallsCount++;
