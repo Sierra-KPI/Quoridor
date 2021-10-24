@@ -31,7 +31,7 @@ namespace Quoridor.OutputConsole.Input
         private const string HelpMessage = "Here's some tips " +
             "tips on how to play the game:\n1. start x - start new " +
             "game, where is the number of real players " +
-            "(1 for 1 real and 1 bot. 2 for two real players)" +
+            "(1 for one real and one bot. 2 for two real players)" +
             "\n2. move xy - move Your player to cell xy, for " +
             "example: move E8\n3. wall xyh - place wall in xy, h - horisontal," +
             "v - vertical, for example: wall V7h\n4. help - print this " +
@@ -133,6 +133,7 @@ namespace Quoridor.OutputConsole.Input
                     WriteIncorrectMessage();
                     break;
             }
+
             StartNewTurn();
         }
 
