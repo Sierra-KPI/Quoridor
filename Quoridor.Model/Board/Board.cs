@@ -101,6 +101,14 @@ namespace Quoridor.Model
             return connectedWalls;
         }
 
+        private void RenewPlacedWall()
+        {
+            foreach (Wall wall in _placedWalls.ToList())
+            {
+                PlaceWall(wall);
+            }
+        }
+
         private bool CheckCoordinatesForWall(Coordinates c1, Coordinates c2)
         {
             if ((c1.Y == 0 && c1.X == Size - 1) ||
