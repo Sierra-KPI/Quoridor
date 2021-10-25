@@ -117,10 +117,8 @@ namespace Quoridor.OutputConsole.Input
                     StartGame(inputString);
                     break;
                 case "move":
-                    MovePlayer(inputString);
-                    break;
                 case "jump":
-                    MovePlayer(inputString);
+                    ChangePlayerPosition(inputString);
                     break;
                 case "wall":
                     PlaceWall(inputString);
@@ -187,7 +185,7 @@ namespace Quoridor.OutputConsole.Input
                 realPlayer, board);
         }
 
-        private void MovePlayer(string[] values)
+        private void ChangePlayerPosition(string[] values)
         {
             Coordinates coordinates = new(values[1][1] - '1',
                 _chars[values[1][0]] - 1);

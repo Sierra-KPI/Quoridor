@@ -99,7 +99,10 @@ namespace Quoridor.Model
                 CurrentPlayer.IncreaseWallCount();
                 return true;
             }
-            else throw new Exception("Unable to unplace the Wall");
+            else
+            {
+                throw new Exception("Unable to unplace the Wall");
+            }
         }
 
         public void SwapPlayer()
