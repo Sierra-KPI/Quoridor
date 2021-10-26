@@ -2,7 +2,7 @@
 
 namespace Quoridor.Model
 {
-    public class Bot : IPlayer
+    public abstract class Bot : IPlayer
     {
         #region Properties
 
@@ -24,6 +24,8 @@ namespace Quoridor.Model
         #endregion Constructor
 
         #region Methods
+
+        public abstract IElement DoMove(QuoridorGame game);
 
         public Cell ChangeCoordinates(Cell newCell)
         {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Quoridor.Model
+﻿namespace Quoridor.Model
 {
     public class MinimaxBot : Bot
     {
@@ -13,9 +11,16 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public void DoMove()
+        public override IElement DoMove(QuoridorGame game)
         {
+            Minimax minimax = new Minimax(game);
 
+            IPlayer bot = game.SecondPlayer;
+            Cell[] possibleCells = game.
+                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
+                    game.FirstPlayer.CurrentCell);
+
+            return minimax.GetMove(possibleCells);
         }
 
         #endregion Methods

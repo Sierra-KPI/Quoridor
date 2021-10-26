@@ -13,9 +13,15 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public IElement DoRandomMove(Cell[] possibleCells,
-            Wall[] possibleWalls)
+        public override IElement DoMove(QuoridorGame game)
         {
+            IPlayer bot = game.SecondPlayer;
+            Cell[] possibleCells = game.
+                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
+                    game.FirstPlayer.CurrentCell);
+            Wall[] possibleWalls = game.
+                CurrentBoard.GetPossibleWallsPlaces();
+
             var random = new Random();
             int choice = random.Next(2);
             if (choice % 2 == 0)
