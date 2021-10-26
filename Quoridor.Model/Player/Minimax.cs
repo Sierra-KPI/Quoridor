@@ -59,6 +59,7 @@ namespace Quoridor.Model
             var cellThrough = _game.CurrentPlayer.CurrentCell;
             _game.SwapPlayer();
             var moves = _game.CurrentBoard.GetPossiblePlayersMoves(cellFrom, cellThrough);
+            var walls = _game.CurrentBoard.GetPossibleWallsPlaces();
 
             int eval;
             foreach (var move in moves)
@@ -78,6 +79,29 @@ namespace Quoridor.Model
                 }
                 if (beta <= alpha) break;
             }
+
+            // temp version of minimax for walls
+            /*foreach (var wall in walls)
+            {
+                if (_game.CurrentPlayer.WallsCount == 0) continue;
+                //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+                _game.PlaceWall(wall);
+                eval = minimax(wall, depth - 1, alpha, beta, !maximizingPlayer);
+
+                //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+                _game.UnplaceWall(wall);
+
+                if (maximizingPlayer)
+                {
+                    alpha = Math.Max(alpha, eval);
+                }
+                else
+                {
+                    beta = Math.Min(beta, eval);
+                }
+                if (beta <= alpha) break;
+            }*/
+
             return maximizingPlayer ? alpha : beta;
 
         }
