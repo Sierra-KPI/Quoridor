@@ -68,9 +68,15 @@ namespace Quoridor.Model
             return false;
         }
 
-        public bool RemoveEdge(int vertex1, int vertex2) =>
-            _adjacencyList[vertex1].Remove(vertex2) &&
-            _adjacencyList[vertex2].Remove(vertex1);
+        public bool RemoveEdge(int vertex1, int vertex2)
+        {
+            if (_adjacencyList[vertex1].Remove(vertex2) &&
+            _adjacencyList[vertex2].Remove(vertex1))
+            {
+                return true;
+            }
+            return false;
+        }
 
         private bool HasEdge(int vertex1, int vertex2) =>
             _adjacencyList[vertex1].Contains(vertex2);
