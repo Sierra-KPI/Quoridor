@@ -14,7 +14,7 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<char, int> _chars = new();
         private bool _endLoop;
-        private string _currentPlayerName = "White Player";
+        private string _currentPlayerName = FirstPlayerName;
         private IPlayer _currentPlayer;
         private string[] _gameModePreference;
 
@@ -31,7 +31,7 @@ namespace Quoridor.OutputConsole.Input
         private const string HelpMessage = "Here's some tips " +
             "tips on how to play the game:\n1. start x - start new " +
             "game, where is the number of real players " +
-            "(1 for 1 real and 1 bot. 2 for two real players)" +
+            "(1 for one real and one bot. 2 for two real players)" +
             "\n2. move xy - move Your player to cell xy, for " +
             "example: move E8\n3. wall xyh - place wall in xy, h - horisontal," +
             "v - vertical, for example: wall V7h\n4. help - print this " +
@@ -47,6 +47,8 @@ namespace Quoridor.OutputConsole.Input
         private const string MultiplayerMessage = "New Multiplayer" +
             " Game has started!";
         private const string SingleModeInput = "1";
+        private const string FirstPlayerName = "White Player";
+        private const string SecondPlayerName = "Black Player";
 
         #endregion Fields
 
@@ -115,10 +117,8 @@ namespace Quoridor.OutputConsole.Input
                     StartGame(inputString);
                     break;
                 case "move":
-                    MovePlayer(inputString);
-                    break;
                 case "jump":
-                    MovePlayer(inputString);
+                    ChangePlayerPosition(inputString);
                     break;
                 case "wall":
                     PlaceWall(inputString);
@@ -133,6 +133,7 @@ namespace Quoridor.OutputConsole.Input
                     WriteIncorrectMessage();
                     break;
             }
+
             StartNewTurn();
         }
 
@@ -170,7 +171,7 @@ namespace Quoridor.OutputConsole.Input
 
             if (values[1] == SingleModeInput)
             {
-                Bot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+                RandomBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 Console.WriteLine(SingleplayerMessage);
 
                 return CurrentGame = new QuoridorGame(firstPlayer,
@@ -184,7 +185,7 @@ namespace Quoridor.OutputConsole.Input
                 realPlayer, board);
         }
 
-        private void MovePlayer(string[] values)
+        private void ChangePlayerPosition(string[] values)
         {
             Coordinates coordinates = new(values[1][1] - '1',
                 _chars[values[1][0]] - 1);
@@ -194,7 +195,7 @@ namespace Quoridor.OutputConsole.Input
 
             CurrentGame.MakeMove(to);
 
-            if (!_currentPlayer.HasWon())
+            if (!CheckWinner(CurrentGame.FirstPlayer))
             {
                 StartBotTurn();
             }
@@ -224,16 +225,23 @@ namespace Quoridor.OutputConsole.Input
 
             View.DrawBoard();
 
-            if (_currentPlayer.HasWon())
+            WritePlayerMessage();
+        }
+
+        private bool CheckWinner(IPlayer player)
+        {
+            if (player.HasWon())
             {
-                WriteCongratulations();
+                WriteCongratulations(player);
                 WriteDelimiter();
 
-                StartGame(_gameModePreference);
                 View.DrawBoard();
+                StartGame(_gameModePreference);
+
+                return true;
             }
 
-            WritePlayerMessage();
+            return false;
         }
 
         private void StartBotTurn()
@@ -245,6 +253,7 @@ namespace Quoridor.OutputConsole.Input
                 if (element is Cell cell)
                 {
                     CurrentGame.MakeMove(cell);
+                    CheckWinner(CurrentGame.SecondPlayer);
                 }
                 else
                 {
@@ -266,19 +275,31 @@ namespace Quoridor.OutputConsole.Input
         {
             if (CurrentGame.CurrentPlayer == CurrentGame.FirstPlayer)
             {
-                _currentPlayerName = "White Player";
+                _currentPlayerName = FirstPlayerName;
             }
             else
             {
-                _currentPlayerName = "Black Player";
+                _currentPlayerName = SecondPlayerName;
             }
 
             Console.WriteLine(CurrentPlayerMessage +
                 _currentPlayerName);
         }
 
-        private void WriteCongratulations() =>
-            Console.WriteLine(_currentPlayerName + CongratulationsMessage);
+        private void WriteCongratulations(IPlayer player)
+        {
+            var winner = "";
+            if (player == CurrentGame.FirstPlayer)
+            {
+                winner = FirstPlayerName;
+            }
+            else
+            {
+                winner = SecondPlayerName;
+            }
+
+            Console.WriteLine(winner + CongratulationsMessage);
+        }
 
         private void QuitLoop() => _endLoop = true;
 
