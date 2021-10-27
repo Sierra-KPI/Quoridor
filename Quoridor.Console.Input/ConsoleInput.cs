@@ -171,7 +171,7 @@ namespace Quoridor.OutputConsole.Input
 
             if (values[1] == SingleModeInput)
             {
-                RandomBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+                MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
                 Console.WriteLine(SingleplayerMessage);
 
                 return CurrentGame = new QuoridorGame(firstPlayer,
