@@ -27,7 +27,7 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public bool CheckGameEnd() => CurrentPlayer.HasWon();
+        public bool CheckGameEnd() => FirstPlayer.HasWon() || SecondPlayer.HasWon();
 
         public bool MakeMove(Cell cellTo, bool isJump = false)
         {
