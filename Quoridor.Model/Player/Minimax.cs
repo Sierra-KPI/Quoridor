@@ -19,10 +19,10 @@ namespace Quoridor.Model
             {
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
-                int score = minimax(move, 2, int.MinValue, int.MaxValue, false);
+                int score = minimax(2, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
                 Console.WriteLine("Score for move " + move.Coordinates.X + " " + move.Coordinates.Y + " -> " + score);
-                if (score > bestScore)
+                if (score >= bestScore)
                 {
                     bestScore = score;
                     step = move;
@@ -46,7 +46,7 @@ namespace Quoridor.Model
             return res;
         }
 
-        private int minimax(IElement element, int depth,
+        private int minimax(int depth,
             int alpha, int beta, bool maximizingPlayer)
         {
             if (depth == 0 || _game.CheckGameEnd())
@@ -66,7 +66,7 @@ namespace Quoridor.Model
             {
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
-                eval = minimax(move, depth - 1, alpha, beta, !maximizingPlayer);
+                eval = minimax(depth - 1, alpha, beta, !maximizingPlayer);
                 _game.UnmakeMove(beforeMove);
 
                 if (maximizingPlayer)
@@ -86,7 +86,7 @@ namespace Quoridor.Model
                 if (_game.CurrentPlayer.WallsCount == 0) continue;
                 //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.PlaceWall(wall);
-                eval = minimax(wall, depth - 1, alpha, beta, !maximizingPlayer);
+                eval = minimax(depth - 1, alpha, beta, !maximizingPlayer);
 
                 //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.UnplaceWall(wall);
