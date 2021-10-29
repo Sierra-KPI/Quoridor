@@ -41,15 +41,20 @@ namespace Quoridor.Model
             Cell cellFrom = _game.CurrentPlayer.CurrentCell;
             int pathLenPlayer1 = _game.CurrentBoard
                 .GetMinPathLength(cellFrom, cellThrough, _game.CurrentPlayer.EndCells);
-            int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
+            //int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
             _game.SwapPlayer();
             int pathLenPlayer2 = _game.CurrentBoard
                 .GetMinPathLength(cellFrom, cellThrough, _game.CurrentPlayer.EndCells);
-            int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
+            //int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
 
             
             int res2 = _game.CurrentPlayer is Bot ? pathLenPlayer1 : -pathLenPlayer1;
-            return res2;
+            //return res2;
+
+            int res3 = _game.CurrentPlayer is MinimaxBot ?
+                pathLenPlayer1 - pathLenPlayer2 :
+                pathLenPlayer2 - pathLenPlayer1;
+            return res3;
 
         }
 
