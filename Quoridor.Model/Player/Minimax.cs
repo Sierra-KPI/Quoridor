@@ -6,6 +6,7 @@ namespace Quoridor.Model
     {
         private QuoridorGame _game;
         private int _timeout;
+        //private int _count;
 
         public Minimax(QuoridorGame game)
         {
@@ -14,10 +15,12 @@ namespace Quoridor.Model
 
         public IElement GetMove(Cell[] possibleSteps)
         {
+            DateTime timemark = DateTime.Now;
             int bestScore = int.MinValue;
             Cell step = Cell.Default;
             foreach (var move in possibleSteps)
             {
+                //_count = 0;
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
                 int score = minimax(2, int.MinValue, int.MaxValue, false);
@@ -28,9 +31,11 @@ namespace Quoridor.Model
                     bestScore = score;
                     step = move;
                 }
+                //Console.WriteLine("Count minimax " + _count);
             }
 
             Console.WriteLine("Step: " + step.Coordinates.X + " " + step.Coordinates.Y);
+            Console.WriteLine("Timemark for Step" + (DateTime.Now - timemark));
             return step;
         }
 
@@ -61,6 +66,7 @@ namespace Quoridor.Model
         private int minimax(int depth,
             int alpha, int beta, bool maximizingPlayer)
         {
+            //_count++;
             if (depth == 0 || _game.CheckGameEnd())
             {
                 var res_sev = sev();
@@ -100,16 +106,15 @@ namespace Quoridor.Model
                 if (beta <= alpha) return maximizingPlayer ? alpha : beta;
             }
 
-            // temp version of minimax for walls
             foreach (var wall in walls)
             {
-                if (_game.CurrentPlayer.WallsCount == 0) continue;
+                if (_game.CurrentPlayer.WallsCount == 0) return maximizingPlayer ? alpha : beta;
                 //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.PlaceWall(wall);
                 eval = minimax(depth - 1, alpha, beta, !maximizingPlayer);
                 //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.UnplaceWall(wall);
-
+                
                 if (maximizingPlayer)
                 {
                     alpha = Math.Max(alpha, eval);

@@ -86,7 +86,7 @@ namespace Quoridor.Model
                     { cell1ID + diff, cell2ID + diff },
                     { cell1ID, cell1ID + diff }
                 };
-
+            
             for (int i = 0; i < wallsId.GetLength(0); i++)
             {
                 if (!CheckCellId(wallsId[i, 0]) || !CheckCellId(wallsId[i, 1])) continue;
@@ -103,7 +103,7 @@ namespace Quoridor.Model
 
         private void RenewPlacedWall()
         {
-            foreach (Wall wall in _placedWalls.ToList())
+            foreach (Wall wall in _placedWalls.ToArray())
             {
                 PlaceWall(wall);
             }
@@ -314,16 +314,15 @@ namespace Quoridor.Model
         public Wall GetWallByCoordinates(Coordinates coordinates,
             Coordinates endCoordinates)
         {
-            try
+            foreach (var element in _walls)
             {
-                return _walls.Single(element =>
-                    element.Coordinates == coordinates &&
-                    element.EndCoordinates == endCoordinates);
+                if (element.Coordinates == coordinates &&
+                    element.EndCoordinates == endCoordinates)
+                {
+                    return element;
+                }
             }
-            catch
-            {
-                return null;
-            }
+            return null;
         }
     }
 
