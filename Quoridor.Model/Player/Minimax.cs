@@ -97,7 +97,7 @@ namespace Quoridor.Model
                 {
                     beta = Math.Min(beta, eval);
                 }
-                if (beta <= alpha) break;
+                if (beta <= alpha) return maximizingPlayer ? alpha : beta;
             }
 
             // temp version of minimax for walls
@@ -118,7 +118,7 @@ namespace Quoridor.Model
                 {
                     beta = Math.Min(beta, eval);
                 }
-                if (beta <= alpha) break;
+                if (beta <= alpha) return maximizingPlayer ? alpha : beta;
             }
 
             //Console.WriteLine("Return from minimax");
