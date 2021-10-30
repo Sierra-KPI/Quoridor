@@ -30,9 +30,7 @@ namespace Quoridor.Model
                 int score = Minimax(2, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
-                Console.WriteLine("Score for move " +
-                    move.Coordinates.X + " " +
-                    move.Coordinates.Y + " -> " + score);
+                WriteScoreMove(move, score);
 
                 if (score >= bestScore)
                 {
@@ -45,6 +43,13 @@ namespace Quoridor.Model
             WriteResults(timemark, step);
 
             return step;
+        }
+
+        private static void WriteScoreMove(Cell move, int score)
+        {
+            Console.WriteLine("Score for move " +
+                move.Coordinates.X + " " +
+                move.Coordinates.Y + " -> " + score);
         }
 
         private void WriteWallsInfo()
