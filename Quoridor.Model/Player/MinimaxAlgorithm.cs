@@ -45,6 +45,13 @@ namespace Quoridor.Model
                 //Console.WriteLine("Count Minimax " + _count);
             }
 
+            WriteResults(timemark, step);
+
+            return step;
+        }
+
+        private void WriteResults(DateTime timemark, Cell step)
+        {
             Console.WriteLine("Timemark for Step: " +
                 (DateTime.Now - timemark));
             Console.WriteLine("Step: " + step.Coordinates.X +
@@ -53,8 +60,6 @@ namespace Quoridor.Model
                 _game.CurrentBoard.GetPlacedWalls().GetLength(0));
             Console.WriteLine("PossibleWallsPlaces -> " +
                 _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
-
-            return step;
         }
 
         private int Sev()
