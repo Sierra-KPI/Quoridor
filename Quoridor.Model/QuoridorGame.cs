@@ -88,7 +88,7 @@ namespace Quoridor.Model
                     CurrentBoard.AddWall(wall);
                 }
             }
-            throw new Exception("Wrong place for Wall");
+            throw new Exception("Wrong place for Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
         }
 
         public bool UnplaceWall(Wall wall)

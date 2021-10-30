@@ -51,6 +51,7 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
+            //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
             var connectedWalls = GetConnectedWalls(wall);
             _walls.RemoveAll(elem => connectedWalls.Contains(elem));
             if (!_placedWalls.Contains(wall)) _placedWalls.Add(wall);
@@ -60,6 +61,7 @@ namespace Quoridor.Model
 
         public bool UnplaceWall(Wall wall)
         {
+            //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
             if (_placedWalls.Contains(wall))
             {
                 _placedWalls.Remove(wall);
@@ -90,7 +92,7 @@ namespace Quoridor.Model
             for (int i = 0; i < wallsId.GetLength(0); i++)
             {
                 if (!CheckCellId(wallsId[i, 0]) || !CheckCellId(wallsId[i, 1])) continue;
-                Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Horizontal : Orientation.Vertical;
+                Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Vertical : Orientation.Horizontal;
                 Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
                 Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
                 if (!CheckCoordinatesForWall(coordinates, endCoordinates)) continue;
@@ -324,6 +326,7 @@ namespace Quoridor.Model
             }
             return null;
         }
+
     }
 
     #endregion Methods

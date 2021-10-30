@@ -15,6 +15,8 @@ namespace Quoridor.Model
 
         public IElement GetMove(Cell[] possibleSteps)
         {
+            Console.WriteLine("PlacedWallls -> " + _game.CurrentBoard.GetPlacedWalls().GetLength(0));
+            Console.WriteLine("PossibleWallsPlaces -> " + _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
             DateTime timemark = DateTime.Now;
             int bestScore = int.MinValue;
             Cell step = Cell.Default;
@@ -34,8 +36,10 @@ namespace Quoridor.Model
                 //Console.WriteLine("Count minimax " + _count);
             }
 
+            Console.WriteLine("Timemark for Step: " + (DateTime.Now - timemark));
             Console.WriteLine("Step: " + step.Coordinates.X + " " + step.Coordinates.Y);
-            Console.WriteLine("Timemark for Step" + (DateTime.Now - timemark));
+            Console.WriteLine("PlacedWallls -> " + _game.CurrentBoard.GetPlacedWalls().GetLength(0));
+            Console.WriteLine("PossibleWallsPlaces -> " + _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
             return step;
         }
 
