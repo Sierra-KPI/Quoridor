@@ -15,10 +15,7 @@ namespace Quoridor.Model
 
         public IElement GetMove(Cell[] possibleSteps)
         {
-            Console.WriteLine("PlacedWallls -> " +
-                _game.CurrentBoard.GetPlacedWalls().GetLength(0));
-            Console.WriteLine("PossibleWallsPlaces -> " +
-                _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
+            WriteWallsInfo();
 
             DateTime timemark = DateTime.Now;
 
@@ -50,6 +47,14 @@ namespace Quoridor.Model
             return step;
         }
 
+        private void WriteWallsInfo()
+        {
+            Console.WriteLine("PlacedWallls -> " +
+                _game.CurrentBoard.GetPlacedWalls().GetLength(0));
+            Console.WriteLine("PossibleWallsPlaces -> " +
+                _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
+        }
+
         private void WriteResults(DateTime timemark, Cell step)
         {
             Console.WriteLine("Timemark for Step: " +
@@ -67,6 +72,7 @@ namespace Quoridor.Model
             Cell cellThrough = _game.CurrentPlayer.CurrentCell;
             _game.SwapPlayer();
             Cell cellFrom = _game.CurrentPlayer.CurrentCell;
+
             int pathLenPlayer1 = _game.CurrentBoard
                 .GetMinPathLength(cellFrom, cellThrough,
                 _game.CurrentPlayer.EndCells);
