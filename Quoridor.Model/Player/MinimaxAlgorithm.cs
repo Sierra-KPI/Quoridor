@@ -69,19 +69,7 @@ namespace Quoridor.Model
 
         private int Sev()
         {
-            Cell cellThrough = _game.CurrentPlayer.CurrentCell;
-            _game.SwapPlayer();
-            Cell cellFrom = _game.CurrentPlayer.CurrentCell;
-
-            int pathLenPlayer1 = _game.CurrentBoard
-                .GetMinPathLength(cellFrom, cellThrough,
-                _game.CurrentPlayer.EndCells);
-            //int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
-            _game.SwapPlayer();
-            int pathLenPlayer2 = _game.CurrentBoard
-                .GetMinPathLength(cellFrom, cellThrough,
-                _game.CurrentPlayer.EndCells);
-            //int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
+            (int pathLenPlayer1, int pathLenPlayer2) = GetPlayersPathes();
 
             int res2 = _game.CurrentPlayer is Bot ?
                 pathLenPlayer1 : -pathLenPlayer1;
@@ -92,6 +80,27 @@ namespace Quoridor.Model
                 pathLenPlayer2 - pathLenPlayer1;
 
             return res3;
+        }
+
+        private (int, int) GetPlayersPathes()
+        {
+            Cell cellThrough = _game.CurrentPlayer.CurrentCell;
+            _game.SwapPlayer();
+            Cell cellFrom = _game.CurrentPlayer.CurrentCell;
+
+            int firstPlayerPathLength = _game.CurrentBoard
+                .GetMinPathLength(cellFrom, cellThrough,
+                _game.CurrentPlayer.EndCells);
+            //int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
+
+            _game.SwapPlayer();
+
+            int secondPlayerPathLength = _game.CurrentBoard
+                .GetMinPathLength(cellFrom, cellThrough,
+                _game.CurrentPlayer.EndCells);
+            //int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
+
+            return (firstPlayerPathLength, secondPlayerPathLength);
         }
 
         private int Minimax(int depth,
