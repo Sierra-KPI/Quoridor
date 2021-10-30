@@ -2,13 +2,13 @@
 
 namespace Quoridor.Model
 {
-    public class Minimax
+    public class MinimaxAlgorithm
     {
         private readonly QuoridorGame _game;
         private readonly int _timeout;
         //private int _count;
 
-        public Minimax(QuoridorGame game)
+        public MinimaxAlgorithm(QuoridorGame game)
         {
             _game = game;
         }
@@ -30,7 +30,7 @@ namespace Quoridor.Model
                 //_count = 0;
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
-                int score = minimax(2, int.MinValue, int.MaxValue, false);
+                int score = Minimax(2, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
                 Console.WriteLine("Score for move " +
@@ -42,7 +42,7 @@ namespace Quoridor.Model
                     bestScore = score;
                     step = move;
                 }
-                //Console.WriteLine("Count minimax " + _count);
+                //Console.WriteLine("Count Minimax " + _count);
             }
 
             Console.WriteLine("Timemark for Step: " +
@@ -83,7 +83,7 @@ namespace Quoridor.Model
             return res3;
         }
 
-        private int minimax(int depth,
+        private int Minimax(int depth,
             int alpha, int beta, bool maximizingPlayer)
         {
             //_count++;
@@ -93,7 +93,7 @@ namespace Quoridor.Model
                 //Console.WriteLine("SEV: " + res_sev);
                 return res_sev;
             }
-            //Console.WriteLine("New minimax");
+            //Console.WriteLine("New Minimax");
             var cellFrom = _game.CurrentPlayer.CurrentCell;
             _game.SwapPlayer();
             var cellThrough = _game.CurrentPlayer.CurrentCell;
@@ -110,7 +110,7 @@ namespace Quoridor.Model
                 //Console.WriteLine("Make move from: " + beforeMove.Coordinates.X + " " + beforeMove.Coordinates.Y +
                 //    " to: " + move.Coordinates.X + " " + move.Coordinates.Y);
                 _game.MakeMove(move);
-                eval = minimax(depth - 1, alpha, beta, !maximizingPlayer);
+                eval = Minimax(depth - 1, alpha, beta, !maximizingPlayer);
                 //Console.WriteLine("Unmake move from: " + beforeMove.Coordinates.X + " " + beforeMove.Coordinates.Y +
                 //    " to: " + move.Coordinates.X + " " + move.Coordinates.Y);
                 _game.UnmakeMove(beforeMove);
@@ -137,7 +137,7 @@ namespace Quoridor.Model
                 }
                 //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.PlaceWall(wall);
-                eval = minimax(depth - 1, alpha, beta, !maximizingPlayer);
+                eval = Minimax(depth - 1, alpha, beta, !maximizingPlayer);
                 //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.UnplaceWall(wall);
                 
@@ -155,7 +155,7 @@ namespace Quoridor.Model
                 }
             }
 
-            //Console.WriteLine("Return from minimax");
+            //Console.WriteLine("Return from Minimax");
             return maximizingPlayer ? alpha : beta;
         }
     }
