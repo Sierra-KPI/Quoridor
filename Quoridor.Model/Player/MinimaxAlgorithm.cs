@@ -103,8 +103,8 @@ namespace Quoridor.Model
             return (firstPlayerPathLength, secondPlayerPathLength);
         }
 
-        private int Minimax(int depth,
-            int alpha, int beta, bool maximizingPlayer)
+        private int Minimax(int depth, int alpha,
+            int beta, bool maximizingPlayer)
         {
             //_count++;
             if (depth == 0 || _game.CheckGameEnd())
@@ -114,13 +114,9 @@ namespace Quoridor.Model
                 return res_sev;
             }
             //Console.WriteLine("New Minimax");
-            var cellFrom = _game.CurrentPlayer.CurrentCell;
-            _game.SwapPlayer();
-            var cellThrough = _game.CurrentPlayer.CurrentCell;
-            _game.SwapPlayer();
-            var moves = _game.CurrentBoard.
-                GetPossiblePlayersMoves(cellFrom, cellThrough);
-            var walls = _game.CurrentBoard.GetPossibleWallsPlaces();
+
+            (Cell[] moves, Wall[] walls) = GetMovesAndWalls();
+
             //Console.WriteLine("Possible Walls length " + walls.GetLength(0));
 
             int eval;
@@ -177,6 +173,21 @@ namespace Quoridor.Model
 
             //Console.WriteLine("Return from Minimax");
             return maximizingPlayer ? alpha : beta;
+        }
+
+        private (Cell[], Wall[]) GetMovesAndWalls()
+        {
+            var cellFrom = _game.CurrentPlayer.CurrentCell;
+            _game.SwapPlayer();
+
+            var cellThrough = _game.CurrentPlayer.CurrentCell;
+            _game.SwapPlayer();
+
+            var moves = _game.CurrentBoard.
+                GetPossiblePlayersMoves(cellFrom, cellThrough);
+            var walls = _game.CurrentBoard.GetPossibleWallsPlaces();
+
+            return (moves, walls);
         }
     }
 }
