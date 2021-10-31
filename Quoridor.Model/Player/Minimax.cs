@@ -21,7 +21,7 @@ namespace Quoridor.Model
                 _game.MakeMove(move);
                 int score = minimax(move, 2, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
-                Console.WriteLine("Score for move " + move.Coordinates.X + " " + move.Coordinates.Y + " -> " + score);
+                //Console.WriteLine("Score for move " + move.Coordinates.X + " " + move.Coordinates.Y + " -> " + score);
                 if (score > bestScore)
                 {
                     bestScore = score;
@@ -29,7 +29,7 @@ namespace Quoridor.Model
                 }
             }
 
-            Console.WriteLine("Step: " + step.Coordinates.X + " " + step.Coordinates.Y);
+            //Console.WriteLine("Step: " + step.Coordinates.X + " " + step.Coordinates.Y);
             coordinates = step.Coordinates;
             return step;
         }
