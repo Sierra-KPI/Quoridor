@@ -40,6 +40,11 @@ namespace Quoridor.Model
                 //Console.WriteLine("Count Minimax " + _count);
             }
 
+            (int pathLenPlayer1, int pathLenPlayer2) = GetPlayersPathes();
+
+            Console.WriteLine(pathLenPlayer1);
+            Console.WriteLine(pathLenPlayer2);
+
             WriteResults(timemark, step);
 
             return step;
@@ -76,34 +81,37 @@ namespace Quoridor.Model
         {
             (int pathLenPlayer1, int pathLenPlayer2) = GetPlayersPathes();
 
-            int res2 = _game.CurrentPlayer is Bot ?
-                pathLenPlayer1 : -pathLenPlayer1;
-            //return res2;
+            if (pathLenPlayer2 > pathLenPlayer1)
+            {
+                return 1;
+            }
 
-            int res3 = _game.CurrentPlayer is MinimaxBot ?
-                pathLenPlayer1 - pathLenPlayer2 :
-                pathLenPlayer2 - pathLenPlayer1;
-
-            return res3;
+            return 0;
         }
 
         private (int, int) GetPlayersPathes()
         {
-            Cell cellThrough = _game.CurrentPlayer.CurrentCell;
+            Cell cellThrough1 = _game.CurrentPlayer.CurrentCell;
             _game.SwapPlayer();
-            Cell cellFrom = _game.CurrentPlayer.CurrentCell;
+            Cell cellFrom1 = _game.CurrentPlayer.CurrentCell;
 
             int firstPlayerPathLength = _game.CurrentBoard
-                .GetMinPathLength(cellFrom, cellThrough,
+                .GetMinPathLength(cellFrom1, cellThrough1,
                 _game.CurrentPlayer.EndCells);
             //int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
 
             _game.SwapPlayer();
 
+            Cell cellThrough2 = _game.CurrentPlayer.CurrentCell;
+            _game.SwapPlayer();
+            Cell cellFrom2 = _game.CurrentPlayer.CurrentCell;
+
             int secondPlayerPathLength = _game.CurrentBoard
-                .GetMinPathLength(cellFrom, cellThrough,
+                .GetMinPathLength(cellFrom2, cellThrough2,
                 _game.CurrentPlayer.EndCells);
             //int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
+
+            _game.SwapPlayer();
 
             return (firstPlayerPathLength, secondPlayerPathLength);
         }
