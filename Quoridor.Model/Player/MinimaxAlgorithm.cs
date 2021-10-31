@@ -81,7 +81,7 @@ namespace Quoridor.Model
         {
             (int pathLenPlayer1, int pathLenPlayer2) = GetPlayersPathes();
 
-            if (pathLenPlayer2 > pathLenPlayer1)
+            if (pathLenPlayer2 >= pathLenPlayer1)
             {
                 return 1;
             }
@@ -97,18 +97,18 @@ namespace Quoridor.Model
 
             int firstPlayerPathLength = _game.CurrentBoard
                 .GetMinPathLength(cellFrom1, cellThrough1,
-                _game.CurrentPlayer.EndCells);
+                _game.FirstPlayer.EndCells);
             //int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
 
             _game.SwapPlayer();
 
-            Cell cellThrough2 = _game.CurrentPlayer.CurrentCell;
-            _game.SwapPlayer();
             Cell cellFrom2 = _game.CurrentPlayer.CurrentCell;
+            _game.SwapPlayer();
+            Cell cellThrough2 = _game.CurrentPlayer.CurrentCell;
 
             int secondPlayerPathLength = _game.CurrentBoard
                 .GetMinPathLength(cellFrom2, cellThrough2,
-                _game.CurrentPlayer.EndCells);
+                _game.SecondPlayer.EndCells);
             //int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
 
             _game.SwapPlayer();
