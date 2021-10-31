@@ -113,9 +113,7 @@ namespace Quoridor.Model
 
         private bool CheckCoordinatesForWall(Coordinates c1, Coordinates c2)
         {
-            if ((c1.Y == 0 && c1.X == Size - 1) ||
-                (c2.X == 0 && c2.Y == Size - 1) ||
-                (c1.X == Size - 1 && c2.X == Size - 1) ||
+            if ((c1.X == Size - 1 && c2.X == Size - 1) ||
                 (c1.Y == Size - 1 && c2.Y == Size - 1))
             {
                 return false;
