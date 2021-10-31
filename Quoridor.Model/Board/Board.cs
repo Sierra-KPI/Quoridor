@@ -157,7 +157,15 @@ namespace Quoridor.Model
             int from2 = cell1ID + diff;
             int to2 = cell2ID + diff;
 
-            return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
+            if (_graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2))
+            {
+                return true;
+            }
+            else
+            {
+                AddWall(wall);
+                return false;
+            }
         }
 
         public bool AddWall(Wall wall)
