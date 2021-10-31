@@ -13,16 +13,33 @@ namespace Quoridor.Model
             _game = game;
         }
 
-        public IElement GetMove(Cell[] possibleSteps)
+        public IElement GetMove()
         {
             WriteWallsInfo();
 
             DateTime timemark = DateTime.Now;
 
-            int bestScore = int.MinValue;
-            Cell step = Cell.Default;
+            (Cell[] moves, Wall[] walls) = GetMovesAndWalls();
 
-            foreach (var move in possibleSteps)
+            int bestScore = int.MinValue;
+            IElement step = moves[0];
+
+            foreach (var wall in walls)
+            {
+                if (!_game.PlaceWall(wall)) continue;
+                Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+                int score = Minimax(2, int.MinValue, int.MaxValue, false);
+                Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+                _game.UnplaceWall(wall);
+                Console.WriteLine("Score for wall " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y + " -> " + score);
+                if (score >= bestScore)
+                {
+                    bestScore = score;
+                    step = wall;
+                }
+            }
+
+            foreach (var move in moves)
             {
                 //_count = 0;
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
@@ -60,7 +77,7 @@ namespace Quoridor.Model
                 _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
         }
 
-        private void WriteResults(DateTime timemark, Cell step)
+        private void WriteResults(DateTime timemark, IElement step)
         {
             Console.WriteLine("Timemark for Step: " +
                 (DateTime.Now - timemark));

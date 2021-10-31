@@ -20,7 +20,7 @@
                     CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
                     game.FirstPlayer.CurrentCell);
 
-            return minimax.GetMove(possibleCells);
+            return minimax.GetMove();
         }
 
         #endregion Methods
