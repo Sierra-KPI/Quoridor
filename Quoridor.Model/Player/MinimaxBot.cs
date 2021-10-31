@@ -11,16 +11,17 @@
 
         #region Methods
 
-        public override IElement DoMove(QuoridorGame game)
+        public override IElement DoMove(QuoridorGame game, out Coordinates coordinate)
         {
             Minimax minimax = new Minimax(game);
 
-            IPlayer bot = game.SecondPlayer;
+            IPlayer bot = game.BotPlayer;
             Cell[] possibleCells = game.
                     CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
                     game.FirstPlayer.CurrentCell);
-
-            return minimax.GetMove(possibleCells);
+            IElement moveResult = minimax.GetMove(possibleCells, out coordinate);
+            coordinate = moveResult.Coordinates;
+            return moveResult;
         }
 
         #endregion Methods

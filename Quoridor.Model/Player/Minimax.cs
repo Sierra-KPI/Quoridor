@@ -11,7 +11,7 @@ namespace Quoridor.Model
             _game = game;
         }
 
-        public IElement GetMove(Cell[] possibleSteps)
+        public IElement GetMove(Cell[] possibleSteps, out Coordinates coordinates)
         {
             int bestScore = int.MinValue;
             Cell step = Cell.Default;
@@ -30,6 +30,7 @@ namespace Quoridor.Model
             }
 
             Console.WriteLine("Step: " + step.Coordinates.X + " " + step.Coordinates.Y);
+            coordinates = step.Coordinates;
             return step;
         }
 
@@ -105,6 +106,5 @@ namespace Quoridor.Model
             return maximizingPlayer ? alpha : beta;
 
         }
-
     }
 }
