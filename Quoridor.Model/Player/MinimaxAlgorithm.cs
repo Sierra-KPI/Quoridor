@@ -26,7 +26,7 @@ namespace Quoridor.Model
 
             foreach (var wall in walls)
             {
-                if (!_game.PlaceWall(wall)) continue;
+                if (!_game.PlaceWallForMinimax(wall)) continue;
                 Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 int score = Minimax(2, int.MinValue, int.MaxValue, false);
                 Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);

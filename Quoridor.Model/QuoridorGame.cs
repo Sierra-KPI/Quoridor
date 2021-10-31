@@ -91,6 +91,38 @@ namespace Quoridor.Model
             throw new Exception("Wrong place for Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
         }
 
+        //rewrite
+        public bool PlaceWallForMinimax(Wall wall)
+        {
+            if (CurrentPlayer.WallsCount == 0)
+            {
+                return false;
+            }
+
+            if (CurrentBoard.RemoveWall(wall))
+            {
+                bool Player1HasPath = CurrentBoard.CheckPaths
+                    (FirstPlayer.CurrentCell, FirstPlayer.EndCells);
+                bool Player2HasPath = CurrentBoard.CheckPaths
+                    (SecondPlayer.CurrentCell, SecondPlayer.EndCells);
+
+                if (Player1HasPath && Player2HasPath)
+                {
+                    if (CurrentBoard.PlaceWall(wall))
+                    {
+                        CurrentPlayer.DecreaseWallCount();
+                        SwapPlayer();
+                        return true;
+                    }
+                }
+                else
+                {
+                    CurrentBoard.AddWall(wall);
+                }
+            }
+            return false;
+        }
+
         public bool UnplaceWall(Wall wall)
         {
             if (CurrentBoard.UnplaceWall(wall))
