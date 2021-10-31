@@ -174,7 +174,7 @@ namespace Quoridor.Model
                     return maximizingPlayer ? alpha : beta;
                 }
                 //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
-                _game.PlaceWall(wall);
+                if (!_game.PlaceWallForMinimax(wall)) continue;
                 eval = Minimax(depth - 1, alpha, beta, !maximizingPlayer);
                 //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.UnplaceWall(wall);
