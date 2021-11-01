@@ -229,10 +229,9 @@ namespace Quoridor.OutputBotConsole.Input
                     var wall = element as Wall;
                     CurrentGame.PlaceWall(wall);
                     formattedCoordinates =
-                        $"{TransformCoordinate(wall.Coordinates.Y + 1)}" +
+                        $"{(char)(wall.Coordinates.Y + 83)}" +
                         $"{wall.Coordinates.X + 1}" +
-                        $"{TransformCoordinate(wall.EndCoordinates.Y + 1)}" +
-                        $"{wall.EndCoordinates.X + 1}";
+                        $"{(wall.Coordinates.X == wall.EndCoordinates.X ? 'v' : 'h')}";
                     break;
             }
 
