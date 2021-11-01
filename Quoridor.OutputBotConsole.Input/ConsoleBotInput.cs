@@ -14,11 +14,6 @@ namespace Quoridor.OutputConsole.Input
 
         private Dictionary<char, int> _chars = new();
 
-        private const string NullOrEmptyMessage = "Your input " +
-            "is empty! Try again";
-        private const string IncorrectMessage = "Incorrect command! " +
-            "Try something else";
-
         #endregion Fields
 
         #region Methods
@@ -61,15 +56,9 @@ namespace Quoridor.OutputConsole.Input
             while (true)
             {
                 string input = Console.ReadLine();
-                if (string.IsNullOrEmpty(input))
-                {
-                    Console.WriteLine(NullOrEmptyMessage);
-                }
-                else
-                {
-                    string[] inputString = input.Split(Array.Empty<char>());
-                    TryToExecuteCommand(inputString);
-                }
+
+                string[] inputString = input.Split(Array.Empty<char>());
+                TryToExecuteCommand(inputString);
             }
         }
 
@@ -82,7 +71,6 @@ namespace Quoridor.OutputConsole.Input
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                WriteIncorrectMessage();
             }
         }
 
@@ -98,7 +86,6 @@ namespace Quoridor.OutputConsole.Input
                     PlaceWall(inputString);
                     break;
                 default:
-                    WriteIncorrectMessage();
                     break;
             }
         }
@@ -110,7 +97,6 @@ namespace Quoridor.OutputConsole.Input
             (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
                 GetPlayerCells(board, PlayerID.First);
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
-            _currentPlayer = firstPlayer;
 
             CurrentGame = CreateGame(firstPlayer, board);
 
@@ -176,7 +162,6 @@ namespace Quoridor.OutputConsole.Input
                 _chars[values[1][0]] - 1);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
-            _currentPlayer = CurrentGame.CurrentPlayer;
 
             CurrentGame.MakeMove(to);
 
@@ -237,9 +222,6 @@ namespace Quoridor.OutputConsole.Input
                 CurrentGame.PlaceWall((Wall)element);
             }
         }
-
-        private static void WriteIncorrectMessage() =>
-            Console.WriteLine(IncorrectMessage);
 
         #endregion Methods
     }
