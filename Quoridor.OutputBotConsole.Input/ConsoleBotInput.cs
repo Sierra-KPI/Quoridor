@@ -20,8 +20,6 @@ namespace Quoridor.OutputConsole.Input
             "is empty! Try again";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
-        private const string ChooseColorMessage =
-            "Please, chose which player you want to play (black or white)";
         private const string CongratulationsMessage = " Has won!";
         private const string CurrentPlayerMessage = "Current player is ";
         private const string FirstPlayerName = "White Player";
@@ -156,7 +154,6 @@ namespace Quoridor.OutputConsole.Input
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 GetPlayerCells(board, PlayerID.Second);
 
-            Console.WriteLine(ChooseColorMessage);
             string choosenColor = Console.ReadLine();
 
             MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
@@ -220,8 +217,6 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartNewTurn()
         {
-            View.DrawBoard();
-
             WritePlayerMessage();
         }
 
@@ -231,7 +226,6 @@ namespace Quoridor.OutputConsole.Input
             {
                 WriteCongratulations(player);
 
-                View.DrawBoard();
                 StartGame();
 
                 return true;
