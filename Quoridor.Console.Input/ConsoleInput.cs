@@ -26,12 +26,6 @@ namespace Quoridor.OutputConsole.Input
             "Please, chose which player you want to play (black or white)";
         private const string CongratulationsMessage = " Has won!";
         private const string CurrentPlayerMessage = "Current player is ";
-        private const string DelimiterMessage = "-----------------" +
-            "----------------------------";
-        private const string MultiplayerMessage = "New Multiplayer" +
-            " Game has started!";
-        private const string SingleModeInput = "1";
-        private const string MultiplayerModeInput = "2";
         private const string FirstPlayerName = "White Player";
         private const string SecondPlayerName = "Black Player";
 
@@ -231,8 +225,6 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartNewTurn()
         {
-            WriteDelimiter();
-
             View.DrawBoard();
 
             WritePlayerMessage();
@@ -243,7 +235,6 @@ namespace Quoridor.OutputConsole.Input
             if (player.HasWon())
             {
                 WriteCongratulations(player);
-                WriteDelimiter();
 
                 View.DrawBoard();
                 StartGame();
@@ -273,9 +264,6 @@ namespace Quoridor.OutputConsole.Input
 
         private static void WriteIncorrectMessage() =>
             Console.WriteLine(IncorrectMessage);
-
-        private static void WriteDelimiter() =>
-            Console.WriteLine(DelimiterMessage);
 
         private void WritePlayerMessage()
         {
