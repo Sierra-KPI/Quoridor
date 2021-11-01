@@ -20,14 +20,6 @@ namespace Quoridor.OutputConsole.Input
 
         private const string NullOrEmptyMessage = "Your input " +
             "is empty! Try again";
-        private const string HelpMessage = "Here's some tips " +
-            "tips on how to play the game:\n1. start x - start new " +
-            "game, where is the number of real players " +
-            "(1 for one real and one bot. 2 for two real players)" +
-            "\n2. move xy - move Your player to cell xy, for " +
-            "example: move E8\n3. wall xyh - place wall in xy, h - horisontal," +
-            "v - vertical, for example: wall V7h\n4. help - print this " +
-            "helpbox\n5. quit - quit the game";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
         private const string ChooseColorMessage =
@@ -51,13 +43,7 @@ namespace Quoridor.OutputConsole.Input
 
         public void OnStart()
         {
-            WriteStartingMessage();
             InitializeDictionary();
-        }
-
-        public void WriteStartingMessage()
-        {
-            Console.WriteLine(HelpMessage);
         }
 
         private void InitializeDictionary() =>
@@ -133,9 +119,6 @@ namespace Quoridor.OutputConsole.Input
                     break;
                 case "quit":
                     QuitLoop();
-                    break;
-                case "help":
-                    WriteHelpMessage();
                     break;
                 default:
                     WriteIncorrectMessage();
@@ -311,9 +294,6 @@ namespace Quoridor.OutputConsole.Input
 
         private static void WriteIncorrectMessage() =>
             Console.WriteLine(IncorrectMessage);
-
-        private static void WriteHelpMessage() =>
-            Console.WriteLine(HelpMessage);
 
         private static void WriteDelimiter() =>
             Console.WriteLine(DelimiterMessage);
