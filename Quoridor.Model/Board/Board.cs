@@ -56,7 +56,6 @@ namespace Quoridor.Model
             _walls.RemoveAll(elem => connectedWalls.Contains(elem));
             if (!_placedWalls.Contains(wall)) _placedWalls.Add(wall);
             return true;
-
         }
 
         public bool UnplaceWall(Wall wall)
@@ -116,35 +115,6 @@ namespace Quoridor.Model
             return connectedWalls;
         }
 
-        private List<Wall> GetConnectedWalls1(Wall wall)
-        {
-            List<Wall> connectedWalls = new List<Wall>();
-            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffCellId(cell1ID, cell2ID);
-
-            int[,] wallsId = new int[,]
-                {
-                    { cell1ID, cell2ID },
-                    { cell1ID - diff, cell2ID - diff },
-                    { cell1ID + diff, cell2ID + diff },
-                    { cell1ID, cell1ID + diff }
-                };
-            
-            for (int i = 0; i < wallsId.GetLength(0); i++)
-            {
-                if (!CheckCellId(wallsId[i, 0]) || !CheckCellId(wallsId[i, 1])) continue;
-                Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Vertical : Orientation.Horizontal;
-                Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
-                Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
-                if (!CheckCoordinatesForWall(coordinates, endCoordinates)) continue;
-                Wall tempWall = GetWallByCoordinates(coordinates, endCoordinates);
-                if (tempWall == null) tempWall = new Wall(coordinates, endCoordinates, orientation);
-                if (!connectedWalls.Contains(tempWall)) connectedWalls.Add(tempWall);
-            }
-            return connectedWalls;
-        }
-
         private void RenewPlacedWall()
         {
             foreach (Wall wall in _placedWalls.ToArray())
@@ -159,15 +129,6 @@ namespace Quoridor.Model
                 (c1.Y == Size - 1 && c2.Y == Size - 1) ||
                 (c1.X < 0 || c1.Y < 0 || c1.X >= Size || c1.Y >= Size) ||
                 (c2.X < 0 || c2.Y < 0 || c2.X >= Size || c2.Y >= Size))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool CheckCellId(int id)
-        {
-            if (id < 0 || id >= Size * Size)
             {
                 return false;
             }
