@@ -55,16 +55,16 @@ namespace Quoridor.Model
                 throw new Exception("Cell is taken by another Player");
             }
 
-            //if ((!isJump && CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough)) ||
-            //(isJump && CurrentBoard.MakeJump(cellFrom, cellTo, cellThrough)))
-            if (CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough))
+            if ((!isJump && CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough)) ||
+                (isJump && CurrentBoard.MakeJump(cellFrom, cellTo, cellThrough)))
+            //if (CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough))
             {
                 CurrentPlayer.ChangeCoordinates(cellTo);
                 CheckGameEnd();
                 SwapPlayer();
                 return true;
             }
-            throw new Exception("Wrong Player Move");
+            throw new Exception("Wrong Player Move " + cellTo.Coordinates.X + " " + cellTo.Coordinates.Y);
         }
 
         public bool UnmakeMove(Cell cell)

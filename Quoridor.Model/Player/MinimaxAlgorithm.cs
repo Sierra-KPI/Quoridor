@@ -19,7 +19,7 @@ namespace Quoridor.Model
 
             DateTime timemark = DateTime.Now;
 
-            (Cell[] moves, Wall[] walls) = GetMovesAndWalls();
+            (Cell[] jumps, Cell[] moves, Wall[] walls) = GetMovesAndWalls();
 
             int bestScore = int.MinValue;
             IElement step = moves[0];
@@ -41,7 +41,6 @@ namespace Quoridor.Model
 
             foreach (var move in moves)
             {
-                //_count = 0;
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
                 int score = Minimax(1, int.MinValue, int.MaxValue, false);
@@ -54,7 +53,22 @@ namespace Quoridor.Model
                     bestScore = score;
                     step = move;
                 }
-                //Console.WriteLine("Count Minimax " + _count);
+            }
+
+            foreach (var jump in jumps)
+            {
+                var beforeMove = _game.CurrentPlayer.CurrentCell;
+                _game.MakeMove(jump, true);
+                int score = Minimax(1, int.MinValue, int.MaxValue, false);
+                _game.UnmakeMove(beforeMove);
+
+                WriteScoreMove(jump, score);
+
+                if (score >= bestScore)
+                {
+                    bestScore = score;
+                    step = jump;
+                }
             }
 
             WriteResults(timemark, step);
@@ -135,18 +149,36 @@ namespace Quoridor.Model
                 return res_sev;
             }
 
-            (Cell[] moves, Wall[] walls) = GetMovesAndWalls();
+            (Cell[] jumps, Cell[] moves, Wall[] walls) = GetMovesAndWalls();
 
             int eval;
+
+            foreach (Cell jump in jumps)
+            {
+                var beforeMove = _game.CurrentPlayer.CurrentCell;
+                _game.MakeMove(jump, true);
+                eval = Minimax(depth - 1, alpha, beta, !maximizingPlayer);
+                _game.UnmakeMove(beforeMove);
+
+                if (maximizingPlayer)
+                {
+                    alpha = Math.Max(alpha, eval);
+                }
+                else
+                {
+                    beta = Math.Min(beta, eval);
+                }
+                if (beta <= alpha)
+                {
+                    return maximizingPlayer ? alpha : beta;
+                }
+            }
+
             foreach (Cell move in moves)
             {
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
-                //Console.WriteLine("Make move from: " + beforeMove.Coordinates.X + " " + beforeMove.Coordinates.Y +
-                //    " to: " + move.Coordinates.X + " " + move.Coordinates.Y);
                 _game.MakeMove(move);
                 eval = Minimax(depth - 1, alpha, beta, !maximizingPlayer);
-                //Console.WriteLine("Unmake move from: " + beforeMove.Coordinates.X + " " + beforeMove.Coordinates.Y +
-                //    " to: " + move.Coordinates.X + " " + move.Coordinates.Y);
                 _game.UnmakeMove(beforeMove);
 
                 if (maximizingPlayer)
@@ -192,7 +224,7 @@ namespace Quoridor.Model
             return maximizingPlayer ? alpha : beta;
         }
 
-        private (Cell[], Wall[]) GetMovesAndWalls()
+        private (Cell[], Cell[], Wall[]) GetMovesAndWalls()
         {
             var cellFrom = _game.CurrentPlayer.CurrentCell;
             _game.SwapPlayer();
@@ -200,11 +232,13 @@ namespace Quoridor.Model
             var cellThrough = _game.CurrentPlayer.CurrentCell;
             _game.SwapPlayer();
 
+            var jumps = _game.CurrentBoard.
+                GetPossiblePlayersJumps(cellFrom, cellThrough);
             var moves = _game.CurrentBoard.
                 GetPossiblePlayersMoves(cellFrom, cellThrough);
             var walls = _game.CurrentBoard.GetPossibleWallsPlaces();
 
-            return (moves, walls);
+            return (jumps, moves, walls);
         }
     }
 }

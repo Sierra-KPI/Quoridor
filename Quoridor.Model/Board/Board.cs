@@ -38,14 +38,14 @@ namespace Quoridor.Model
 
         public bool MakeMove(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
-            //Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
-            Cell[] moves = GetPossiblePlayersMovesWithJumps(cellFrom, cellThrough);
+            Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
+            //Cell[] moves = GetPossiblePlayersMovesWithJumps(cellFrom, cellThrough);
             return Array.Exists(moves, element => element == cellTo);
         }
 
         public bool MakeJump(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
-            Cell[] moves = CheckJump(cellFrom, cellThrough);
+            Cell[] moves = GetPossiblePlayersJumps(cellFrom, cellThrough);
             return Array.Exists(moves, element => element == cellTo);
         }
 
@@ -236,7 +236,7 @@ namespace Quoridor.Model
             return endCells;
         }
 
-        private Cell[] CheckJump(Cell cellFrom, Cell cellThrough)
+        public Cell[] GetPossiblePlayersJumps(Cell cellFrom, Cell cellThrough)
         {
             List<Cell> cellsTo = new List<Cell>();
             int diffX = cellThrough.Coordinates.X - cellFrom.Coordinates.X;
@@ -291,15 +291,15 @@ namespace Quoridor.Model
                 if (edges[i] == cellThrough.Id) continue;
                 possibleCells.Add(GetCellById(edges[i]));
             }
-            //return possibleCells;
-            Cell[] jumps = CheckJump(cellFrom, cellThrough);
-            return possibleCells.Concat(jumps).ToArray();
+            return possibleCells.ToArray();
+            //Cell[] jumps = CheckJump(cellFrom, cellThrough);
+            //return possibleCells.Concat(jumps).ToArray();
         }
 
         public Cell[] GetPossiblePlayersMovesWithJumps(Cell cellFrom, Cell cellThrough)
         {
             Cell[] possibleCells = GetPossiblePlayersMoves(cellFrom, cellThrough);
-            Cell[] jumps = CheckJump(cellFrom, cellThrough);
+            Cell[] jumps = GetPossiblePlayersJumps(cellFrom, cellThrough);
             return possibleCells.Concat(jumps).ToArray();
         }
 

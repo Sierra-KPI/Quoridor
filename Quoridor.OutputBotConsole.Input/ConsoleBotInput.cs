@@ -79,8 +79,10 @@ namespace Quoridor.OutputBotConsole.Input
             switch (inputString[0])
             {
                 case "move":
-                case "jump":
                     ChangePlayerPosition(inputString);
+                    break;
+                case "jump":
+                    ChangePlayerPosition(inputString, true);
                     break;
                 case "wall":
                     PlaceWall(inputString);
@@ -156,14 +158,14 @@ namespace Quoridor.OutputBotConsole.Input
                     secondGamePlayer, board);
         }
 
-        private void ChangePlayerPosition(string[] values)
+        private void ChangePlayerPosition(string[] values, bool isJump = false)
         {
             Coordinates coordinates = new(values[1][1] - '1',
                 _chars[values[1][0]] - 1);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
 
-            CurrentGame.MakeMove(to);
+            CurrentGame.MakeMove(to, isJump);
 
             if (!CheckWinner(CurrentGame.FirstPlayer))
             {
