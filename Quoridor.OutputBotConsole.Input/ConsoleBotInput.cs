@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Quoridor.Model;
 using Quoridor.View;
 
-namespace Quoridor.OutputConsole.Input
+namespace Quoridor.OutputBotConsole.Input
 {
     public class ConsoleBotInput
     {

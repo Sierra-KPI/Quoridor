@@ -13,7 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model", "Quoridor.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.Model.Tests", "Quoridor.Model.Tests\Quoridor.Model.Tests.csproj", "{FCE2CA02-2BF2-4D78-A491-0EF060667FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quoridor.OutputBotConsole.Input", "Quoridor.OutputBotConsole.Input\Quoridor.OutputBotConsole.Input.csproj", "{D9D71AD0-096D-479F-B7CC-8E0364DF5D59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quoridor.OutputBotConsole.Input", "Quoridor.OutputBotConsole.Input\Quoridor.OutputBotConsole.Input.csproj", "{D9D71AD0-096D-479F-B7CC-8E0364DF5D59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quoridor.OutputBotConsole.App", "Quoridor.OutputBotConsole.App\Quoridor.OutputBotConsole.App.csproj", "{23B30FBD-9CFD-4AC8-948E-0D261DD4F535}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab1", "Lab1", "{9F084D48-B98E-4860-9946-67B34EAA066B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab2", "Lab2", "{CDF4D59C-081D-4742-87D4-DFDA77F0038E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +51,19 @@ Global
 		{D9D71AD0-096D-479F-B7CC-8E0364DF5D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9D71AD0-096D-479F-B7CC-8E0364DF5D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9D71AD0-096D-479F-B7CC-8E0364DF5D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B30FBD-9CFD-4AC8-948E-0D261DD4F535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B30FBD-9CFD-4AC8-948E-0D261DD4F535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B30FBD-9CFD-4AC8-948E-0D261DD4F535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B30FBD-9CFD-4AC8-948E-0D261DD4F535}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{81D64F5F-2107-4984-98F1-1EF034CE9F54} = {9F084D48-B98E-4860-9946-67B34EAA066B}
+		{8855A7A5-CA92-48B9-A1EB-A16A27252FEB} = {9F084D48-B98E-4860-9946-67B34EAA066B}
+		{D9D71AD0-096D-479F-B7CC-8E0364DF5D59} = {CDF4D59C-081D-4742-87D4-DFDA77F0038E}
+		{23B30FBD-9CFD-4AC8-948E-0D261DD4F535} = {CDF4D59C-081D-4742-87D4-DFDA77F0038E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1ADE9696-CF22-468A-90C7-B0424049B7DB}
