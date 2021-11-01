@@ -13,15 +13,11 @@ namespace Quoridor.OutputConsole.Input
         public ViewOutput View;
 
         private Dictionary<char, int> _chars = new();
-        private string _currentPlayerName = FirstPlayerName;
-        private IPlayer _currentPlayer;
 
         private const string NullOrEmptyMessage = "Your input " +
             "is empty! Try again";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
-        private const string FirstPlayerName = "White Player";
-        private const string SecondPlayerName = "Black Player";
 
         #endregion Fields
 
@@ -105,8 +101,6 @@ namespace Quoridor.OutputConsole.Input
                     WriteIncorrectMessage();
                     break;
             }
-
-            StartNewTurn();
         }
 
         private void StartGame()
@@ -213,11 +207,6 @@ namespace Quoridor.OutputConsole.Input
             StartBotTurn();
         }
 
-        private void StartNewTurn()
-        {
-            WritePlayerMessage();
-        }
-
         private bool CheckWinner(IPlayer player)
         {
             if (player.HasWon())
@@ -251,18 +240,6 @@ namespace Quoridor.OutputConsole.Input
 
         private static void WriteIncorrectMessage() =>
             Console.WriteLine(IncorrectMessage);
-
-        private void WritePlayerMessage()
-        {
-            if (CurrentGame.CurrentPlayer == CurrentGame.FirstPlayer)
-            {
-                _currentPlayerName = FirstPlayerName;
-            }
-            else
-            {
-                _currentPlayerName = SecondPlayerName;
-            }
-        }
 
         #endregion Methods
     }
