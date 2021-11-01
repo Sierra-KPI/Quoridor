@@ -20,8 +20,6 @@ namespace Quoridor.OutputConsole.Input
             "is empty! Try again";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
-        private const string CongratulationsMessage = " Has won!";
-        private const string CurrentPlayerMessage = "Current player is ";
         private const string FirstPlayerName = "White Player";
         private const string SecondPlayerName = "Black Player";
 
@@ -224,8 +222,6 @@ namespace Quoridor.OutputConsole.Input
         {
             if (player.HasWon())
             {
-                WriteCongratulations(player);
-
                 StartGame();
 
                 return true;
@@ -266,24 +262,6 @@ namespace Quoridor.OutputConsole.Input
             {
                 _currentPlayerName = SecondPlayerName;
             }
-
-            Console.WriteLine(CurrentPlayerMessage +
-                _currentPlayerName);
-        }
-
-        private void WriteCongratulations(IPlayer player)
-        {
-            var winner = "";
-            if (player == CurrentGame.FirstPlayer)
-            {
-                winner = FirstPlayerName;
-            }
-            else
-            {
-                winner = SecondPlayerName;
-            }
-
-            Console.WriteLine(winner + CongratulationsMessage);
         }
 
         #endregion Methods
