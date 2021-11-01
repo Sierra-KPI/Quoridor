@@ -28,8 +28,6 @@ namespace Quoridor.OutputConsole.Input
         private const string CurrentPlayerMessage = "Current player is ";
         private const string DelimiterMessage = "-----------------" +
             "----------------------------";
-        private const string SingleplayerMessage = "New Singleplayer" +
-            " Game has started!";
         private const string MultiplayerMessage = "New Multiplayer" +
             " Game has started!";
         private const string SingleModeInput = "1";
@@ -44,6 +42,7 @@ namespace Quoridor.OutputConsole.Input
         public void OnStart()
         {
             InitializeDictionary();
+            StartGame();
         }
 
         private void InitializeDictionary() =>
@@ -107,9 +106,6 @@ namespace Quoridor.OutputConsole.Input
         {
             switch (inputString[0])
             {
-                case "start":
-                    StartGame(inputString);
-                    break;
                 case "move":
                 case "jump":
                     ChangePlayerPosition(inputString);
@@ -128,9 +124,8 @@ namespace Quoridor.OutputConsole.Input
             StartNewTurn();
         }
 
-        private void StartGame(string[] values)
+        private void StartGame()
         {
-            _gameModePreference = values;
             Board board = new BoardFactory().CreateBoard();
 
             (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
@@ -138,7 +133,7 @@ namespace Quoridor.OutputConsole.Input
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
             _currentPlayer = firstPlayer;
 
-            CurrentGame = CreateGame(values, firstPlayer, board);
+            CurrentGame = CreateGame(firstPlayer, board);
 
             View = new(CurrentGame);
 
@@ -167,14 +162,11 @@ namespace Quoridor.OutputConsole.Input
             return (playerCell, playerEndCells);
         }
 
-        private QuoridorGame CreateGame(string[] values,
-            Player firstPlayer, Board board)
+        private QuoridorGame CreateGame(Player firstPlayer, Board board)
         {
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 GetPlayerCells(board, PlayerID.Second);
 
-            if (values[1] == SingleModeInput)
-            {
                 Console.WriteLine(ChooseColorMessage);
                 string choosenColor = Console.ReadLine();
 
@@ -196,21 +188,8 @@ namespace Quoridor.OutputConsole.Input
                     throw new Exception("Wrong color is chosen");
                 }
 
-                Console.WriteLine(SingleplayerMessage);
-
-                return CurrentGame = new QuoridorGame(firstGamePlayer,
+            return CurrentGame = new QuoridorGame(firstGamePlayer,
                     secondGamePlayer, board);
-            }
-            else if (values[1] == MultiplayerModeInput)
-            {
-                Player realPlayer = new(secondPlayerCell, secondPlayerEndCells);
-                Console.WriteLine(MultiplayerMessage);
-
-                return CurrentGame = new QuoridorGame(firstPlayer,
-                    realPlayer, board);
-            }
-
-            throw new Exception("Wrong number of players");
         }
 
         private void ChangePlayerPosition(string[] values)
@@ -267,7 +246,7 @@ namespace Quoridor.OutputConsole.Input
                 WriteDelimiter();
 
                 View.DrawBoard();
-                StartGame(_gameModePreference);
+                StartGame();
 
                 return true;
             }
