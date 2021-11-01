@@ -11,17 +11,17 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public override IElement DoMove(QuoridorGame game)
+        public override IElement DoMove(QuoridorGame game, out Coordinates coordinates)
         {
-            MinimaxAlgorithm minimax = new MinimaxAlgorithm(game, out Coordinates coordinate);
+            MinimaxAlgorithm minimax = new MinimaxAlgorithm(game);
 
             IPlayer bot = game.BotPlayer;
             Cell[] possibleCells = game.
                     CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
                     game.FirstPlayer.CurrentCell);
 
-            IElement moveResult = minimax.GetMove(possibleCells, out coordinate);
-            coordinate = moveResult.Coordinates;
+            IElement moveResult = minimax.GetMove(out coordinates);
+            coordinates = moveResult.Coordinates;
             return moveResult;
         }
 
