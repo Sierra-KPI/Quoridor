@@ -15,7 +15,7 @@ namespace Quoridor.Model
 
         public (string, IElement) GetMove(out Coordinates coordinates)
         {
-            WriteWallsInfo();
+            //WriteWallsInfo();
 
             DateTime timemark = DateTime.Now;
 
@@ -48,7 +48,7 @@ namespace Quoridor.Model
                 int score = Minimax(1, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
-                WriteScoreMove(move, score);
+                //WriteScoreMove(move, score);
 
                 if (score >= bestScore)
                 {
@@ -75,7 +75,7 @@ namespace Quoridor.Model
                 }
             }
 
-            WriteResults(timemark, step);
+            //WriteResults(timemark, step);
             coordinates = step.Coordinates;
             return (command, step);
         }
@@ -107,19 +107,12 @@ namespace Quoridor.Model
                 _game.CurrentBoard.GetPossibleWallsPlaces().GetLength(0));
         }
 
-        private int Sev()
+        private int Sev(bool maximizingPlayer)
         {
             (int pathLenPlayer1, int pathLenPlayer2) = GetPlayersPathes();
-
-            int res2 = _game.CurrentPlayer is Bot ?
-                pathLenPlayer1 : -pathLenPlayer1;
-            //return res2;
-
-            int res3 = _game.CurrentPlayer is MinimaxBot ?
+            return maximizingPlayer ?
                 pathLenPlayer1 - pathLenPlayer2 :
                 pathLenPlayer2 - pathLenPlayer1;
-
-            return res3;
         }
 
         private (int, int) GetPlayersPathes()
@@ -131,14 +124,11 @@ namespace Quoridor.Model
             int firstPlayerPathLength = _game.CurrentBoard
                 .GetMinPathLength(cellFrom, cellThrough,
                 _game.CurrentPlayer.EndCells);
-            //int wallCountPlayer1 = _game.CurrentPlayer.WallsCount;
 
             _game.SwapPlayer();
-
             int secondPlayerPathLength = _game.CurrentBoard
                 .GetMinPathLength(cellThrough, cellFrom,
                 _game.CurrentPlayer.EndCells);
-            //int wallCountPlayer2 = _game.CurrentPlayer.WallsCount;
 
             return (firstPlayerPathLength, secondPlayerPathLength);
         }
@@ -146,11 +136,9 @@ namespace Quoridor.Model
         private int Minimax(int depth, int alpha,
             int beta, bool maximizingPlayer)
         {
-            //_count++;
             if (depth == 0 || _game.CheckGameEnd())
             {
-                var res_sev = Sev();
-                return res_sev;
+                return Sev(maximizingPlayer);
             }
 
             (Cell[] jumps, Cell[] moves, Wall[] walls) = GetMovesAndWalls();
