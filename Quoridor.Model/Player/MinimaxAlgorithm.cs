@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Quoridor.Model
 {
@@ -13,7 +13,7 @@ namespace Quoridor.Model
             _game = game;
         }
 
-        public IElement GetMove()
+        public IElement GetMove(out Coordinates coordinates)
         {
             WriteWallsInfo();
 
@@ -58,7 +58,7 @@ namespace Quoridor.Model
             }
 
             WriteResults(timemark, step);
-
+            coordinates = step.Coordinates;
             return step;
         }
 

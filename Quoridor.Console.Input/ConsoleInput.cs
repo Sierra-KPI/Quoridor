@@ -38,6 +38,8 @@ namespace Quoridor.OutputConsole.Input
             "helpbox\n5. quit - quit the game";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
+        private const string ChooseColorMessage =
+            "Please, chose which player you want to play (black or white)";
         private const string CongratulationsMessage = " Has won!";
         private const string CurrentPlayerMessage = "Current player is ";
         private const string DelimiterMessage = "-----------------" +
@@ -47,6 +49,7 @@ namespace Quoridor.OutputConsole.Input
         private const string MultiplayerMessage = "New Multiplayer" +
             " Game has started!";
         private const string SingleModeInput = "1";
+        private const string MultiplayerModeInput = "2";
         private const string FirstPlayerName = "White Player";
         private const string SecondPlayerName = "Black Player";
 
@@ -79,6 +82,19 @@ namespace Quoridor.OutputConsole.Input
                 { 'H', 8 },
                 { 'I', 9 }
             };
+
+        private char TransformCoordinate(int horizntalCoordinate)
+        {
+            foreach (KeyValuePair<char, int> item in _chars)
+            {
+                if (item.Value == horizntalCoordinate)
+                {
+                    return item.Key;
+                }
+            }
+
+            throw new FormatException("Wrong horizontal coordinate format");
+        }
 
         public void ReadMove()
         {
@@ -151,6 +167,19 @@ namespace Quoridor.OutputConsole.Input
             CurrentGame = CreateGame(values, firstPlayer, board);
 
             View = new(CurrentGame);
+
+            if (CurrentGame.FirstPlayer is Bot bot)
+            {
+                Cell tempCoords = firstPlayer.CurrentCell;
+                firstPlayer.CurrentCell = bot.CurrentCell;
+                bot.CurrentCell = tempCoords;
+
+                Cell[] tempCells = firstPlayer.EndCells;
+                firstPlayer.EndCells = bot.EndCells;
+                bot.EndCells = tempCells;
+
+                StartBotTurn();
+            }
         }
 
         private static (Cell playerCell, Cell[] playerEndCells)
@@ -172,18 +201,42 @@ namespace Quoridor.OutputConsole.Input
 
             if (values[1] == SingleModeInput)
             {
+                Console.WriteLine(ChooseColorMessage);
+                string choosenColor = Console.ReadLine();
+
                 MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+                IPlayer firstGamePlayer;
+                IPlayer secondGamePlayer;
+                if (choosenColor == "white")
+                {
+                    firstGamePlayer = firstPlayer;
+                    secondGamePlayer = botPlayer;
+                }
+                else if (choosenColor == "black")
+                {
+                    firstGamePlayer = botPlayer;
+                    secondGamePlayer = firstPlayer;
+                }
+                else
+                {
+                    throw new Exception("Wrong color is chosen");
+                }
+
                 Console.WriteLine(SingleplayerMessage);
 
+                return CurrentGame = new QuoridorGame(firstGamePlayer,
+                    secondGamePlayer, board);
+            }
+            else if (values[1] == MultiplayerModeInput)
+            {
+                Player realPlayer = new(secondPlayerCell, secondPlayerEndCells);
+                Console.WriteLine(MultiplayerMessage);
+
                 return CurrentGame = new QuoridorGame(firstPlayer,
-                    botPlayer, board);
+                    realPlayer, board);
             }
 
-            Player realPlayer = new(secondPlayerCell, secondPlayerEndCells);
-            Console.WriteLine(MultiplayerMessage);
-
-            return CurrentGame = new QuoridorGame(firstPlayer,
-                realPlayer, board);
+            throw new Exception("Wrong number of players");
         }
 
         private void ChangePlayerPosition(string[] values)
@@ -209,10 +262,13 @@ namespace Quoridor.OutputConsole.Input
             char orientation = values[1][2];
 
             Coordinates firstCoordinates = new Coordinates(number, letter);
-            Coordinates secondCoordinates = orientation == 'h' ?
-                new Coordinates(number + 1, letter) :
-                new Coordinates(number, letter + 1);
-           
+            Coordinates secondCoordinates = orientation switch
+            {
+                'h' => new Coordinates(number + 1, letter),
+                'v' => new Coordinates(number, letter + 1),
+                _ => throw new FormatException("Wrong orientation input")
+            };
+
             Wall wall = CurrentGame.CurrentBoard.
                 GetWallByCoordinates(firstCoordinates, secondCoordinates);
             CurrentGame.PlaceWall(wall);
@@ -247,19 +303,18 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartBotTurn()
         {
-            if (CurrentGame.SecondPlayer is Bot bot)
+            Coordinates coordinates;
+            IElement element = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame, out coordinates);
+            if (element is Cell cell)
             {
-                IElement element = bot.DoMove(CurrentGame);
-
-                if (element is Cell cell)
-                {
-                    CurrentGame.MakeMove(cell);
-                    CheckWinner(CurrentGame.SecondPlayer);
-                }
-                else
-                {
-                    CurrentGame.PlaceWall((Wall)element);
-                }
+                CurrentGame.MakeMove(cell);
+                CheckWinner(CurrentGame.SecondPlayer);
+                string formattedCoordinates = $"{TransformCoordinate(coordinates.Y + 1)}{coordinates.X + 1}";
+                Console.WriteLine("move " + formattedCoordinates);
+            }
+            else
+            {
+                CurrentGame.PlaceWall((Wall)element);
             }
         }
 

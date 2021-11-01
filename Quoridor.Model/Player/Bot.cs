@@ -7,8 +7,8 @@ namespace Quoridor.Model
         #region Properties
 
         public int WallsCount { get; private set; }
-        public Cell CurrentCell { get; private set; }
-        public Cell[] EndCells { get; private set; }
+        public Cell CurrentCell { get; set; }
+        public Cell[] EndCells { get; set; }
 
         #endregion Properties
 
@@ -25,7 +25,7 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public abstract IElement DoMove(QuoridorGame game);
+        public abstract IElement DoMove(QuoridorGame game, out Coordinates coordinates);
 
         public Cell ChangeCoordinates(Cell newCell)
         {
