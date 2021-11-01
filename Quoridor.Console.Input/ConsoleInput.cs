@@ -13,10 +13,8 @@ namespace Quoridor.OutputConsole.Input
         public ViewOutput View;
 
         private Dictionary<char, int> _chars = new();
-        private bool _endLoop;
         private string _currentPlayerName = FirstPlayerName;
         private IPlayer _currentPlayer;
-        private string[] _gameModePreference;
 
         private const string NullOrEmptyMessage = "Your input " +
             "is empty! Try again";
@@ -68,7 +66,7 @@ namespace Quoridor.OutputConsole.Input
 
         public void ReadMove()
         {
-            while (!_endLoop)
+            while (true)
             {
                 string input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
@@ -106,9 +104,6 @@ namespace Quoridor.OutputConsole.Input
                     break;
                 case "wall":
                     PlaceWall(inputString);
-                    break;
-                case "quit":
-                    QuitLoop();
                     break;
                 default:
                     WriteIncorrectMessage();
@@ -247,13 +242,15 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartBotTurn()
         {
-            Coordinates coordinates;
-            IElement element = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame, out coordinates);
+            IElement element = (CurrentGame.BotPlayer as Bot).
+                DoMove(CurrentGame, out Coordinates coordinates);
             if (element is Cell cell)
             {
                 CurrentGame.MakeMove(cell);
                 CheckWinner(CurrentGame.SecondPlayer);
-                string formattedCoordinates = $"{TransformCoordinate(coordinates.Y + 1)}{coordinates.X + 1}";
+                string formattedCoordinates =
+                    $"{TransformCoordinate(coordinates.Y + 1)}" +
+                    $"{coordinates.X + 1}";
                 Console.WriteLine("move " + formattedCoordinates);
             }
             else
@@ -294,8 +291,6 @@ namespace Quoridor.OutputConsole.Input
 
             Console.WriteLine(winner + CongratulationsMessage);
         }
-
-        private void QuitLoop() => _endLoop = true;
 
         #endregion Methods
     }
