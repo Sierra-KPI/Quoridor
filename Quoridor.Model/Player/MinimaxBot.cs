@@ -13,7 +13,7 @@
 
         public override IElement DoMove(QuoridorGame game, out Coordinates coordinate)
         {
-            Minimax minimax = new Minimax(game);
+            MinimaxAlgorithm minimax = new MinimaxAlgorithm(game);
 
             IPlayer bot = game.BotPlayer;
             Cell[] possibleCells = game.
