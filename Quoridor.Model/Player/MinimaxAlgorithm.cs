@@ -2,11 +2,11 @@
 
 namespace Quoridor.Model
 {
-    public class Minimax
+    public class MinimaxAlgorithm
     {
         private QuoridorGame _game;
 
-        public Minimax(QuoridorGame game)
+        public MinimaxAlgorithm(QuoridorGame game)
         {
             _game = game;
         }
