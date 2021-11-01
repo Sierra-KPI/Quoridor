@@ -51,15 +51,16 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
+            //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
             var connectedWalls = GetConnectedWalls(wall);
             _walls.RemoveAll(elem => connectedWalls.Contains(elem));
             if (!_placedWalls.Contains(wall)) _placedWalls.Add(wall);
             return true;
-
         }
 
         public bool UnplaceWall(Wall wall)
         {
+            //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
             if (_placedWalls.Contains(wall))
             {
                 _placedWalls.Remove(wall);
@@ -75,35 +76,48 @@ namespace Quoridor.Model
         private List<Wall> GetConnectedWalls(Wall wall)
         {
             List<Wall> connectedWalls = new List<Wall>();
-            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffCellId(cell1ID, cell2ID);
+            Coordinates coordinates = wall.Coordinates;
+            Coordinates endCoordinates = wall.EndCoordinates;
 
-            int[,] wallsId = new int[,]
-                {
-                    { cell1ID, cell2ID },
-                    { cell1ID - diff, cell2ID - diff },
-                    { cell1ID + diff, cell2ID + diff },
-                    { cell1ID, cell1ID + diff }
-                };
-
-            for (int i = 0; i < wallsId.GetLength(0); i++)
+            Coordinates[,] walls;
+            if (coordinates.X == endCoordinates.X)
             {
-                if (!CheckCellId(wallsId[i, 0]) || !CheckCellId(wallsId[i, 1])) continue;
-                Orientation orientation = wallsId[i, 0] - wallsId[i, 1] == 1 ? Orientation.Horizontal : Orientation.Vertical;
-                Coordinates coordinates = GetCellById(wallsId[i, 0]).Coordinates;
-                Coordinates endCoordinates = GetCellById(wallsId[i, 1]).Coordinates;
-                if (!CheckCoordinatesForWall(coordinates, endCoordinates)) continue;
-                Wall tempWall = GetWallByCoordinates(coordinates, endCoordinates);
-                if (tempWall == null) tempWall = new Wall(coordinates, endCoordinates, orientation);
+                walls = new Coordinates[,]
+                {
+                    { coordinates, endCoordinates },
+                    { coordinates.Down(), endCoordinates.Down() },
+                    { coordinates.Up(), endCoordinates.Up() },
+                    { coordinates, coordinates.Down() }
+                };
+            }
+            else
+            {
+                walls = new Coordinates[,]
+                {
+                    { coordinates, endCoordinates },
+                    { coordinates.Left(), endCoordinates.Left() },
+                    { coordinates.Right(), endCoordinates.Right() },
+                    { coordinates, coordinates.Right() }
+                };
+            }
+
+            for (int i = 0; i < walls.GetLength(0); i++)
+            {
+                Orientation orientation = Orientation.Horizontal;
+                Coordinates coordinates1 = walls[i, 0];
+                Coordinates endCoordinates1 = walls[i, 1];
+                if (!CheckCoordinatesForWall(coordinates1, endCoordinates1)) continue;
+                Wall tempWall = GetWallByCoordinates(coordinates1, endCoordinates1);
+                if (tempWall == null) tempWall = new Wall(coordinates1, endCoordinates1, orientation);
                 if (!connectedWalls.Contains(tempWall)) connectedWalls.Add(tempWall);
             }
+
             return connectedWalls;
         }
 
         private void RenewPlacedWall()
         {
-            foreach (Wall wall in _placedWalls.ToList())
+            foreach (Wall wall in _placedWalls.ToArray())
             {
                 PlaceWall(wall);
             }
@@ -111,19 +125,10 @@ namespace Quoridor.Model
 
         private bool CheckCoordinatesForWall(Coordinates c1, Coordinates c2)
         {
-            if ((c1.Y == 0 && c1.X == Size - 1) ||
-                (c2.X == 0 && c2.Y == Size - 1) ||
-                (c1.X == Size - 1 && c2.X == Size - 1) ||
-                (c1.Y == Size - 1 && c2.Y == Size - 1))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool CheckCellId(int id)
-        {
-            if (id < 0 || id >= Size * Size)
+            if ((c1.X == Size - 1 && c2.X == Size - 1) ||
+                (c1.Y == Size - 1 && c2.Y == Size - 1) ||
+                (c1.X < 0 || c1.Y < 0 || c1.X >= Size || c1.Y >= Size) ||
+                (c2.X < 0 || c2.Y < 0 || c2.X >= Size || c2.Y >= Size))
             {
                 return false;
             }
@@ -157,7 +162,15 @@ namespace Quoridor.Model
             int from2 = cell1ID + diff;
             int to2 = cell2ID + diff;
 
-            return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
+            if (_graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2))
+            {
+                return true;
+            }
+            else
+            {
+                AddWall(wall);
+                return false;
+            }
         }
 
         public bool AddWall(Wall wall)
@@ -314,17 +327,17 @@ namespace Quoridor.Model
         public Wall GetWallByCoordinates(Coordinates coordinates,
             Coordinates endCoordinates)
         {
-            try
+            foreach (var element in _walls)
             {
-                return _walls.Single(element =>
-                    element.Coordinates == coordinates &&
-                    element.EndCoordinates == endCoordinates);
+                if (element.Coordinates == coordinates &&
+                    element.EndCoordinates == endCoordinates)
+                {
+                    return element;
+                }
             }
-            catch
-            {
-                return null;
-            }
+            return null;
         }
+
     }
 
     #endregion Methods

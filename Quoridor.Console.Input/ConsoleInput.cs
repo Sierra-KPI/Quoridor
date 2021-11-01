@@ -119,8 +119,9 @@ namespace Quoridor.OutputConsole.Input
             {
                 ExecuteCommand(inputString);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 WriteIncorrectMessage();
             }
         }

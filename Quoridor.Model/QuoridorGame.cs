@@ -41,7 +41,7 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public bool CheckGameEnd() => CurrentPlayer.HasWon();
+        public bool CheckGameEnd() => FirstPlayer.HasWon() || SecondPlayer.HasWon();
 
         public bool MakeMove(Cell cellTo, bool isJump = false)
         {
@@ -102,7 +102,39 @@ namespace Quoridor.Model
                     CurrentBoard.AddWall(wall);
                 }
             }
-            throw new Exception("Wrong place for Wall");
+            throw new Exception("Wrong place for Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+        }
+
+        //rewrite
+        public bool PlaceWallForMinimax(Wall wall)
+        {
+            if (CurrentPlayer.WallsCount == 0)
+            {
+                return false;
+            }
+
+            if (CurrentBoard.RemoveWall(wall))
+            {
+                bool Player1HasPath = CurrentBoard.CheckPaths
+                    (FirstPlayer.CurrentCell, FirstPlayer.EndCells);
+                bool Player2HasPath = CurrentBoard.CheckPaths
+                    (SecondPlayer.CurrentCell, SecondPlayer.EndCells);
+
+                if (Player1HasPath && Player2HasPath)
+                {
+                    if (CurrentBoard.PlaceWall(wall))
+                    {
+                        CurrentPlayer.DecreaseWallCount();
+                        SwapPlayer();
+                        return true;
+                    }
+                }
+                else
+                {
+                    CurrentBoard.AddWall(wall);
+                }
+            }
+            return false;
         }
 
         public bool UnplaceWall(Wall wall)
