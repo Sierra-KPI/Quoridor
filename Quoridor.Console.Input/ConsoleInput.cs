@@ -18,14 +18,6 @@ namespace Quoridor.OutputConsole.Input
         private IPlayer _currentPlayer;
         private string[] _gameModePreference;
 
-        private const string GreetingMessage = "Hi! Now You are " +
-            "playing Quoridor.\nThe object of the game is to advance " +
-            "your pawn to the opposite edge of the board.\nOn your " +
-            "turn you may either move your pawn or place a wall. " +
-            "\nYou may hinder your opponent with wall placement, " +
-            "but not completely block them off.\nMeanwhile, " +
-            "they are trying to do the same to you.\nThe first " +
-            "pawn to reach the opposite side wins.";
         private const string NullOrEmptyMessage = "Your input " +
             "is empty! Try again";
         private const string HelpMessage = "Here's some tips " +
@@ -65,7 +57,6 @@ namespace Quoridor.OutputConsole.Input
 
         public void WriteStartingMessage()
         {
-            Console.WriteLine(GreetingMessage);
             Console.WriteLine(HelpMessage);
         }
 
