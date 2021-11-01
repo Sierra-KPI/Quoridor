@@ -60,11 +60,11 @@ namespace Quoridor.OutputConsole.Input
                 { 'I', 9 }
             };
 
-        private char TransformCoordinate(int horizntalCoordinate)
+        private char TransformCoordinate(int horizontalCoordinate)
         {
             foreach (KeyValuePair<char, int> item in _chars)
             {
-                if (item.Value == horizntalCoordinate)
+                if (item.Value == horizontalCoordinate)
                 {
                     return item.Key;
                 }
