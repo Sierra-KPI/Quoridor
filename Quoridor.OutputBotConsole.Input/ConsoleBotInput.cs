@@ -5,7 +5,7 @@ using Quoridor.View;
 
 namespace Quoridor.OutputConsole.Input
 {
-    public class ConsoleInput
+    public class ConsoleBotInput
     {
         #region Fields
 

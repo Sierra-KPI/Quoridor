@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Quoridor.Console.Input\Quoridor.OutputConsole.Input.csproj" />
     <ProjectReference Include="..\Quoridor.Model\Quoridor.Model.csproj" />
+    <ProjectReference Include="..\Quoridor.OutputBotConsole.Input\Quoridor.OutputBotConsole.Input.csproj" />
     <ProjectReference Include="..\Quoridor.View.Console\Quoridor.View.csproj" />
   </ItemGroup>
 
