@@ -25,7 +25,7 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public abstract IElement DoMove(QuoridorGame game, out Coordinates coordinates);
+        public abstract (string, IElement) DoMove(QuoridorGame game, out Coordinates coordinates);
 
         public Cell ChangeCoordinates(Cell newCell)
         {

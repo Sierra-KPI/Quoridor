@@ -13,7 +13,7 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public override IElement DoMove(QuoridorGame game, out Coordinates coordinates)
+        public override (string,IElement) DoMove(QuoridorGame game, out Coordinates coordinates)
         {
             IPlayer bot = game.SecondPlayer;
             Cell[] possibleCells = game.
@@ -25,17 +25,20 @@ namespace Quoridor.Model
             var random = new Random();
             int choice = random.Next(2);
             IElement moveResult;
+            string command;
             if (choice % 2 == 0)
             {
                 moveResult = ChooseRandomCell(possibleCells);
+                command = "move";
             }
             else
             {
                 moveResult = ChooseRandomWall(possibleWalls);
+                command = "wall";
             }
 
             coordinates = moveResult.Coordinates;
-            return moveResult;
+            return (command, moveResult);
         }
 
         public Cell ChooseRandomCell(Cell[] possibleCells)

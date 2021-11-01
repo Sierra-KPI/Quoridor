@@ -13,7 +13,7 @@ namespace Quoridor.Model
             _game = game;
         }
 
-        public IElement GetMove(out Coordinates coordinates)
+        public (string, IElement) GetMove(out Coordinates coordinates)
         {
             WriteWallsInfo();
 
@@ -23,6 +23,7 @@ namespace Quoridor.Model
 
             int bestScore = int.MinValue;
             IElement step = moves[0];
+            string command = "";
 
             foreach (var wall in walls)
             {
@@ -36,6 +37,7 @@ namespace Quoridor.Model
                 {
                     bestScore = score;
                     step = wall;
+                    command = "wall";
                 }
             }
 
@@ -52,6 +54,7 @@ namespace Quoridor.Model
                 {
                     bestScore = score;
                     step = move;
+                    command = "move";
                 }
             }
 
@@ -68,12 +71,13 @@ namespace Quoridor.Model
                 {
                     bestScore = score;
                     step = jump;
+                    command = "jump";
                 }
             }
 
             WriteResults(timemark, step);
             coordinates = step.Coordinates;
-            return step;
+            return (command, step);
         }
 
         private static void WriteScoreMove(Cell move, int score)

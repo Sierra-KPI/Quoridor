@@ -306,18 +306,35 @@ namespace Quoridor.OutputConsole.Input
         private void StartBotTurn()
         {
             Coordinates coordinates;
-            IElement element = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame, out coordinates);
-            if (element is Cell cell)
+            (string command,IElement element) = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame, out coordinates);
+            string formattedCoordinates = "";
+            switch (command)
             {
-                CurrentGame.MakeMove(cell);
-                CheckWinner(CurrentGame.SecondPlayer);
-                string formattedCoordinates = $"{TransformCoordinate(coordinates.Y + 1)}{coordinates.X + 1}";
-                Console.WriteLine("move " + formattedCoordinates);
+                case "move":
+                    CurrentGame.MakeMove((Cell)element);
+                    formattedCoordinates =
+                        $"{TransformCoordinate(element.Coordinates.Y + 1)}" +
+                        $"{element.Coordinates.X + 1}";
+                    break;
+                case "jump":
+                    CurrentGame.MakeMove((Cell)element, true);
+                    formattedCoordinates =
+                        $"{TransformCoordinate(element.Coordinates.Y + 1)}" +
+                        $"{element.Coordinates.X + 1}";
+                    break;
+                case "wall":
+                    var wall = element as Wall;
+                    CurrentGame.PlaceWall(wall);
+                    formattedCoordinates =
+                        $"{TransformCoordinate(wall.Coordinates.Y + 1)}" +
+                        $"{wall.Coordinates.X + 1}" +
+                        $"{TransformCoordinate(wall.EndCoordinates.Y + 1)}" +
+                        $"{wall.EndCoordinates.X + 1}";
+                    break;
             }
-            else
-            {
-                CurrentGame.PlaceWall((Wall)element);
-            }
+
+            CheckWinner(CurrentGame.SecondPlayer);
+            Console.WriteLine(command + " " + formattedCoordinates);
         }
 
         private static void WriteIncorrectMessage() =>
