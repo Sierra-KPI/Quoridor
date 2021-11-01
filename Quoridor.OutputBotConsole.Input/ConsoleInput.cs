@@ -13,43 +13,17 @@ namespace Quoridor.OutputConsole.Input
         public ViewOutput View;
 
         private Dictionary<char, int> _chars = new();
-        private bool _endLoop;
         private string _currentPlayerName = FirstPlayerName;
         private IPlayer _currentPlayer;
-        private string[] _gameModePreference;
 
-        private const string GreetingMessage = "Hi! Now You are " +
-            "playing Quoridor.\nThe object of the game is to advance " +
-            "your pawn to the opposite edge of the board.\nOn your " +
-            "turn you may either move your pawn or place a wall. " +
-            "\nYou may hinder your opponent with wall placement, " +
-            "but not completely block them off.\nMeanwhile, " +
-            "they are trying to do the same to you.\nThe first " +
-            "pawn to reach the opposite side wins.";
         private const string NullOrEmptyMessage = "Your input " +
             "is empty! Try again";
-        private const string HelpMessage = "Here's some tips " +
-            "tips on how to play the game:\n1. start x - start new " +
-            "game, where is the number of real players " +
-            "(1 for one real and one bot. 2 for two real players)" +
-            "\n2. move xy - move Your player to cell xy, for " +
-            "example: move E8\n3. wall xyh - place wall in xy, h - horisontal," +
-            "v - vertical, for example: wall V7h\n4. help - print this " +
-            "helpbox\n5. quit - quit the game";
         private const string IncorrectMessage = "Incorrect command! " +
             "Try something else";
         private const string ChooseColorMessage =
             "Please, chose which player you want to play (black or white)";
         private const string CongratulationsMessage = " Has won!";
         private const string CurrentPlayerMessage = "Current player is ";
-        private const string DelimiterMessage = "-----------------" +
-            "----------------------------";
-        private const string SingleplayerMessage = "New Singleplayer" +
-            " Game has started!";
-        private const string MultiplayerMessage = "New Multiplayer" +
-            " Game has started!";
-        private const string SingleModeInput = "1";
-        private const string MultiplayerModeInput = "2";
         private const string FirstPlayerName = "White Player";
         private const string SecondPlayerName = "Black Player";
 
@@ -59,14 +33,8 @@ namespace Quoridor.OutputConsole.Input
 
         public void OnStart()
         {
-            WriteStartingMessage();
             InitializeDictionary();
-        }
-
-        public void WriteStartingMessage()
-        {
-            Console.WriteLine(GreetingMessage);
-            Console.WriteLine(HelpMessage);
+            StartGame();
         }
 
         private void InitializeDictionary() =>
@@ -83,11 +51,11 @@ namespace Quoridor.OutputConsole.Input
                 { 'I', 9 }
             };
 
-        private char TransformCoordinate(int horizntalCoordinate)
+        private char TransformCoordinate(int horizontalCoordinate)
         {
             foreach (KeyValuePair<char, int> item in _chars)
             {
-                if (item.Value == horizntalCoordinate)
+                if (item.Value == horizontalCoordinate)
                 {
                     return item.Key;
                 }
@@ -98,7 +66,7 @@ namespace Quoridor.OutputConsole.Input
 
         public void ReadMove()
         {
-            while (!_endLoop)
+            while (true)
             {
                 string input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
@@ -130,21 +98,12 @@ namespace Quoridor.OutputConsole.Input
         {
             switch (inputString[0])
             {
-                case "start":
-                    StartGame(inputString);
-                    break;
                 case "move":
                 case "jump":
                     ChangePlayerPosition(inputString);
                     break;
                 case "wall":
                     PlaceWall(inputString);
-                    break;
-                case "quit":
-                    QuitLoop();
-                    break;
-                case "help":
-                    WriteHelpMessage();
                     break;
                 default:
                     WriteIncorrectMessage();
@@ -154,9 +113,8 @@ namespace Quoridor.OutputConsole.Input
             StartNewTurn();
         }
 
-        private void StartGame(string[] values)
+        private void StartGame()
         {
-            _gameModePreference = values;
             Board board = new BoardFactory().CreateBoard();
 
             (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
@@ -164,7 +122,7 @@ namespace Quoridor.OutputConsole.Input
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
             _currentPlayer = firstPlayer;
 
-            CurrentGame = CreateGame(values, firstPlayer, board);
+            CurrentGame = CreateGame(firstPlayer, board);
 
             View = new(CurrentGame);
 
@@ -193,50 +151,34 @@ namespace Quoridor.OutputConsole.Input
             return (playerCell, playerEndCells);
         }
 
-        private QuoridorGame CreateGame(string[] values,
-            Player firstPlayer, Board board)
+        private QuoridorGame CreateGame(Player firstPlayer, Board board)
         {
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 GetPlayerCells(board, PlayerID.Second);
 
-            if (values[1] == SingleModeInput)
+            Console.WriteLine(ChooseColorMessage);
+            string choosenColor = Console.ReadLine();
+
+            MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+            IPlayer firstGamePlayer;
+            IPlayer secondGamePlayer;
+            if (choosenColor == "white")
             {
-                Console.WriteLine(ChooseColorMessage);
-                string choosenColor = Console.ReadLine();
+                firstGamePlayer = firstPlayer;
+                secondGamePlayer = botPlayer;
+            }
+            else if (choosenColor == "black")
+            {
+                firstGamePlayer = botPlayer;
+                secondGamePlayer = firstPlayer;
+            }
+            else
+            {
+                throw new Exception("Wrong color is chosen");
+            }
 
-                MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
-                IPlayer firstGamePlayer;
-                IPlayer secondGamePlayer;
-                if (choosenColor == "white")
-                {
-                    firstGamePlayer = firstPlayer;
-                    secondGamePlayer = botPlayer;
-                }
-                else if (choosenColor == "black")
-                {
-                    firstGamePlayer = botPlayer;
-                    secondGamePlayer = firstPlayer;
-                }
-                else
-                {
-                    throw new Exception("Wrong color is chosen");
-                }
-
-                Console.WriteLine(SingleplayerMessage);
-
-                return CurrentGame = new QuoridorGame(firstGamePlayer,
+            return CurrentGame = new QuoridorGame(firstGamePlayer,
                     secondGamePlayer, board);
-            }
-            else if (values[1] == MultiplayerModeInput)
-            {
-                Player realPlayer = new(secondPlayerCell, secondPlayerEndCells);
-                Console.WriteLine(MultiplayerMessage);
-
-                return CurrentGame = new QuoridorGame(firstPlayer,
-                    realPlayer, board);
-            }
-
-            throw new Exception("Wrong number of players");
         }
 
         private void ChangePlayerPosition(string[] values)
@@ -278,8 +220,6 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartNewTurn()
         {
-            WriteDelimiter();
-
             View.DrawBoard();
 
             WritePlayerMessage();
@@ -290,10 +230,9 @@ namespace Quoridor.OutputConsole.Input
             if (player.HasWon())
             {
                 WriteCongratulations(player);
-                WriteDelimiter();
 
                 View.DrawBoard();
-                StartGame(_gameModePreference);
+                StartGame();
 
                 return true;
             }
@@ -303,13 +242,15 @@ namespace Quoridor.OutputConsole.Input
 
         private void StartBotTurn()
         {
-            Coordinates coordinates;
-            IElement element = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame, out coordinates);
+            IElement element = (CurrentGame.BotPlayer as Bot).
+                DoMove(CurrentGame, out Coordinates coordinates);
             if (element is Cell cell)
             {
                 CurrentGame.MakeMove(cell);
                 CheckWinner(CurrentGame.SecondPlayer);
-                string formattedCoordinates = $"{TransformCoordinate(coordinates.Y + 1)}{coordinates.X + 1}";
+                string formattedCoordinates =
+                    $"{TransformCoordinate(coordinates.Y + 1)}" +
+                    $"{coordinates.X + 1}";
                 Console.WriteLine("move " + formattedCoordinates);
             }
             else
@@ -320,12 +261,6 @@ namespace Quoridor.OutputConsole.Input
 
         private static void WriteIncorrectMessage() =>
             Console.WriteLine(IncorrectMessage);
-
-        private static void WriteHelpMessage() =>
-            Console.WriteLine(HelpMessage);
-
-        private static void WriteDelimiter() =>
-            Console.WriteLine(DelimiterMessage);
 
         private void WritePlayerMessage()
         {
@@ -356,8 +291,6 @@ namespace Quoridor.OutputConsole.Input
 
             Console.WriteLine(winner + CongratulationsMessage);
         }
-
-        private void QuitLoop() => _endLoop = true;
 
         #endregion Methods
     }
