@@ -134,8 +134,10 @@ namespace Quoridor.OutputConsole.Input
                     StartGame(inputString);
                     break;
                 case "move":
-                case "jump":
                     ChangePlayerPosition(inputString);
+                    break;
+                case "jump":
+                    ChangePlayerPosition(inputString, true);
                     break;
                 case "wall":
                     PlaceWall(inputString);
@@ -239,7 +241,7 @@ namespace Quoridor.OutputConsole.Input
             throw new Exception("Wrong number of players");
         }
 
-        private void ChangePlayerPosition(string[] values)
+        private void ChangePlayerPosition(string[] values, bool isJump = false)
         {
             Coordinates coordinates = new(values[1][1] - '1',
                 _chars[values[1][0]] - 1);
@@ -247,7 +249,7 @@ namespace Quoridor.OutputConsole.Input
                 GetCellByCoordinates(coordinates);
             _currentPlayer = CurrentGame.CurrentPlayer;
 
-            CurrentGame.MakeMove(to);
+            CurrentGame.MakeMove(to, isJump);
 
             if (!CheckWinner(CurrentGame.FirstPlayer))
             {
