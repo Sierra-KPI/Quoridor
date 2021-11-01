@@ -77,6 +77,48 @@ namespace Quoridor.Model
         private List<Wall> GetConnectedWalls(Wall wall)
         {
             List<Wall> connectedWalls = new List<Wall>();
+            Coordinates coordinates = wall.Coordinates;
+            Coordinates endCoordinates = wall.EndCoordinates;
+
+            Coordinates[,] walls;
+            if (coordinates.X == endCoordinates.X)
+            {
+                walls = new Coordinates[,]
+                {
+                    { coordinates, endCoordinates },
+                    { coordinates.Down(), endCoordinates.Down() },
+                    { coordinates.Up(), endCoordinates.Up() },
+                    { coordinates, coordinates.Down() }
+                };
+            }
+            else
+            {
+                walls = new Coordinates[,]
+                {
+                    { coordinates, endCoordinates },
+                    { coordinates.Left(), endCoordinates.Left() },
+                    { coordinates.Right(), endCoordinates.Right() },
+                    { coordinates, coordinates.Right() }
+                };
+            }
+
+            for (int i = 0; i < walls.GetLength(0); i++)
+            {
+                Orientation orientation = Orientation.Horizontal;
+                Coordinates coordinates1 = walls[i, 0];
+                Coordinates endCoordinates1 = walls[i, 1];
+                if (!CheckCoordinatesForWall(coordinates1, endCoordinates1)) continue;
+                Wall tempWall = GetWallByCoordinates(coordinates1, endCoordinates1);
+                if (tempWall == null) tempWall = new Wall(coordinates1, endCoordinates1, orientation);
+                if (!connectedWalls.Contains(tempWall)) connectedWalls.Add(tempWall);
+            }
+
+            return connectedWalls;
+        }
+
+        private List<Wall> GetConnectedWalls1(Wall wall)
+        {
+            List<Wall> connectedWalls = new List<Wall>();
             int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
             int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
             int diff = GetDiffCellId(cell1ID, cell2ID);
@@ -114,7 +156,9 @@ namespace Quoridor.Model
         private bool CheckCoordinatesForWall(Coordinates c1, Coordinates c2)
         {
             if ((c1.X == Size - 1 && c2.X == Size - 1) ||
-                (c1.Y == Size - 1 && c2.Y == Size - 1))
+                (c1.Y == Size - 1 && c2.Y == Size - 1) ||
+                (c1.X < 0 || c1.Y < 0 || c1.X >= Size || c1.Y >= Size) ||
+                (c2.X < 0 || c2.Y < 0 || c2.X >= Size || c2.Y >= Size))
             {
                 return false;
             }

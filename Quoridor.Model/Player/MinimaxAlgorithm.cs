@@ -28,7 +28,7 @@ namespace Quoridor.Model
             {
                 if (!_game.PlaceWallForMinimax(wall)) continue;
                 //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
-                int score = Minimax(1, int.MinValue, int.MaxValue, false);
+                int score = Minimax(2, int.MinValue, int.MaxValue, false);
                 //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
                 _game.UnplaceWall(wall);
                 //Console.WriteLine("Score for wall " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y + " -> " + score);
@@ -44,7 +44,7 @@ namespace Quoridor.Model
                 //_count = 0;
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
-                int score = Minimax(1, int.MinValue, int.MaxValue, false);
+                int score = Minimax(2, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
                 WriteScoreMove(move, score);
