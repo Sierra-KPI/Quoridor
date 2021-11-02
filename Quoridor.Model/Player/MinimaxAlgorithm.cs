@@ -65,7 +65,7 @@ namespace Quoridor.Model
                 int score = Minimax(1, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
-                WriteScoreMove(jump, score);
+                // WriteScoreMove(jump, score);
 
                 if (score >= bestScore)
                 {

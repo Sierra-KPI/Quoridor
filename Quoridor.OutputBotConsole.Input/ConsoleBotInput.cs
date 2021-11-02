@@ -55,6 +55,7 @@ namespace Quoridor.OutputBotConsole.Input
         {
             while (true)
             {
+                Console.Write("-> ");
                 string input = Console.ReadLine();
 
                 string[] inputString = input.Split(Array.Empty<char>());
@@ -134,17 +135,18 @@ namespace Quoridor.OutputBotConsole.Input
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 GetPlayerCells(board, PlayerID.Second);
 
+            // Console.Write("-> ");
             string choosenColor = Console.ReadLine();
 
             MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
             IPlayer firstGamePlayer;
             IPlayer secondGamePlayer;
-            if (choosenColor == "white")
+            if (choosenColor == "White")
             {
                 firstGamePlayer = firstPlayer;
                 secondGamePlayer = botPlayer;
             }
-            else if (choosenColor == "black")
+            else if (choosenColor == "Black")
             {
                 firstGamePlayer = botPlayer;
                 secondGamePlayer = firstPlayer;
