@@ -10,7 +10,7 @@ namespace Quoridor.OutputBotConsole.Input
         #region Fields
 
         public QuoridorGame CurrentGame;
-        public ViewOutput View;
+        public BotView View;
 
         private Dictionary<char, int> _chars = new();
 
@@ -55,8 +55,7 @@ namespace Quoridor.OutputBotConsole.Input
         {
             while (true)
             {
-                Console.Write("-> ");
-                string input = Console.ReadLine();
+                string input = View.GetCommand();
 
                 string[] inputString = input.Split(Array.Empty<char>());
                 TryToExecuteCommand(inputString);
@@ -71,7 +70,7 @@ namespace Quoridor.OutputBotConsole.Input
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                View.PrintCommand(e.ToString());
             }
         }
 
@@ -95,6 +94,8 @@ namespace Quoridor.OutputBotConsole.Input
 
         private void StartGame()
         {
+            View = new();
+
             Board board = new BoardFactory().CreateBoard();
 
             (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
@@ -102,8 +103,6 @@ namespace Quoridor.OutputBotConsole.Input
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
 
             CurrentGame = CreateGame(firstPlayer, board);
-
-            View = new(CurrentGame);
 
             if (CurrentGame.FirstPlayer is Bot bot)
             {
@@ -135,8 +134,7 @@ namespace Quoridor.OutputBotConsole.Input
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 GetPlayerCells(board, PlayerID.Second);
 
-            // Console.Write("-> ");
-            string choosenColor = Console.ReadLine();
+            string choosenColor = View.GetCommand();
 
             MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
             IPlayer firstGamePlayer;
@@ -212,7 +210,7 @@ namespace Quoridor.OutputBotConsole.Input
         {
             (string command, IElement element) = (CurrentGame.BotPlayer as Bot).
                 DoMove(CurrentGame);
-            string formattedCoordinates = "";
+            var formattedCoordinates = "";
             switch (command)
             {
                 case "move":
@@ -238,7 +236,8 @@ namespace Quoridor.OutputBotConsole.Input
             }
 
             CheckWinner(CurrentGame.SecondPlayer);
-            Console.WriteLine(command + " " + formattedCoordinates);
+            var textToPrint = command + " " + formattedCoordinates;
+            View.PrintCommand(textToPrint);
         }
 
         #endregion Methods
