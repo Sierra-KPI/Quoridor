@@ -13,7 +13,7 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public override (string,IElement) DoMove(QuoridorGame game, out Coordinates coordinates)
+        public override (string,IElement) DoMove(QuoridorGame game)
         {
             IPlayer bot = game.SecondPlayer;
             Cell[] possibleCells = game.
@@ -37,7 +37,6 @@ namespace Quoridor.Model
                 command = "wall";
             }
 
-            coordinates = moveResult.Coordinates;
             return (command, moveResult);
         }
 

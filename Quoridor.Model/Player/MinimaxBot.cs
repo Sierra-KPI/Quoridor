@@ -11,11 +11,10 @@ namespace Quoridor.Model
 
         #region Methods
 
-        public override (string, IElement) DoMove(QuoridorGame game, out Coordinates coordinates)
+        public override (string, IElement) DoMove(QuoridorGame game)
         {
             MinimaxAlgorithm minimax = new MinimaxAlgorithm(game);
-            (string command, IElement moveResult) = minimax.GetMove(out coordinates);
-            coordinates = moveResult.Coordinates;
+            (string command, IElement moveResult) = minimax.GetMove();
             return (command, moveResult);
         }
 

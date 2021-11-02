@@ -306,7 +306,7 @@ namespace Quoridor.OutputConsole.Input
         private void StartBotTurn()
         {
             Coordinates coordinates;
-            (string command,IElement element) = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame, out coordinates);
+            (string command,IElement element) = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame);
             string formattedCoordinates = "";
             switch (command)
             {

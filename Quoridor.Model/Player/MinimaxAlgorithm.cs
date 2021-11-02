@@ -13,7 +13,7 @@ namespace Quoridor.Model
             _game = game;
         }
 
-        public (string, IElement) GetMove(out Coordinates coordinates)
+        public (string, IElement) GetMove()
         {
             //WriteWallsInfo();
 
@@ -76,7 +76,6 @@ namespace Quoridor.Model
             }
 
             //WriteResults(timemark, step);
-            coordinates = step.Coordinates;
             return (command, step);
         }
 
