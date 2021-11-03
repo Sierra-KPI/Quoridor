@@ -75,17 +75,6 @@ namespace Quoridor.Model
             return (command, step);
         }
 
-        //private int CheckScore(int score, int bestScore,
-        //    IElement step, string command, )
-        //{
-        //    if (score >= bestScore)
-        //    {
-        //        bestScore = score;
-        //        step = wall;
-        //        command = "wall";
-        //    }
-        //}
-
         private int Sev(bool maximizingPlayer)
         {
             (int pathLenPlayer1, int pathLenPlayer2) = GetPlayersPathes();
