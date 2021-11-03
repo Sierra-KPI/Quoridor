@@ -39,26 +39,99 @@ namespace Quoridor.Model
         public bool MakeMove(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
             Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
+            //Cell[] moves = GetPossiblePlayersMovesWithJumps(cellFrom, cellThrough);
+            return Array.Exists(moves, element => element == cellTo);
+        }
+
+        public bool MakeJump(Cell cellFrom, Cell cellTo, Cell cellThrough)
+        {
+            Cell[] moves = GetPossiblePlayersJumps(cellFrom, cellThrough);
             return Array.Exists(moves, element => element == cellTo);
         }
 
         public bool PlaceWall(Wall wall)
         {
-            int cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
-            int cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
-            int diff = GetDiffCellId(cell1ID, cell2ID);
+            //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+            var connectedWalls = GetConnectedWalls(wall);
+            _walls.RemoveAll(elem => connectedWalls.Contains(elem));
+            if (!_placedWalls.Contains(wall)) _placedWalls.Add(wall);
+            return true;
+        }
 
-            _walls = _walls.Where(elem =>
+        public bool UnplaceWall(Wall wall)
+        {
+            //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
+            if (_placedWalls.Contains(wall))
             {
-                int wallCell1 = GetIdOfCellByCoordinates(elem.Coordinates);
-                int wallCell2 = GetIdOfCellByCoordinates(elem.EndCoordinates);
-                return (wallCell1 != cell1ID || wallCell2 != cell2ID) &&
-                (wallCell1 != cell1ID - diff || wallCell2 != cell2ID - diff) &&
-                (wallCell1 != cell1ID + diff || wallCell2 != cell2ID + diff) &&
-                (wallCell1 != cell1ID || wallCell2 != cell1ID + diff);
-            }).ToList();
+                _placedWalls.Remove(wall);
+                AddWall(wall);
+                var connectedWalls = GetConnectedWalls(wall);
+                _walls.AddRange(connectedWalls);
+                RenewPlacedWall();
+                return true;
+            }
+            return false;
+        }
 
-            _placedWalls.Add(wall);
+        private List<Wall> GetConnectedWalls(Wall wall)
+        {
+            List<Wall> connectedWalls = new List<Wall>();
+            Coordinates coordinates = wall.Coordinates;
+            Coordinates endCoordinates = wall.EndCoordinates;
+
+            Coordinates[,] walls;
+            if (coordinates.X == endCoordinates.X)
+            {
+                walls = new Coordinates[,]
+                {
+                    { coordinates, endCoordinates },
+                    { coordinates.Down(), endCoordinates.Down() },
+                    { coordinates.Up(), endCoordinates.Up() },
+                    { coordinates, coordinates.Down() }
+                };
+            }
+            else
+            {
+                walls = new Coordinates[,]
+                {
+                    { coordinates, endCoordinates },
+                    { coordinates.Left(), endCoordinates.Left() },
+                    { coordinates.Right(), endCoordinates.Right() },
+                    { coordinates, coordinates.Right() }
+                };
+            }
+
+            for (int i = 0; i < walls.GetLength(0); i++)
+            {
+                Orientation orientation = Orientation.Horizontal;
+                Coordinates coordinates1 = walls[i, 0];
+                Coordinates endCoordinates1 = walls[i, 1];
+                if (!CheckCoordinatesForWall(coordinates1, endCoordinates1)) continue;
+                Wall tempWall = GetWallByCoordinates(coordinates1, endCoordinates1);
+                if (tempWall == null) tempWall = new Wall(coordinates1, endCoordinates1, orientation);
+                if (!connectedWalls.Contains(tempWall)) connectedWalls.Add(tempWall);
+            }
+
+            return connectedWalls;
+        }
+
+        private void RenewPlacedWall()
+        {
+            foreach (Wall wall in _placedWalls.ToArray())
+            {
+                PlaceWall(wall);
+            }
+        }
+
+        private bool CheckCoordinatesForWall(Coordinates c1, Coordinates c2)
+        {
+            if ((c1.X == Size - 1 && c2.X == Size - 1) ||
+                (c1.Y == Size - 1 && c2.Y == Size - 1) ||
+                (c1.X < 0 || c1.Y < 0 || c1.X >= Size || c1.Y >= Size) ||
+                (c2.X < 0 || c2.Y < 0 || c2.X >= Size || c2.Y >= Size))
+            {
+                return false;
+            }
             return true;
         }
 
@@ -89,7 +162,15 @@ namespace Quoridor.Model
             int from2 = cell1ID + diff;
             int to2 = cell2ID + diff;
 
-            return _graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2);
+            if (_graph.RemoveEdge(from1, to1) && _graph.RemoveEdge(from2, to2))
+            {
+                return true;
+            }
+            else
+            {
+                AddWall(wall);
+                return false;
+            }
         }
 
         public bool AddWall(Wall wall)
@@ -120,12 +201,24 @@ namespace Quoridor.Model
         public bool HasPath(Cell cellFrom, Cell cellTo) =>
             _graph.HasPath(cellFrom.Id, cellTo.Id);
 
+        // rewrite
+        public int GetMinPathLength(Cell cellFrom, Cell cellThrough, Cell[] cellsTo)
+        {
+            int[] idOfCells = new int[cellsTo.GetLength(0)];
+            for (var i = 0; i < cellsTo.GetLength(0); i++)
+            {
+                idOfCells[i] = cellsTo[i].Id;
+            }
+
+            return _graph.GetMinPathLength(cellFrom.Id, cellThrough.Id, idOfCells);
+        }
+
         public Cell GetStartCellForPlayer(int playerId)
         {
             return playerId switch
             {
-                (int)PlayerID.First => _cells[Size / 2, 0],
-                (int)PlayerID.Second => _cells[Size / 2, Size - 1],
+                (int)PlayerID.First => _cells[Size - 1, Size / 2],
+                (int)PlayerID.Second => _cells[0, Size / 2],
                 _ => Cell.Default,
             };
         }
@@ -133,16 +226,17 @@ namespace Quoridor.Model
         public Cell[] GetEndCellsForPlayer(Cell cell)
         {
             Cell[] endCells = new Cell[Size];
-            int endY = cell.Coordinates.Y == 0 ? Size - 1 : 0;
+
+            int endX = cell.Coordinates.X == 0 ? Size - 1 : 0;
             for (var i = 0; i < Size; i++)
             {
-                endCells[i] = _cells[i, endY];
+                endCells[i] = _cells[endX, i];
             }
 
             return endCells;
         }
 
-        private Cell[] CheckJump(Cell cellFrom, Cell cellThrough)
+        public Cell[] GetPossiblePlayersJumps(Cell cellFrom, Cell cellThrough)
         {
             List<Cell> cellsTo = new List<Cell>();
             int diffX = cellThrough.Coordinates.X - cellFrom.Coordinates.X;
@@ -190,15 +284,22 @@ namespace Quoridor.Model
         public Cell[] GetPossiblePlayersMoves(Cell cellFrom, Cell cellThrough)
         {
             int[] edges = _graph.GetEdgesForVertex(cellFrom.Id);
-            Cell[] possibleCells = new Cell[edges.GetLength(0)];
+            List<Cell> possibleCells = new List<Cell>();
 
             for (var i = 0; i < edges.GetLength(0); i++)
             {
-                possibleCells[i] = GetCellById(edges[i]);
+                if (edges[i] == cellThrough.Id) continue;
+                possibleCells.Add(GetCellById(edges[i]));
             }
+            return possibleCells.ToArray();
+            //Cell[] jumps = CheckJump(cellFrom, cellThrough);
+            //return possibleCells.Concat(jumps).ToArray();
+        }
 
-            Cell[] jumps = CheckJump(cellFrom, cellThrough);
-
+        public Cell[] GetPossiblePlayersMovesWithJumps(Cell cellFrom, Cell cellThrough)
+        {
+            Cell[] possibleCells = GetPossiblePlayersMoves(cellFrom, cellThrough);
+            Cell[] jumps = GetPossiblePlayersJumps(cellFrom, cellThrough);
             return possibleCells.Concat(jumps).ToArray();
         }
 
@@ -222,10 +323,21 @@ namespace Quoridor.Model
             return _cells[coordinates.X, coordinates.Y];
         }
 
+        // rewrite
         public Wall GetWallByCoordinates(Coordinates coordinates,
-            Coordinates endCoordinates) => _walls.Single(element =>
-            element.Coordinates == coordinates &&
-            element.EndCoordinates == endCoordinates);
+            Coordinates endCoordinates)
+        {
+            foreach (var element in _walls)
+            {
+                if (element.Coordinates == coordinates &&
+                    element.EndCoordinates == endCoordinates)
+                {
+                    return element;
+                }
+            }
+            return null;
+        }
+
     }
 
     #endregion Methods

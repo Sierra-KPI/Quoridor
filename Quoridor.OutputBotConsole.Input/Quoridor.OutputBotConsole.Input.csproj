@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Quoridor.BotView\Quoridor.BotView.csproj" />
+    <ProjectReference Include="..\Quoridor.Model\Quoridor.Model.csproj" />
+    <ProjectReference Include="..\Quoridor.View.Console\Quoridor.View.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -9,8 +9,8 @@ namespace Quoridor.View
 
         private readonly QuoridorGame _currentGame;
 
-        private const string FirstPlayerSymbol = " 1 ";
-        private const string SecondPlayerSymbol = " 2 ";
+        private const string FirstPlayerSymbol = " W ";
+        private const string SecondPlayerSymbol = " B ";
         private const string EmptyCellSymbol = "   ";
         private const string HorizontalWallSymbol = "───";
         private const string VerticalWallSymbol = "│";
@@ -39,21 +39,7 @@ namespace Quoridor.View
         {
             _viewBoard = new string[_viewBoardSize, _viewBoardSize];
             CleanCells();
-
-            for (var i = 0; i < _viewBoardSize; i++)
-            {
-                for (var j = 0; j < _viewBoardSize; j++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        _viewBoard[i, j] = HorizontalWallSymbol;
-                    }
-                    if (j % 2 == 0)
-                    {
-                        _viewBoard[i, j] = VerticalWallSymbol;
-                    }
-                }
-            }
+            CleanWalls();
         }
 
         private void UpdateBoard()
@@ -73,6 +59,24 @@ namespace Quoridor.View
             }
         }
 
+        private void CleanWalls()
+        {
+            for (var i = 0; i < _viewBoardSize; i++)
+            {
+                for (var j = 0; j < _viewBoardSize; j++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        _viewBoard[i, j] = HorizontalWallSymbol;
+                    }
+                    if (j % 2 == 0)
+                    {
+                        _viewBoard[i, j] = VerticalWallSymbol;
+                    }
+                }
+            }
+        }
+
         private void UpdateCells()
         {
             CleanCells();
@@ -87,6 +91,7 @@ namespace Quoridor.View
 
         private void UpdateWalls()
         {
+            CleanWalls();
             var walls = _currentGame.CurrentBoard.GetPlacedWalls();
             for (var i = 0; i < walls.GetLength(0); i++)
             {
@@ -95,13 +100,24 @@ namespace Quoridor.View
                 int x2 = walls[i].EndCoordinates.X * 2;
                 int y2 = walls[i].EndCoordinates.Y * 2;
 
-                if (walls[i].Orientation == Orientation.Vertical)
+                /*if (walls[i].Orientation == Orientation.Vertical)
                 {
                     _viewBoard[x1, y2] = VerticalPlacedWallSymbol;
                     _viewBoard[x1 + 1, y2] = VerticalPlacedWallSymbol;
                     _viewBoard[x1 + 2, y2] = VerticalPlacedWallSymbol;
                 }
                 if (walls[i].Orientation == Orientation.Horizontal)
+                {
+                    _viewBoard[x2, y1] = HorizontalPlacedWallSymbol;
+                    _viewBoard[x2, y1 + 2] = HorizontalPlacedWallSymbol;
+                }*/
+                if (walls[i].Coordinates.X == walls[i].EndCoordinates.X)
+                {
+                    _viewBoard[x1, y2] = VerticalPlacedWallSymbol;
+                    _viewBoard[x1 + 1, y2] = VerticalPlacedWallSymbol;
+                    _viewBoard[x1 + 2, y2] = VerticalPlacedWallSymbol;
+                }
+                else
                 {
                     _viewBoard[x2, y1] = HorizontalPlacedWallSymbol;
                     _viewBoard[x2, y1 + 2] = HorizontalPlacedWallSymbol;
@@ -135,8 +151,24 @@ namespace Quoridor.View
                 {
                     Console.Write(_viewBoard[i, j]);
                 }
+
+                if (i % 2 == 0 && i != 0 && i != _viewBoardSize - 1)
+                {
+                    Console.Write(" " + (i / 2) + " ");
+                }
+                else
+                {
+                    Console.Write("   ");
+                }
                 Console.WriteLine();
             }
+
+            Console.Write("    ");
+            for (var i = 0; i < _currentGame.CurrentBoard.Size - 1; i++)
+            {
+                Console.Write("   " + (char)(i + 83));
+            }
+            Console.WriteLine();
         }
 
         #endregion Methods

@@ -5,8 +5,8 @@
         #region Properties
 
         public int WallsCount { get; private set; }
-        public Cell CurrentCell { get; private set; }
-        public Cell[] EndCells { get; private set; }
+        public Cell CurrentCell { get; set; }
+        public Cell[] EndCells { get; set; }
 
         #endregion Properties
 
@@ -30,6 +30,8 @@
         }
 
         public void DecreaseWallCount() => WallsCount--;
+
+        public void IncreaseWallCount() => WallsCount++;
 
         public bool HasWon()
         {
