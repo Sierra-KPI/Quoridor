@@ -139,12 +139,12 @@ namespace Quoridor.OutputBotConsole.Input
             MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
             IPlayer firstGamePlayer;
             IPlayer secondGamePlayer;
-            if (choosenColor == "White")
+            if (choosenColor == "black")
             {
                 firstGamePlayer = firstPlayer;
                 secondGamePlayer = botPlayer;
             }
-            else if (choosenColor == "Black")
+            else if (choosenColor == "white")
             {
                 firstGamePlayer = botPlayer;
                 secondGamePlayer = firstPlayer;
