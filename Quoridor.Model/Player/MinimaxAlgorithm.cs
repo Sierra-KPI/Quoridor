@@ -31,9 +31,7 @@ namespace Quoridor.Model
                     continue;
                 }
 
-                int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
-
-                _game.UnplaceWall(wall);
+                int score = GetWallScore(wall);
 
                 if (score >= bestScore)
                 {
@@ -45,10 +43,7 @@ namespace Quoridor.Model
 
             foreach (Cell move in moves)
             {
-                var beforeMove = _game.CurrentPlayer.CurrentCell;
-                _game.MakeMove(move);
-                int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
-                _game.UnmakeMove(beforeMove);
+                int score = GetMoveScore(move);
 
                 if (score >= bestScore)
                 {
@@ -60,10 +55,7 @@ namespace Quoridor.Model
 
             foreach (Cell jump in jumps)
             {
-                var beforeMove = _game.CurrentPlayer.CurrentCell;
-                _game.MakeMove(jump, true);
-                int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
-                _game.UnmakeMove(beforeMove);
+                int score = GetJumpScore(jump);
 
                 if (score >= bestScore)
                 {
@@ -74,6 +66,35 @@ namespace Quoridor.Model
             }
 
             return (command, step);
+        }
+
+        private int GetWallScore(Wall wall)
+        {
+            int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
+
+            _game.UnplaceWall(wall);
+
+            return score;
+        }
+
+        private int GetMoveScore(Cell move)
+        {
+            var beforeMove = _game.CurrentPlayer.CurrentCell;
+            _game.MakeMove(move);
+            int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
+            _game.UnmakeMove(beforeMove);
+
+            return score;
+        }
+
+        private int GetJumpScore(Cell jump)
+        {
+            var beforeMove = _game.CurrentPlayer.CurrentCell;
+            _game.MakeMove(jump, true);
+            int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
+            _game.UnmakeMove(beforeMove);
+
+            return score;
         }
 
         private int Sev(bool maximizingPlayer)
