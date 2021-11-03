@@ -100,17 +100,6 @@ namespace Quoridor.View
                 int x2 = walls[i].EndCoordinates.X * 2;
                 int y2 = walls[i].EndCoordinates.Y * 2;
 
-                /*if (walls[i].Orientation == Orientation.Vertical)
-                {
-                    _viewBoard[x1, y2] = VerticalPlacedWallSymbol;
-                    _viewBoard[x1 + 1, y2] = VerticalPlacedWallSymbol;
-                    _viewBoard[x1 + 2, y2] = VerticalPlacedWallSymbol;
-                }
-                if (walls[i].Orientation == Orientation.Horizontal)
-                {
-                    _viewBoard[x2, y1] = HorizontalPlacedWallSymbol;
-                    _viewBoard[x2, y1 + 2] = HorizontalPlacedWallSymbol;
-                }*/
                 if (walls[i].Coordinates.X == walls[i].EndCoordinates.X)
                 {
                     _viewBoard[x1, y2] = VerticalPlacedWallSymbol;

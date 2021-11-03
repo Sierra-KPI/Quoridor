@@ -57,7 +57,6 @@ namespace Quoridor.Model
 
             if ((!isJump && CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough)) ||
                 (isJump && CurrentBoard.MakeJump(cellFrom, cellTo, cellThrough)))
-            //if (CurrentBoard.MakeMove(cellFrom, cellTo, cellThrough))
             {
                 CurrentPlayer.ChangeCoordinates(cellTo);
                 CheckGameEnd();
@@ -105,7 +104,6 @@ namespace Quoridor.Model
             throw new Exception("Wrong place for Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
         }
 
-        //rewrite
         public bool PlaceWallForMinimax(Wall wall)
         {
             if (CurrentPlayer.WallsCount == 0)

@@ -39,7 +39,6 @@ namespace Quoridor.Model
         public bool MakeMove(Cell cellFrom, Cell cellTo, Cell cellThrough)
         {
             Cell[] moves = GetPossiblePlayersMoves(cellFrom, cellThrough);
-            //Cell[] moves = GetPossiblePlayersMovesWithJumps(cellFrom, cellThrough);
             return Array.Exists(moves, element => element == cellTo);
         }
 
@@ -51,7 +50,6 @@ namespace Quoridor.Model
 
         public bool PlaceWall(Wall wall)
         {
-            //Console.WriteLine("Place Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
             var connectedWalls = GetConnectedWalls(wall);
             _walls.RemoveAll(elem => connectedWalls.Contains(elem));
             if (!_placedWalls.Contains(wall)) _placedWalls.Add(wall);
@@ -60,7 +58,6 @@ namespace Quoridor.Model
 
         public bool UnplaceWall(Wall wall)
         {
-            //Console.WriteLine("Unplace Wall: " + wall.Coordinates.X + " " + wall.Coordinates.Y + " " + wall.EndCoordinates.X + " " + wall.EndCoordinates.Y);
             if (_placedWalls.Contains(wall))
             {
                 _placedWalls.Remove(wall);
@@ -201,7 +198,6 @@ namespace Quoridor.Model
         public bool HasPath(Cell cellFrom, Cell cellTo) =>
             _graph.HasPath(cellFrom.Id, cellTo.Id);
 
-        // rewrite
         public int GetMinPathLength(Cell cellFrom, Cell cellThrough, Cell[] cellsTo)
         {
             int[] idOfCells = new int[cellsTo.GetLength(0)];
@@ -292,8 +288,6 @@ namespace Quoridor.Model
                 possibleCells.Add(GetCellById(edges[i]));
             }
             return possibleCells.ToArray();
-            //Cell[] jumps = CheckJump(cellFrom, cellThrough);
-            //return possibleCells.Concat(jumps).ToArray();
         }
 
         public Cell[] GetPossiblePlayersMovesWithJumps(Cell cellFrom, Cell cellThrough)
@@ -323,7 +317,6 @@ namespace Quoridor.Model
             return _cells[coordinates.X, coordinates.Y];
         }
 
-        // rewrite
         public Wall GetWallByCoordinates(Coordinates coordinates,
             Coordinates endCoordinates)
         {
