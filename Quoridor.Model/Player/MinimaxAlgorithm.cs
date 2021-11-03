@@ -5,7 +5,6 @@ namespace Quoridor.Model
     public class MinimaxAlgorithm
     {
         private readonly QuoridorGame _game;
-        private readonly int _timeout;
 
         public MinimaxAlgorithm(QuoridorGame game)
         {

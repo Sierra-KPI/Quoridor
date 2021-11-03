@@ -8,7 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Quoridor.BotView\Quoridor.BotView.csproj" />
     <ProjectReference Include="..\Quoridor.Model\Quoridor.Model.csproj" />
-    <ProjectReference Include="..\Quoridor.View.Console\Quoridor.View.csproj" />
   </ItemGroup>
 
 </Project>
