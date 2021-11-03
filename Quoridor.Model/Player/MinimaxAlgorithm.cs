@@ -6,6 +6,10 @@ namespace Quoridor.Model
     {
         private readonly QuoridorGame _game;
 
+        private const string MoveCommand = "move";
+        private const string JumpCommand = "jump";
+        private const string WallCommand = "wall";
+
         public MinimaxAlgorithm(QuoridorGame game)
         {
             _game = game;
@@ -17,7 +21,7 @@ namespace Quoridor.Model
 
             int bestScore = int.MinValue;
             IElement step = moves[0];
-            string command = "";
+            var command = "";
 
             foreach (Wall wall in walls)
             {
@@ -34,7 +38,7 @@ namespace Quoridor.Model
                 {
                     bestScore = score;
                     step = wall;
-                    command = "wall";
+                    command = WallCommand;
                 }
             }
 
@@ -49,7 +53,7 @@ namespace Quoridor.Model
                 {
                     bestScore = score;
                     step = move;
-                    command = "move";
+                    command = MoveCommand;
                 }
             }
 
@@ -64,12 +68,23 @@ namespace Quoridor.Model
                 {
                     bestScore = score;
                     step = jump;
-                    command = "jump";
+                    command = JumpCommand;
                 }
             }
 
             return (command, step);
         }
+
+        //private int CheckScore(int score, int bestScore,
+        //    IElement step, string command, )
+        //{
+        //    if (score >= bestScore)
+        //    {
+        //        bestScore = score;
+        //        step = wall;
+        //        command = "wall";
+        //    }
+        //}
 
         private int Sev(bool maximizingPlayer)
         {
