@@ -179,7 +179,6 @@ namespace Quoridor.Model
             var dists = DijkstraAlgorithm(from);
             for (int i = 0; i < to.GetLength(0); i++)
             {
-                // rewrite to Math.Min
                 if (dists[to[i]] <= min)
                 {
                     min = dists[to[i]];

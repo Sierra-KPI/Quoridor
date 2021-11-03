@@ -186,12 +186,7 @@ namespace Quoridor.Model
 
         public bool CheckPaths(Cell cellFrom, Cell[] cellsTo)
         {
-            int[] idOfCells = new int[cellsTo.GetLength(0)];
-            for (var i = 0; i < cellsTo.GetLength(0); i++)
-            {
-                idOfCells[i] = cellsTo[i].Id;
-            }
-
+            int[] idOfCells = GetIdsOfCells(cellsTo);
             return _graph.CheckPaths(cellFrom.Id, idOfCells);
         }
 
@@ -200,13 +195,18 @@ namespace Quoridor.Model
 
         public int GetMinPathLength(Cell cellFrom, Cell cellThrough, Cell[] cellsTo)
         {
-            int[] idOfCells = new int[cellsTo.GetLength(0)];
-            for (var i = 0; i < cellsTo.GetLength(0); i++)
-            {
-                idOfCells[i] = cellsTo[i].Id;
-            }
-
+            int[] idOfCells = GetIdsOfCells(cellsTo);
             return _graph.GetMinPathLength(cellFrom.Id, cellThrough.Id, idOfCells);
+        }
+
+        private int[] GetIdsOfCells(Cell[] cells)
+        {
+            int[] idOfCells = new int[cells.GetLength(0)];
+            for (var i = 0; i < cells.GetLength(0); i++)
+            {
+                idOfCells[i] = cells[i].Id;
+            }
+            return idOfCells;
         }
 
         public Cell GetStartCellForPlayer(int playerId)
