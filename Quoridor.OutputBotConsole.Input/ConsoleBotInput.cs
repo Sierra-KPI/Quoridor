@@ -198,8 +198,6 @@ namespace Quoridor.OutputBotConsole.Input
         {
             if (player.HasWon())
             {
-                StartGame();
-
                 return true;
             }
 
