@@ -9,6 +9,7 @@ namespace Quoridor.Model
         private const string MoveCommand = "move";
         private const string JumpCommand = "jump";
         private const string WallCommand = "wall";
+        private const int Depth = 1;
 
         public MinimaxAlgorithm(QuoridorGame game)
         {
@@ -30,7 +31,7 @@ namespace Quoridor.Model
                     continue;
                 }
 
-                int score = Minimax(1, int.MinValue, int.MaxValue, false);
+                int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
 
                 _game.UnplaceWall(wall);
 
@@ -46,7 +47,7 @@ namespace Quoridor.Model
             {
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(move);
-                int score = Minimax(1, int.MinValue, int.MaxValue, false);
+                int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
                 if (score >= bestScore)
@@ -61,7 +62,7 @@ namespace Quoridor.Model
             {
                 var beforeMove = _game.CurrentPlayer.CurrentCell;
                 _game.MakeMove(jump, true);
-                int score = Minimax(1, int.MinValue, int.MaxValue, false);
+                int score = Minimax(Depth, int.MinValue, int.MaxValue, false);
                 _game.UnmakeMove(beforeMove);
 
                 if (score >= bestScore)
