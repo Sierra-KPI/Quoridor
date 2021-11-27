@@ -11,20 +11,6 @@ namespace Quoridor.Model
         public IPlayer CurrentPlayer { get; private set; }
         public Board CurrentBoard { get; private set; }
 
-        private IPlayer botPlayer;
-        public IPlayer BotPlayer
-        {
-            get
-            {
-                if (botPlayer == null)
-                {
-                    botPlayer = FirstPlayer is Bot ? FirstPlayer : SecondPlayer;
-                }
-
-                return botPlayer;
-            }
-        }
-
         #endregion Properties
 
         #region Constructor

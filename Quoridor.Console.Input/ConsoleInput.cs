@@ -169,19 +169,7 @@ namespace Quoridor.OutputConsole.Input
             CurrentGame = CreateGame(values, firstPlayer, board);
 
             View = new(CurrentGame);
-
-            if (CurrentGame.FirstPlayer is Bot bot)
-            {
-                Cell tempCoords = firstPlayer.CurrentCell;
-                firstPlayer.CurrentCell = bot.CurrentCell;
-                bot.CurrentCell = tempCoords;
-
-                Cell[] tempCells = firstPlayer.EndCells;
-                firstPlayer.EndCells = bot.EndCells;
-                bot.EndCells = tempCells;
-
-                StartBotTurn();
-            }
+            StartBotTurn();
         }
 
         private static (Cell playerCell, Cell[] playerEndCells)
@@ -306,7 +294,7 @@ namespace Quoridor.OutputConsole.Input
         private void StartBotTurn()
         {
             Coordinates coordinates;
-            (string command,IElement element) = (CurrentGame.BotPlayer as Bot).DoMove(CurrentGame);
+            (string command,IElement element) = CurrentGame.CurrentPlayer.DoMove(CurrentGame);
             string formattedCoordinates = "";
             switch (command)
             {
@@ -323,13 +311,15 @@ namespace Quoridor.OutputConsole.Input
                         $"{element.Coordinates.X + 1}";
                     break;
                 case "wall":
-                    var wall = element as Wall;
+                    var wall = (Wall)element;
                     CurrentGame.PlaceWall(wall);
                     formattedCoordinates =
                         $"{(char)(wall.Coordinates.Y + 83)}" +
                         $"{wall.Coordinates.X + 1}" +
                         $"{(wall.Coordinates.X == wall.EndCoordinates.X ? 'v' : 'h')}";
                     break;
+                default:
+                    return;
             }
 
             CheckWinner(CurrentGame.SecondPlayer);

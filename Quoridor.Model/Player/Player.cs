@@ -23,6 +23,10 @@
 
         #region Methods
 
+        public (string, IElement) DoMove(QuoridorGame game) {
+            return ("player", game.CurrentPlayer.CurrentCell);
+        }
+
         public Cell ChangeCoordinates(Cell newCell)
         {
             CurrentCell = newCell;

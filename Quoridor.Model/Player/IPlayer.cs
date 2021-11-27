@@ -17,6 +17,7 @@
         void IncreaseWallCount();
         bool HasWon();
 
+        (string, IElement) DoMove(QuoridorGame game);
         #endregion Methods
     }
 }
