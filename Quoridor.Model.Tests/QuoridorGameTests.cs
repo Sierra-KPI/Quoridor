@@ -9,17 +9,13 @@ namespace Quoridor.Model.Tests
         {
             Board board = new BoardFactory().CreateBoard();
 
-            Cell firstPlayerCell = board.GetStartCellForPlayer
-                ((int)PlayerID.First);
-            Cell[] firstPlayerEndCells = board.GetEndCellsForPlayer
-                (board.GetStartCellForPlayer((int)PlayerID.First));
+            (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
+               board.GetPlayerCells(PlayerID.First);
 
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
 
-            Cell secondPlayerCell = board.GetStartCellForPlayer
-                ((int)PlayerID.Second);
-            Cell[] secondPlayerEndCells = board.GetEndCellsForPlayer
-                (board.GetStartCellForPlayer((int)PlayerID.Second));
+            (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
+                board.GetPlayerCells(PlayerID.Second);
 
             Player secondPlayer = new(secondPlayerCell, secondPlayerEndCells);
 
@@ -89,7 +85,7 @@ namespace Quoridor.Model.Tests
             Board board = new BoardFactory().CreateBoard();
 
             Cell expected = board.GetStartCellForPlayer
-                ((int)playerID);
+                (playerID);
 
             Coordinates coordinates = new(x, y);
             Cell actual = new(coordinates, 5);
@@ -118,7 +114,7 @@ namespace Quoridor.Model.Tests
             Board board = new BoardFactory().CreateBoard();
 
             Cell firstPlayerCell = board.GetStartCellForPlayer
-                ((int)PlayerID.First);
+                (PlayerID.First);
             Cell[] actual =
                 board.GetEndCellsForPlayer(firstPlayerCell);
 
@@ -144,7 +140,7 @@ namespace Quoridor.Model.Tests
             Board board = new BoardFactory().CreateBoard();
 
             Cell secondPlayerCell = board.GetStartCellForPlayer
-                ((int)PlayerID.Second);
+                (PlayerID.Second);
             Cell[] actual =
                 board.GetEndCellsForPlayer(secondPlayerCell);
 

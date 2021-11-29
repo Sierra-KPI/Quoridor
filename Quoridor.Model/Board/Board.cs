@@ -220,14 +220,14 @@ namespace Quoridor.Model
             return (playerCell, playerEndCells);
         }
 
-        private Cell GetStartCellForPlayer(PlayerID playerID) => playerID switch
+        public Cell GetStartCellForPlayer(PlayerID playerID) => playerID switch
         {
             PlayerID.First => _cells[Size - 1, Size / 2],
             PlayerID.Second => _cells[0, Size / 2],
             _ => Cell.Default,
         };
 
-        private Cell[] GetEndCellsForPlayer(Cell cell)
+        public Cell[] GetEndCellsForPlayer(Cell cell)
         {
             Cell[] endCells = new Cell[Size];
 
