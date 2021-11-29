@@ -111,7 +111,7 @@ namespace Quoridor.OutputConsole.App
 
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 board.GetPlayerCells(PlayerID.Second);
-            MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+            RandomBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
             IPlayer firstGamePlayer;
             IPlayer secondGamePlayer;
             if (choosenColor == "white")
@@ -192,6 +192,7 @@ namespace Quoridor.OutputConsole.App
         {
             if (CurrentGame.CheckGameEnd())
             {
+                CurrentGame.SwapPlayer();
                 View.WriteCongratulations(CurrentGame.CurrentPlayer);
                 StartGame(_gameModePreference);
                 return true;
