@@ -44,7 +44,6 @@ namespace Quoridor.OutputConsole.App
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 ViewOutput.WriteIncorrectMessage();
             }
         }
