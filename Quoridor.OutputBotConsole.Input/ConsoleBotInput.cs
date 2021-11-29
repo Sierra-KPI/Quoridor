@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Quoridor.Model;
 using Quoridor.View;
 
@@ -12,44 +11,11 @@ namespace Quoridor.OutputBotConsole.Input
         public QuoridorGame CurrentGame;
         public BotView View;
 
-        private Dictionary<char, int> _chars = new();
-
         #endregion Fields
 
         #region Methods
 
-        public void OnStart()
-        {
-            InitializeDictionary();
-            StartGame();
-        }
-
-        private void InitializeDictionary() =>
-            _chars = new Dictionary<char, int>
-            {
-                { 'A', 1 },
-                { 'B', 2 },
-                { 'C', 3 },
-                { 'D', 4 },
-                { 'E', 5 },
-                { 'F', 6 },
-                { 'G', 7 },
-                { 'H', 8 },
-                { 'I', 9 }
-            };
-
-        private char TransformCoordinate(int horizontalCoordinate)
-        {
-            foreach (KeyValuePair<char, int> item in _chars)
-            {
-                if (item.Value == horizontalCoordinate)
-                {
-                    return item.Key;
-                }
-            }
-
-            throw new FormatException("Wrong horizontal coordinate format");
-        }
+        public void OnStart() => StartGame();
 
         public void ReadMove()
         {
@@ -99,28 +65,17 @@ namespace Quoridor.OutputBotConsole.Input
             Board board = new BoardFactory().CreateBoard();
 
             (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
-                GetPlayerCells(board, PlayerID.First);
+                board.GetPlayerCells(PlayerID.First);
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
 
             CurrentGame = CreateGame(firstPlayer, board);
             StartBotTurn();
         }
 
-        private static (Cell playerCell, Cell[] playerEndCells)
-            GetPlayerCells(Board board, PlayerID playerID)
-        {
-            Cell playerCell = board.GetStartCellForPlayer
-                ((int)playerID);
-            Cell[] playerEndCells = board.GetEndCellsForPlayer
-                (board.GetStartCellForPlayer((int)playerID));
-
-            return (playerCell, playerEndCells);
-        }
-
         private QuoridorGame CreateGame(Player firstPlayer, Board board)
         {
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
-                GetPlayerCells(board, PlayerID.Second);
+                board.GetPlayerCells(PlayerID.Second);
 
             string choosenColor = View.GetCommand();
 
@@ -149,7 +104,7 @@ namespace Quoridor.OutputBotConsole.Input
         private void ChangePlayerPosition(string[] values, bool isJump = false)
         {
             Coordinates coordinates = new(values[1][1] - '1',
-                _chars[values[1][0]] - 1);
+                values[1][0] - 65);
             Cell to = CurrentGame.CurrentBoard.
                 GetCellByCoordinates(coordinates);
 
@@ -201,13 +156,13 @@ namespace Quoridor.OutputBotConsole.Input
                 case "move":
                     CurrentGame.MakeMove((Cell)element);
                     formattedCoordinates =
-                        $"{TransformCoordinate(element.Coordinates.Y + 1)}" +
+                        $"{(char)(element.Coordinates.Y + 65)}" +
                         $"{element.Coordinates.X + 1}";
                     break;
                 case "jump":
                     CurrentGame.MakeMove((Cell)element, true);
                     formattedCoordinates =
-                        $"{TransformCoordinate(element.Coordinates.Y + 1)}" +
+                        $"{(char)(element.Coordinates.Y + 65)}" +
                         $"{element.Coordinates.X + 1}";
                     break;
                 case "wall":

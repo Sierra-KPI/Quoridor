@@ -272,7 +272,7 @@ namespace Quoridor.View
                         $"{(char)(element.Coordinates.Y + 83)}" +
                         $"{element.Coordinates.X + 1}" +
                         $"{(element.Coordinates.X == element.EndCoordinates.X ? 'v' : 'h')}";
-            Console.WriteLine(command + " " + formattedCoordinates); 
+            Console.WriteLine(command + " " + formattedCoordinates);
         }
 
     }

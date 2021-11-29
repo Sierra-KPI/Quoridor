@@ -107,7 +107,7 @@ namespace Quoridor.OutputConsole.App
             Player firstPlayer, Board board)
         {
             ViewOutput.WriteChooseColorMessage();
-            string choosenColor = Console.ReadLine();
+            string choosenColor = Input.ReadMove()[0];
 
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 board.GetPlayerCells(PlayerID.Second);

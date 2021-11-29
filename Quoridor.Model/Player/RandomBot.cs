@@ -7,13 +7,14 @@ namespace Quoridor.Model
         #region Constructor
 
         public RandomBot(Cell currentCell, Cell[] endCells) :
-            base(currentCell, endCells) {}
+            base(currentCell, endCells)
+        { }
 
         #endregion Constructor
 
         #region Methods
 
-        public override (string,IElement) DoMove(QuoridorGame game)
+        public override (string, IElement) DoMove(QuoridorGame game)
         {
             IPlayer bot = game.SecondPlayer;
             Cell[] possibleCells = game.
