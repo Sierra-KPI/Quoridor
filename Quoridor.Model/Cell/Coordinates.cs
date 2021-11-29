@@ -51,7 +51,7 @@ namespace Quoridor.Model
 
         #region Operators
 
-        public static bool operator == (Coordinates coordinates1,
+        public static bool operator ==(Coordinates coordinates1,
             Coordinates coordinates2)
         {
             if (coordinates1.X == coordinates2.X &&
@@ -63,7 +63,7 @@ namespace Quoridor.Model
             return false;
         }
 
-        public static bool operator != (Coordinates coordinates1,
+        public static bool operator !=(Coordinates coordinates1,
             Coordinates coordinates2)
         {
             if (coordinates1.X != coordinates2.X ||
