@@ -11,10 +11,7 @@ namespace Quoridor.Model
         private const string WallCommand = "wall";
         private const int Depth = 1;
 
-        public MinimaxAlgorithm(QuoridorGame game)
-        {
-            _game = game;
-        }
+        public MinimaxAlgorithm(QuoridorGame game) => _game = game;
 
         public (string, IElement) GetMove()
         {
@@ -192,7 +189,7 @@ namespace Quoridor.Model
                 eval = Minimax(depth - 1, alpha, beta, !maximizingPlayer);
 
                 _game.UnplaceWall(wall);
-                
+
                 if (maximizingPlayer)
                 {
                     alpha = Math.Max(alpha, eval);

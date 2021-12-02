@@ -209,15 +209,23 @@ namespace Quoridor.Model
             return idOfCells;
         }
 
-        public Cell GetStartCellForPlayer(int playerId)
+        public (Cell playerCell, Cell[] playerEndCells)
+           GetPlayerCells(PlayerID playerID)
         {
-            return playerId switch
-            {
-                (int)PlayerID.First => _cells[Size - 1, Size / 2],
-                (int)PlayerID.Second => _cells[0, Size / 2],
-                _ => Cell.Default,
-            };
+            Cell playerCell = GetStartCellForPlayer
+                (playerID);
+            Cell[] playerEndCells = GetEndCellsForPlayer
+                (GetStartCellForPlayer(playerID));
+
+            return (playerCell, playerEndCells);
         }
+
+        public Cell GetStartCellForPlayer(PlayerID playerID) => playerID switch
+        {
+            PlayerID.First => _cells[Size - 1, Size / 2],
+            PlayerID.Second => _cells[0, Size / 2],
+            _ => Cell.Default,
+        };
 
         public Cell[] GetEndCellsForPlayer(Cell cell)
         {

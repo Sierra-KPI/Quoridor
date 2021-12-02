@@ -1,32 +1,40 @@
 ﻿using System;
 using Quoridor.Model;
+using Quoridor.OutputConsole.Input;
 using Quoridor.View;
 
-namespace Quoridor.OutputBotConsole.Input
+namespace Quoridor.OutputConsole.App
 {
-    public class ConsoleBotInput
+    class GameLoop
     {
-        #region Fields
 
         public QuoridorGame CurrentGame;
-        public BotView View;
+        public ViewOutput View;
+        public ConsoleInput Input;
 
-        #endregion Fields
+        private string[] _gameModePreference;
+        private const string SingleModeInput = "1";
+        private const string MultiplayerModeInput = "2";
 
-        #region Methods
+        private bool _endLoop;
 
-        public void OnStart() => StartGame();
-
-        public void ReadMove()
+        public GameLoop()
         {
-            while (true)
-            {
-                string input = View.GetCommand();
+            ViewOutput.WriteStartingMessage();
+            Input = new ConsoleInput();
+            StartGameLoop();
+        }
 
-                string[] inputString = input.Split(Array.Empty<char>());
-                TryToExecuteCommand(inputString);
+        private void StartGameLoop()
+        {
+            while (!_endLoop)
+            {
+                string[] command = Input.ReadMove();
+                TryToExecuteCommand(command);
             }
         }
+
+        private void QuitLoop() => _endLoop = true;
 
         private void TryToExecuteCommand(string[] inputString)
         {
@@ -36,7 +44,7 @@ namespace Quoridor.OutputBotConsole.Input
             }
             catch (Exception e)
             {
-                View.PrintCommand(e.ToString());
+                ViewOutput.WriteIncorrectMessage();
             }
         }
 
@@ -44,6 +52,9 @@ namespace Quoridor.OutputBotConsole.Input
         {
             switch (inputString[0])
             {
+                case "start":
+                    StartGame(inputString);
+                    break;
                 case "move":
                     ChangePlayerPosition(inputString);
                     break;
@@ -53,41 +64,61 @@ namespace Quoridor.OutputBotConsole.Input
                 case "wall":
                     PlaceWall(inputString);
                     break;
+                case "quit":
+                    QuitLoop();
+                    break;
+                case "help":
+                    View.WriteHelpMessage();
+                    break;
                 default:
+                    ViewOutput.WriteIncorrectMessage();
                     break;
             }
+            StartNewTurn();
         }
 
-        private void StartGame()
-        {
-            View = new();
 
+        private void StartGame(string[] values)
+        {
+            _gameModePreference = values;
             Board board = new BoardFactory().CreateBoard();
 
             (Cell firstPlayerCell, Cell[] firstPlayerEndCells) =
                 board.GetPlayerCells(PlayerID.First);
             Player firstPlayer = new(firstPlayerCell, firstPlayerEndCells);
 
-            CurrentGame = CreateGame(firstPlayer, board);
+            if (values[1] == SingleModeInput)
+            {
+                CurrentGame = CreateSingleModeGame(firstPlayer, board);
+            }
+            else if (values[1] == MultiplayerModeInput)
+            {
+                CurrentGame = CreateMultiplayerModeGame(firstPlayer, board);
+            }
+            else throw new Exception("Wrong number of players");
+
+            View = new(CurrentGame);
             StartBotTurn();
         }
 
-        private QuoridorGame CreateGame(Player firstPlayer, Board board)
+
+        private QuoridorGame CreateSingleModeGame(
+            Player firstPlayer, Board board)
         {
+            ViewOutput.WriteChooseColorMessage();
+            string choosenColor = Input.ReadMove()[0];
+
             (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
                 board.GetPlayerCells(PlayerID.Second);
-
-            string choosenColor = View.GetCommand();
-
-            MinimaxBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
+            RandomBot botPlayer = new(secondPlayerCell, secondPlayerEndCells);
             IPlayer firstGamePlayer;
             IPlayer secondGamePlayer;
-            if (choosenColor == "black")
+            if (choosenColor == "white")
             {
                 firstGamePlayer = firstPlayer;
                 secondGamePlayer = botPlayer;
             }
-            else if (choosenColor == "white")
+            else if (choosenColor == "black")
             {
                 firstGamePlayer = botPlayer;
                 secondGamePlayer = firstPlayer;
@@ -96,9 +127,22 @@ namespace Quoridor.OutputBotConsole.Input
             {
                 throw new Exception("Wrong color is chosen");
             }
+            ViewOutput.WriteSingleplayerMessage();
 
             return CurrentGame = new QuoridorGame(firstGamePlayer,
-                    secondGamePlayer, board);
+                secondGamePlayer, board);
+        }
+
+        private QuoridorGame CreateMultiplayerModeGame(
+            Player firstPlayer, Board board)
+        {
+            (Cell secondPlayerCell, Cell[] secondPlayerEndCells) =
+                board.GetPlayerCells(PlayerID.Second);
+            Player realPlayer = new(secondPlayerCell, secondPlayerEndCells);
+            ViewOutput.WriteMultiplayerMessage();
+
+            return CurrentGame = new QuoridorGame(firstPlayer,
+                realPlayer, board);
         }
 
         private void ChangePlayerPosition(string[] values, bool isJump = false)
@@ -109,8 +153,7 @@ namespace Quoridor.OutputBotConsole.Input
                 GetCellByCoordinates(coordinates);
 
             CurrentGame.MakeMove(to, isJump);
-
-            if (!CheckWinner(CurrentGame.FirstPlayer))
+            if (!CheckWinner())
             {
                 StartBotTurn();
             }
@@ -137,51 +180,48 @@ namespace Quoridor.OutputBotConsole.Input
             StartBotTurn();
         }
 
-        private bool CheckWinner(IPlayer player)
+        private void StartNewTurn()
         {
-            if (player.HasWon())
+            View.WriteDelimiter();
+            View.DrawBoard();
+            View.WritePlayerMessage();
+        }
+
+        private bool CheckWinner()
+        {
+            if (CurrentGame.CheckGameEnd())
             {
+                CurrentGame.SwapPlayer();
+                View.WriteCongratulations(CurrentGame.CurrentPlayer);
+                StartGame(_gameModePreference);
                 return true;
             }
-
             return false;
         }
 
         private void StartBotTurn()
         {
             (string command, IElement element) = CurrentGame.CurrentPlayer.DoMove(CurrentGame);
-            var formattedCoordinates = "";
             switch (command)
             {
                 case "move":
                     CurrentGame.MakeMove((Cell)element);
-                    formattedCoordinates =
-                        $"{(char)(element.Coordinates.Y + 65)}" +
-                        $"{element.Coordinates.X + 1}";
+                    View.WriteBotMove(command, (Cell)element);
                     break;
                 case "jump":
                     CurrentGame.MakeMove((Cell)element, true);
-                    formattedCoordinates =
-                        $"{(char)(element.Coordinates.Y + 65)}" +
-                        $"{element.Coordinates.X + 1}";
+                    View.WriteBotMove(command, (Cell)element);
                     break;
                 case "wall":
-                    var wall = (Wall)element;
-                    CurrentGame.PlaceWall(wall);
-                    formattedCoordinates =
-                        $"{(char)(wall.Coordinates.Y + 83)}" +
-                        $"{wall.Coordinates.X + 1}" +
-                        $"{(wall.Coordinates.X == wall.EndCoordinates.X ? 'v' : 'h')}";
+                    CurrentGame.PlaceWall((Wall)element);
+                    View.WriteBotPlaceWall(command, (Wall)element);
                     break;
                 default:
                     return;
             }
-
-            CheckWinner(CurrentGame.SecondPlayer);
-            var textToPrint = command + " " + formattedCoordinates;
-            View.PrintCommand(textToPrint);
+            CheckWinner();
         }
 
-        #endregion Methods
     }
+
 }

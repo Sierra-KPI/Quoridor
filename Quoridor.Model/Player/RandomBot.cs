@@ -7,33 +7,50 @@ namespace Quoridor.Model
         #region Constructor
 
         public RandomBot(Cell currentCell, Cell[] endCells) :
-            base(currentCell, endCells) {}
+            base(currentCell, endCells)
+        { }
 
         #endregion Constructor
 
         #region Methods
 
-        public override (string,IElement) DoMove(QuoridorGame game)
+        public override (string, IElement) DoMove(QuoridorGame game)
         {
-            IPlayer bot = game.SecondPlayer;
-            Cell[] possibleCells = game.
-                    CurrentBoard.GetPossiblePlayersMoves(bot.CurrentCell,
-                    game.FirstPlayer.CurrentCell);
-            Wall[] possibleWalls = game.
-                CurrentBoard.GetPossibleWallsPlaces();
+            var cellFrom = game.CurrentPlayer.CurrentCell;
+            game.SwapPlayer();
+
+            var cellThrough = game.CurrentPlayer.CurrentCell;
+            game.SwapPlayer();
+
+            var jumps = game.CurrentBoard.
+                GetPossiblePlayersJumps(cellFrom, cellThrough);
+            var moves = game.CurrentBoard.
+                GetPossiblePlayersMoves(cellFrom, cellThrough);
+            var walls = game.CurrentBoard.GetPossibleWallsPlaces();
+
 
             var random = new Random();
             int choice = random.Next(2);
             IElement moveResult;
             string command;
-            if (choice % 2 == 0)
+            if (jumps.GetLength(0) > 0)
             {
-                moveResult = ChooseRandomCell(possibleCells);
+                moveResult = ChooseRandomCell(jumps);
+                command = "jump";
+            }
+            else if (WallsCount == 0)
+            {
+                moveResult = ChooseRandomCell(moves);
+                command = "move";
+            }
+            else if (choice % 2 == 0)
+            {
+                moveResult = ChooseRandomCell(moves);
                 command = "move";
             }
             else
             {
-                moveResult = ChooseRandomWall(possibleWalls);
+                moveResult = ChooseRandomWall(walls);
                 command = "wall";
             }
 

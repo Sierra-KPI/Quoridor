@@ -5,7 +5,8 @@ namespace Quoridor.Model
         #region Constructor
 
         public MinimaxBot(Cell currentCell, Cell[] endCells) :
-            base(currentCell, endCells) {}
+            base(currentCell, endCells)
+        { }
 
         #endregion Constructor
 
