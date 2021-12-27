@@ -24,10 +24,6 @@ The abstract strategy game Quoridor is surprisingly deep for its simple rules. T
 
 ## Example
 
-Wall Placement
-
-[![Picture1](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)](https://github.com/Sierra-KPI/Quoridor/blob/main/docs/WallExample.png)
-
 ```csharp
 public bool MakeMove(Cell from, Cell to, Cell through)
 {
@@ -40,7 +36,7 @@ public bool PlaceWall(Wall wall)
     var cell1ID = GetIdOfCellByCoordinates(wall.Coordinates);
     var cell2ID = GetIdOfCellByCoordinates(wall.EndCoordinates);
     int diff = GetDiffId(cell1ID, cell2ID);
-            
+
     _walls = _walls.Where(elem =>
     {
         //replace to GetIdOfCellByCoordinates
